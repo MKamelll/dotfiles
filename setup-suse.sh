@@ -27,5 +27,8 @@ echo "X-GNOME-Autostart-enabled=false" >> .config/autostart/gnome-software-servi
 # TODO: Add installing suse-prime-bbswitch here
 # TODO: Prompt for the initial prime-select profile
 
+# Force gdm to use X to use the touchpad on login
+echo "${lightCyan}Uncomment WaylandEnabled=false in /etc/gdm/custom.conf"
+
 # Set display for gdm to be the primary always
 cp .config/monitors.xml /var/lib/gdm/.config
