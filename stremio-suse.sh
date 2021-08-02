@@ -18,6 +18,7 @@ zypper install libqt5-creator mpv-devel libcaca-devel ncurses5-devel libQt5WebVi
 
 # Resolve needed packages
 zypper search -i rsvg-conver || zypper install rsvg-conver
+zypper search -i ffmpeg-4    || zypper install ffmpeg-4
 
 # Build
 cd stremio-shell
