@@ -6,7 +6,7 @@ lightRed="\033[1;31m"
 noColor="\033[0m"
 
 # Check for root
-[[ $EUID > 0 ]] && echo "${lightRed}The script needs to be ran as root${noColor}"
+[[ $EUID > 0 ]] && echo "${lightRed}The script must be run as root${noColor}"
 
 # Cloning
 echo "${lightCyan}Cloning in ${PWD}${noColor}"

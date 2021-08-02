@@ -6,7 +6,7 @@ lightRed="\033[1;31m"
 noColor="\033[0m"
 
 # Check if running as root
-[[ $EUID > 0 ]] && echo "The script needs to be ran as root"
+[[ $EUID > 0 ]] && echo "The script must be run as root"
 
 # Use the synaptics driver for touchpad
 zypper search -i "synaptics" || zypper install "xf86-input-synaptics"
