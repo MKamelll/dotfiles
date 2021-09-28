@@ -44,6 +44,7 @@ set autoindent
 
 " Set relative number
 set relativenumber
+set number
 
 " Set colorscheme
 syntax on
