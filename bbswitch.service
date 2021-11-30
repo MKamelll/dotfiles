@@ -1,0 +1,8 @@
+[Unit]
+Description=Modprobe bbswitch because suseprime doesn't start
+
+[Service]
+ExecStart=/usr/sbin/bbswitch.sh
+
+[Install]
+WantedBy=multi-user.target
