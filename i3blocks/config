@@ -1,0 +1,40 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+separator=true
+separator_block_width=15
+
+[weather]
+color=#C64191
+command=echo "Weather:" $($MY_PATH/weather.sh)
+interval=1 * 60 * 60 * 4  # 4hrs
+
+[memory]
+color=#93B7BE
+command=echo "Mem:" $($MY_PATH/memory.sh)
+interval=5
+
+[load]
+color=#B0DB43
+command=echo "Load:" $($MY_PATH/load.sh)
+interval=5
+
+[volume]
+color=#f12711
+command=echo "Volume:" $($MY_PATH/volume.sh)
+interval=once
+
+[wifi]
+color=#f5af19
+command=$MY_PATH/network.sh
+interval=15
+
+[time]
+command=$MY_PATH/date.sh
+interval=1
