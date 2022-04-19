@@ -27,7 +27,7 @@ interval=5
 
 [volume]
 color=#f12711
-command=echo "Volume:" $($MY_PATH/volume.sh)
+command=echo "Volume:" $($MY_PATH/set_volume.sh)
 interval=once
 
 [wifi]
