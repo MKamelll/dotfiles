@@ -13,7 +13,7 @@ separator_block_width=15
 [weather]
 color=#C64191
 command=echo "Weather:" $($MY_PATH/weather.sh)
-interval=1 * 60 * 60 * 4  # 4hrs
+interval=14400 # 4hrs
 
 [memory]
 color=#93B7BE
