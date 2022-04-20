@@ -10,31 +10,43 @@
 separator=true
 separator_block_width=15
 
+[layout]
+label=⌨️ 
+color=#9CF6F6
+command=$BAFR/bafr.py keyboard_layout
+interval=once
+
 [weather]
+label=☁️ 
 color=#C64191
-command=echo "Weather:" $($MY_PATH/weather.sh)
+command=$BAFR/bafr.py weather
 interval=14400 # 4hrs
 
 [memory]
+label=🎒 
 color=#93B7BE
-command=echo "Mem:" $($MY_PATH/memory.sh)
+command=$BAFR/bafr.py memory
 interval=5
 
 [load]
+label=🔲 
 color=#B0DB43
-command=echo "Load:" $($MY_PATH/load.sh)
+command=$BAFR/bafr.py load
 interval=5
 
 [volume]
+label=🔊 
 color=#f12711
-command=echo "Volume:" $($MY_PATH/set_volume.sh)
+command=$BAFR/bafr.py volume
 interval=once
 
 [wifi]
+label=🌐 
 color=#f5af19
-command=$MY_PATH/network.sh
-interval=15
+command=$BAFR/bafr.py network
+interval=10
 
 [time]
-command=$MY_PATH/date.sh
+label=📅 
+command=$BAFR/bafr.py date
 interval=1
