@@ -10,6 +10,12 @@
 separator=true
 separator_block_width=15
 
+[brightness]
+label=🔆 
+color=#EAEA7F
+command=$BAFR/bafr.py brightness
+interval=once
+
 [layout]
 label=⌨️ 
 color=#9CF6F6
