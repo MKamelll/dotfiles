@@ -10,6 +10,12 @@
 separator=true
 separator_block_width=15
 
+[updates]
+label=🦎 
+color=#b8b42d
+command=$BAFR/bafr.py updates zypper lu
+interval=43200 # 12hrs
+
 [brightness]
 label=🔆 
 color=#EAEA7F

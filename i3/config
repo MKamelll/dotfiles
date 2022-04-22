@@ -182,7 +182,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command MY_PATH=~/.config/i3blocks/i3bs i3blocks
+        status_command MY_PATH=~/.config/i3blocks/i3bs BAFR=~/Projects/bafr i3blocks
 }
 
 #############################################################
@@ -193,3 +193,9 @@ assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)documents"] $ws3
 assign [class="(?i)stremio"] $ws4
 
+exec_always feh --bg-fill ~/Pictures/Wallpapers/1.jpg
+
+############################################################
+# Gaps
+
+smart_borders on
