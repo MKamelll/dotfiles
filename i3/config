@@ -179,12 +179,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command MY_PATH=~/.config/i3blocks/i3bs BAFR=~/Projects/bafr i3blocks
-}
-
 #############################################################
 # Bind windows to workspaces
 
@@ -193,9 +187,62 @@ assign [class="(?i)google-chrome"] $ws2
 assign [class="(?i)documents"] $ws3
 assign [class="(?i)stremio"] $ws4
 
-exec_always feh --bg-fill ~/Pictures/Wallpapers/1.jpg
+exec_always feh --bg-fill ~/Pictures/Wallpapers/2.jpg
 
 ############################################################
 # Gaps
 
 smart_borders on
+
+###########################################################
+# Float gnome apps
+
+for_window [class=".*(?i)gnome.*"] floating enable
+for_window [class="(?i)gnome-terminal"] floating disable
+
+###########################################################
+# Colors
+########################
+set $black      "#282a36"
+########################
+set $grey       "#44475a"
+########################
+set $orange     "#ffb86c"
+########################
+set $red        "#ff5555"
+########################
+set $white      "#f8f8f2"
+########################
+set $blue       "#6272a4"
+########################
+set $green      "#50fa7b"
+
+# class                 border  backgr. text    indicator child_border
+client.focused          $blue   $blue   $white  $orange   $blue
+client.focused_inactive $black  $black  $white  $orange   $black  
+client.unfocused        $black  $black  $white  $orange   $black
+client.urgent           $red    $red    $white  $red      $red
+client.placeholder      $blue   $blue   $white  $orange   $blue
+
+client.background       $black
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+        status_command MY_PATH=~/.config/i3blocks/i3bs BAFR=~/Projects/bafr i3blocks
+        colors {
+        background $black
+        statusline $white
+        separator  $orange
+        
+        # class            border   backgr.  text
+        focused_workspace  $blue    $blue    $white
+        inactive_workspace $grey    $grey    $white
+        active_workspace   $blue    $blue    $white
+        urgent_workspace   $red     $red     $white
+        binding_mode       $red     $red     $white
+    }
+
+}
+
+
