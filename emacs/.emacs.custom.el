@@ -26,12 +26,14 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Bindings for copying and pasting
-(global-set-key (kbd "C-S-c") 'kill-ring-save)   ;; Copy
-(global-set-key (kbd "C-S-v") 'yank)             ;; Paste
-(global-set-key (kbd "C-S-d") 'kill-region)    ;; Cut (Shift+Ctrl+C)
-(global-set-key (kbd "C-S-z") 'undo)             ;; Undo
-(global-set-key (kbd "C-S-r") 'undo-redo)           ;; Redo (needs redo+ package or `undo-redo` in Emacs 28+)
+(global-set-key (kbd "C-S-c") 'kill-ring-save)
+(global-set-key (kbd "C-S-v") 'yank)
+(global-set-key (kbd "C-S-x") 'kill-region)
 (global-set-key (kbd "C-S-s") 'save-buffer)
+
+;; Undo and Redo
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-S-z") 'undo-redo)
 
 ;; Moving a line up and down
 (defun move-line-up ()
