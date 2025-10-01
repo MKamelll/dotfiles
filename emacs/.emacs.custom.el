@@ -78,3 +78,16 @@
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+
+;; Tell lsp-mode to use capf, works best with Corfu
+(setq lsp-completion-provider :capf)
+
+;; Function to make LSP capf the first one in the list
+(defun my/lsp-capf-priority ()
+  (when (boundp 'lsp-completion-at-point)
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super #'lsp-completion-at-point
+                                       (apply-partially #'cape-dabbrev)
+                                       #'cape-file)))))
+;; Hook it into LSP
+(add-hook 'lsp-completion-mode-hook #'my/lsp-capf-priority)
