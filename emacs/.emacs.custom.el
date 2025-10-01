@@ -9,13 +9,6 @@
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
 
-;; Autocomplete
-(require 'corfu)
-(global-corfu-mode)
-(setq corfu-auto t)        ;; enable auto popup
-(setq corfu-auto-prefix 2) ;; show after typing 2 chars
-(setq corfu-auto-delay 0)  ;; no delay
-
 ;; Remove the bar below to main menu
 (tool-bar-mode -1)
 
@@ -58,7 +51,8 @@
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
 
-;; Lsp things
+;; Setting emacs to symlink the compile_commands.json file to the root directory
+;; if using meson and the build directory is "builddir"
 (defun my/meson-setup-compile-commands ()
   "Automatically link compile_commands.json from Meson builddir to project root."
   (let* ((root (project-root (project-current t)))
@@ -72,22 +66,18 @@
 ;; Hook into opening a C/C++ file
 (add-hook 'c-mode-common-hook #'my/meson-setup-compile-commands)
 
+;; Lsp things
+(require 'company)
+(global-company-mode t)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+(with-eval-after-load 'company
+  (define-key company-mode-map (kbd "C-SPC") #'company-complete))
+
 (require 'lsp-mode)
+(setq lsp-keymap-prefix "C-c l")
 (add-hook 'c-mode-hook #'lsp-deferred)
 (add-hook 'c++-mode-hook #'lsp-deferred)
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
-
-;; Tell lsp-mode to use capf, works best with Corfu
-(setq lsp-completion-provider :capf)
-
-;; Function to make LSP capf the first one in the list
-(defun my/lsp-capf-priority ()
-  (when (boundp 'lsp-completion-at-point)
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super #'lsp-completion-at-point
-                                       (apply-partially #'cape-dabbrev)
-                                       #'cape-file)))))
-;; Hook it into LSP
-(add-hook 'lsp-completion-mode-hook #'my/lsp-capf-priority)
