@@ -31,6 +31,7 @@
 (global-set-key (kbd "C-S-d") 'kill-region)    ;; Cut (Shift+Ctrl+C)
 (global-set-key (kbd "C-S-z") 'undo)             ;; Undo
 (global-set-key (kbd "C-S-r") 'undo-redo)           ;; Redo (needs redo+ package or `undo-redo` in Emacs 28+)
+(global-set-key (kbd "C-S-s") 'save-buffer)
 
 ;; Moving a line up and down
 (defun move-line-up ()
@@ -54,10 +55,6 @@
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
-
-;; Query and replace
-(global-set-key (kbd "C-S-f") 'query-replace)          ;; Ctrl+Shift+F → search & replace
-(global-set-key (kbd "C-S-x") 'query-replace-regexp) ;; Ctrl+Alt+Shift+F → regex replace
 
 ;; Lsp things
 (defun my/meson-setup-compile-commands ()
