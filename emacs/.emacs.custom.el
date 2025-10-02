@@ -24,15 +24,6 @@
 (global-set-key (kbd "C-S-x") 'kill-region)
 (global-set-key (kbd "C-S-s") 'save-buffer)
 
-;; Searching
-(defun my-isearch-from-start ()
-  "Run `isearch-forward` but always from the beginning of the buffer."
-  (interactive)
-  (goto-char (point-min))
-  (isearch-forward))
-
-(global-set-key (kbd "C-s") 'my-isearch-from-start)
-
 ;; Undo and Redo
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-z") 'undo-redo)
