@@ -77,7 +77,7 @@
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
 (require 'lsp-mode)
-(setq lsp-keymap-prefix "C-c l")
+(global-set-key (kbd "C-f") #'lsp-format-buffer)
 (add-hook 'c-mode-hook #'lsp-deferred)
 (add-hook 'c++-mode-hook #'lsp-deferred)
 
