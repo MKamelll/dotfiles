@@ -50,8 +50,8 @@
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
-(global-set-key (kbd "C-<tab>") 'next-buffer)
-(global-set-key (kbd "C-S-<tab>") 'previous-buffer)
+(global-set-key (kbd "<f2>") 'switch-to-next-buffer)
+(global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
 
 ;; Setting emacs to symlink the compile_commands.json file to the root directory
 ;; if using meson and the build directory is "builddir"
