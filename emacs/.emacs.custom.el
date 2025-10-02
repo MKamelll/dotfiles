@@ -83,3 +83,7 @@
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
+
+;; git
+(require 'magit)
+(global-set-key (kbd "<f5>") 'magit-status)
