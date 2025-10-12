@@ -53,6 +53,15 @@
 (global-set-key (kbd "<f2>") 'switch-to-next-buffer)
 (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
 
+(defun select-current-line ()
+  "Select the current line."
+  (interactive)
+  (beginning-of-line)
+  (set-mark-command nil)
+  (end-of-line))
+
+(global-set-key (kbd "C-l") 'select-current-line)
+
 ;; Setting emacs to symlink the compile_commands.json file to the root directory
 ;; if using meson and the build directory is "builddir"
 (defun my/meson-setup-compile-commands ()
@@ -74,12 +83,19 @@
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
 (with-eval-after-load 'company
-  (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
+  (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 (require 'lsp-mode)
 (global-set-key (kbd "C-f") #'lsp-format-buffer)
 (add-hook 'c-mode-hook #'lsp-deferred)
 (add-hook 'c++-mode-hook #'lsp-deferred)
+(add-hook 'python-mode-hook #'lsp-deferred)
+
+(setq lsp-pylsp-plugins-mypy-enabled t
+      lsp-pylsp-plugins-mypy-live-mode t
+      lsp-pylsp-plugins-black-enabled t
+      lsp-pylsp-plugins-flake8-enabled nil
+      lsp-pylsp-plugins-pycodestyle-enabled nil)
 
 (require 'lsp-ui)
 (add-hook 'lsp-mode-hook #'lsp-ui-mode)
