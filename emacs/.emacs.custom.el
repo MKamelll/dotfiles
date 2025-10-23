@@ -85,9 +85,13 @@
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
+(require 'php-mode)
+(require 'go-mode)
 (require 'eglot)
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
 (global-set-key (kbd "C-f") #'eglot-format-buffer)
+(add-hook 'php-mode-hook 'eglot-ensure)
+(add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
 (setq eglot-server-programs
       '((python-mode . ("uv" "run" "pylsp"))))
