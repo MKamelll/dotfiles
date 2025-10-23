@@ -85,28 +85,12 @@
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
-(require 'lsp-mode)
-(require 'php-mode)
-(global-set-key (kbd "C-f") #'lsp-format-buffer)
-(add-hook 'c-mode-hook #'lsp-deferred)
-(add-hook 'c++-mode-hook #'lsp-deferred)
-(add-hook 'python-mode-hook #'lsp-deferred)
-(add-hook 'php-mode-hook #'lsp-deferred)
-
+(require 'eglot)
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
-(setq lsp-idle-delay 0.500)
-
-(setq lsp-pylsp-plugins-mypy-enabled t
-      lsp-pylsp-plugins-mypy-live-mode nil
-      lsp-pylsp-plugins-black-enabled t
-      lsp-pylsp-plugins-flake8-enabled nil
-      lsp-pylsp-plugins-pycodestyle-enabled nil
-      lsp-pylsp-server-command '("uv" "run" "pylsp"))
-
-(setq lsp-pylsp-plugins-pylsp_mypy-args '("--config-file" "pyproject.toml"))
-
-(require 'lsp-ui)
-(add-hook 'lsp-mode-hook #'lsp-ui-mode)
+(global-set-key (kbd "C-f") #'eglot-format-buffer)
+(add-hook 'python-mode-hook 'eglot-ensure)
+(setq eglot-server-programs
+      '((python-mode . ("uv" "run" "pylsp"))))
 
 ;; git
 (require 'magit)
