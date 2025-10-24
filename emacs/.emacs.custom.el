@@ -113,6 +113,7 @@
 (setq eglot-server-programs
        '((typescript-mode . ("typescript-language-server" "--stdio"))
 	 (python-mode . ("uv" "run" "pylsp"))
+	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
          (js-ts-mode . ("typescript-language-server" "--stdio"))))
 
