@@ -87,14 +87,42 @@
 
 (require 'php-mode)
 (require 'go-mode)
+(require 'svelte-mode)
+(require 'typescript-mode)
 (require 'eglot)
+(require 'prettier-js)
+
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
-(global-set-key (kbd "C-f") #'eglot-format-buffer)
+
+(defvar my-prettier-modes '(typescript-mode tsx-ts-mode js-ts-mode json-mode svelte-mode)
+  "A list of major modes where Prettier should be used for formatting.")
+
+(defun my-eglot-or-prettier-format ()
+  "Format using prettier-js in specified modes, otherwise fall back to Eglot."
+  (interactive)
+  ;; Only proceed if Eglot is active in the buffer
+  (when (eglot-managed-p)
+    (if (memq major-mode my-prettier-modes)
+        ;; Use Prettier if the mode is in the list
+        (prettier-js-prettify)
+      ;; Use Eglot otherwise
+      (eglot-format-buffer))))
+
+(global-set-key (kbd "C-f") #'my-eglot-or-prettier-format)
+
+(setq eglot-server-programs
+       '((typescript-mode . ("typescript-language-server" "--stdio"))
+	 (python-mode . ("uv" "run" "pylsp"))
+	 (tsx-mode . ("typescript-language-server" "--stdio"))
+         (js-ts-mode . ("typescript-language-server" "--stdio"))))
+
+(add-hook 'typescript-mode-hook #'eglot-ensure)
+(add-hook 'tsx-ts-mode-hook #'eglot-ensure)
+(add-hook 'js-ts-mode-hook #'eglot-ensure)
+(add-hook 'svelte-mode-hook 'eglot-ensure)
 (add-hook 'php-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
-(setq eglot-server-programs
-      '((python-mode . ("uv" "run" "pylsp"))))
 
 ;; git
 (require 'magit)
