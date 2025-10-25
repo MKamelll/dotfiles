@@ -73,6 +73,7 @@
   (end-of-line))
 
 (global-set-key (kbd "C-l") 'select-current-line)
+(global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 
 ;; Setting emacs to symlink the compile_commands.json file to the root directory
 ;; if using meson and the build directory is "builddir"
