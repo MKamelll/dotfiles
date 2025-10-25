@@ -32,6 +32,13 @@
 (setq select-enable-primary nil)
 (setq select-enable-clipboard t)
 (setq mouse-drag-copy-region nil)
+(defun my-backward-delete-word (arg)
+  "Delete characters backward until encountering the beginning of a word.
+  With argument ARG, do this that many times."
+  (interactive "p")
+  (delete-region (point) (progn (backward-word arg) (point))))
+
+(global-set-key (kbd "C-<backspace>") 'my-backward-delete-word)
 
 ;; Moving a line up and down
 (defun move-line-up ()
