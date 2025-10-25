@@ -26,7 +26,12 @@
 
 ;; Undo and Redo
 (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-S-z") 'undo-redo)
+(global-set-key (kbd "C-a") 'undo-redo)
+
+;; --- Disable automatic clipboard copying on selection ---
+(setq select-enable-primary nil)
+(setq select-enable-clipboard t)
+(setq mouse-drag-copy-region nil)
 
 ;; Moving a line up and down
 (defun move-line-up ()
@@ -134,3 +139,10 @@
 ;; git
 (require 'magit)
 (global-set-key (kbd "<f5>") 'magit-status)
+
+;; autosave and stuff
+(require 'no-littering)
+(let ((dir (no-littering-expand-var-file-name "lock-files/")))
+  (make-directory dir t)
+  (setq lock-file-name-transforms `((".*" ,dir t))))
+(no-littering-theme-backups)
