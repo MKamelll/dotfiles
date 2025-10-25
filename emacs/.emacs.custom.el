@@ -73,6 +73,8 @@
   (end-of-line))
 
 (global-set-key (kbd "C-l") 'select-current-line)
+
+(require 'multiple-cursors)
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 
 ;; Setting emacs to symlink the compile_commands.json file to the root directory
