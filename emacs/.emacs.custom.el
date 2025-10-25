@@ -92,6 +92,8 @@
 (require 'eglot)
 (require 'prettier-js)
 (require 'php-cs-fixer)
+(require 'dotenv-mode)
+(add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
 
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
 
