@@ -90,6 +90,8 @@
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
+(require 'dotenv-mode)
+(require 'yaml-mode)
 (require 'php-mode)
 (require 'go-mode)
 (require 'svelte-mode)
@@ -123,6 +125,7 @@
 
 (setq eglot-server-programs
        '((typescript-mode . ("typescript-language-server" "--stdio"))
+	 (go-mode . ("gopls" "serve"))
 	 (python-mode . ("uv" "run" "pylsp"))
 	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
