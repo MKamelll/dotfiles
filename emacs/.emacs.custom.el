@@ -29,16 +29,24 @@
 (global-set-key (kbd "C-a") 'undo-redo)
 
 ;; --- Disable automatic clipboard copying on selection ---
-(setq select-enable-primary nil)
-(setq select-enable-clipboard t)
-(setq mouse-drag-copy-region nil)
-(defun my-backward-delete-word (arg)
+(defun backward-delete-word (arg)
   "Delete characters backward until encountering the beginning of a word.
-  With argument ARG, do this that many times."
+Unlike `backward-kill-word', this does not save the deleted text to the kill ring."
   (interactive "p")
   (delete-region (point) (progn (backward-word arg) (point))))
 
-(global-set-key (kbd "C-<backspace>") 'my-backward-delete-word)
+;; Global binding
+(global-set-key (kbd "C-<backspace>") #'backward-delete-word)
+
+;; Also apply in minibuffer and read-only prompts
+(defun my-setup-minibuffer-backspace ()
+  "Make C-Backspace delete word without copying in minibuffers too."
+  (define-key minibuffer-local-map (kbd "C-<backspace>") #'backward-delete-word)
+  (define-key minibuffer-local-ns-map (kbd "C-<backspace>") #'backward-delete-word)
+  (define-key minibuffer-local-completion-map (kbd "C-<backspace>") #'backward-delete-word)
+  (define-key minibuffer-local-must-match-map (kbd "C-<backspace>") #'backward-delete-word))
+
+(add-hook 'minibuffer-setup-hook #'my-setup-minibuffer-backspace)
 
 ;; Moving a line up and down
 (defun move-line-up ()
@@ -97,6 +105,12 @@
 (global-company-mode t)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
+(setq company-backends
+      '((company-capf company-dabbrev-code company-dabbrev company-files)))
+(setq company-dabbrev-downcase nil       ;; keep original case
+      company-dabbrev-other-buffers t    ;; search other buffers too
+      company-dabbrev-code-everywhere t) ;; include comments and strings
+
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
