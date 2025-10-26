@@ -35,16 +35,16 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
   (interactive "p")
   (delete-region (point) (progn (backward-word arg) (point))))
 
-;; Global binding
 (global-set-key (kbd "C-<backspace>") #'backward-delete-word)
 
-;; Also apply in minibuffer and read-only prompts
 (defun my-setup-minibuffer-backspace ()
-  "Make C-Backspace delete word without copying in minibuffers too."
-  (define-key minibuffer-local-map (kbd "C-<backspace>") #'backward-delete-word)
-  (define-key minibuffer-local-ns-map (kbd "C-<backspace>") #'backward-delete-word)
-  (define-key minibuffer-local-completion-map (kbd "C-<backspace>") #'backward-delete-word)
-  (define-key minibuffer-local-must-match-map (kbd "C-<backspace>") #'backward-delete-word))
+  "Make C-Backspace delete word without copying in all minibuffers."
+  (dolist (keymap (list minibuffer-local-map
+                        minibuffer-local-ns-map
+                        minibuffer-local-completion-map
+                        minibuffer-local-must-match-map
+                        minibuffer-local-filename-completion-map))
+    (define-key keymap (kbd "C-<backspace>") #'backward-delete-word)))
 
 (add-hook 'minibuffer-setup-hook #'my-setup-minibuffer-backspace)
 
@@ -105,8 +105,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-company-mode t)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
-(setq company-backends
-      '((company-capf company-dabbrev-code company-dabbrev company-files)))
+(defvar my/company-default-backends
+  '((company-capf company-dabbrev-code company-dabbrev company-files))
+  "Default company backends including LSP (capf) and local buffer completions.")
+(setq company-backends my/company-default-backends)
 (setq company-dabbrev-downcase nil       ;; keep original case
       company-dabbrev-other-buffers t    ;; search other buffers too
       company-dabbrev-code-everywhere t) ;; include comments and strings
@@ -125,6 +127,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'php-cs-fixer)
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (setq-local company-backends my/company-default-backends)))
 
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
 
