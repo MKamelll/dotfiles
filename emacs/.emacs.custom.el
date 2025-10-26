@@ -26,7 +26,7 @@
 
 ;; Undo and Redo
 (global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-a") 'undo-redo)
+(global-set-key (kbd "C-q") 'undo-redo)
 
 ;; --- Disable automatic clipboard copying on selection ---
 (defun backward-delete-word (arg)
@@ -81,6 +81,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
   (end-of-line))
 
 (global-set-key (kbd "C-l") 'select-current-line)
+(global-set-key (kbd "C-/") 'comment-region)
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
