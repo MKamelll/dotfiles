@@ -127,6 +127,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'prettier-js)
 (require 'php-cs-fixer)
 (require 'dotenv-mode)
+(require 'eglot-java)
+
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
 (add-hook 'eglot-managed-mode-hook
           (lambda ()
@@ -156,11 +158,14 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (setq eglot-server-programs
        '((typescript-mode . ("typescript-language-server" "--stdio"))
 	 (go-mode . ("gopls" "serve"))
+	 (java-mode . ("jdtls"))
 	 (python-mode . ("uv" "run" "pylsp"))
 	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
          (js-ts-mode . ("typescript-language-server" "--stdio"))))
 
+(add-hook 'java-mode-hook #'eglot-ensure)
+(add-hook 'eglot-managed-mode-hook #'eglot-java-mode)
 (add-hook 'typescript-mode-hook #'eglot-ensure)
 (add-hook 'tsx-ts-mode-hook #'eglot-ensure)
 (add-hook 'js-ts-mode-hook #'eglot-ensure)
