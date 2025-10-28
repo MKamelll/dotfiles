@@ -5,6 +5,10 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+;; use spaces for everything
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
@@ -155,10 +159,19 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (global-set-key (kbd "C-f") #'my-eglot-or-other-format)
 
+(setq eglot-workspace-configuration
+      '(:java (:format (:enabled t
+               :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+                               :profile "GoogleStyle")))))
+
 (setq eglot-server-programs
        '((typescript-mode . ("typescript-language-server" "--stdio"))
 	 (go-mode . ("gopls" "serve"))
-	 (java-mode . ("jdtls"))
+	 (java-mode . ("jdtls"
+         "-data" "/home/ice/.cache/jdtls-workspace"
+         "--add-modules=ALL-SYSTEM"
+         "--add-opens" "java.base/java.util=ALL-UNNAMED"
+         "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
 	 (python-mode . ("uv" "run" "pylsp"))
 	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
