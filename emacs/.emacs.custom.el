@@ -88,7 +88,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-set-key (kbd "C-/") 'comment-region)
 
 (require 'multiple-cursors)
-(global-set-key (kbd "C-d") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-]") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-[") 'mc/mark-previous-like-this)
 
 ;; Setting emacs to symlink the compile_commands.json file to the root directory
 ;; if using meson and the build directory is "builddir"
