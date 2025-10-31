@@ -119,7 +119,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
-(require 'dotenv-mode)
 (require 'yaml-mode)
 (require 'php-mode)
 (require 'go-mode)
