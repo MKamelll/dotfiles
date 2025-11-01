@@ -188,6 +188,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'string-inflection)
 (global-set-key (kbd "<f12>") 'string-inflection-all-cycle)
 
+;; spell checking
+(global-set-key (kbd "<f11>") #'ispell-word)
+
 ;; git
 (require 'magit)
 (global-set-key (kbd "<f5>") 'magit-status)
