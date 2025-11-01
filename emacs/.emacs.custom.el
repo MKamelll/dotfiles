@@ -184,6 +184,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
 
+;; change string casing
+(require 'string-inflection)
+(global-set-key (kbd "<f12>") 'string-inflection-all-cycle)
+
 ;; git
 (require 'magit)
 (global-set-key (kbd "<f5>") 'magit-status)
