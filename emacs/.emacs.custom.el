@@ -129,6 +129,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'php-cs-fixer)
 (require 'dotenv-mode)
 (require 'eglot-java)
+(require 'ruby-mode)
 
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
 (add-hook 'eglot-managed-mode-hook
@@ -169,20 +170,23 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
          "--add-modules=ALL-SYSTEM"
          "--add-opens" "java.base/java.util=ALL-UNNAMED"
          "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
+     ((ruby-mode ruby-ts-mode) . ("solargraph" "stdio"))
 	 (python-mode . ("uv" "run" "pylsp"))
 	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
          (js-ts-mode . ("typescript-language-server" "--stdio"))))
 
-(add-hook 'java-mode-hook #'eglot-ensure)
-(add-hook 'eglot-managed-mode-hook #'eglot-java-mode)
-(add-hook 'typescript-mode-hook #'eglot-ensure)
-(add-hook 'tsx-ts-mode-hook #'eglot-ensure)
-(add-hook 'js-ts-mode-hook #'eglot-ensure)
+(add-hook 'java-mode-hook 'eglot-ensure)
+(add-hook 'eglot-managed-mode-hook 'eglot-java-mode)
+(add-hook 'typescript-mode-hook 'eglot-ensure)
+(add-hook 'tsx-ts-mode-hook 'eglot-ensure)
+(add-hook 'js-ts-mode-hook 'eglot-ensure)
 (add-hook 'svelte-mode-hook 'eglot-ensure)
 (add-hook 'php-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
+(add-hook 'ruby-mode 'eglot-ensure)
+(add-hook 'ruby-ts-mode 'eglot-ensure)
 
 ;; change string casing
 (require 'string-inflection)
