@@ -170,7 +170,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
          "--add-modules=ALL-SYSTEM"
          "--add-opens" "java.base/java.util=ALL-UNNAMED"
          "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
-     ((ruby-mode ruby-ts-mode) . ("solargraph" "stdio"))
+     (ruby-mode . ("solargraph" "stdio"))
+     (ruby-ts-mode . ("solargraph" "stdio"))
 	 (python-mode . ("uv" "run" "pylsp"))
 	 (php-mode . ("phpactor" "language-server"))
 	 (tsx-mode . ("typescript-language-server" "--stdio"))
