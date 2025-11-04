@@ -130,6 +130,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'yaml-mode)
 (require 'php-mode)
 (require 'go-mode)
+(require 'go-ts-mode)
 (require 'svelte-mode)
 (require 'typescript-mode)
 (require 'eglot)
@@ -137,6 +138,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'php-cs-fixer)
 (require 'eglot-java)
 (require 'ruby-mode)
+(require 'html-ts-mode)
 
 ;; dot-env
 (require 'dotenv-mode)
@@ -171,22 +173,19 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(:java (:format (:enabled t
                :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
                                :profile "GoogleStyle")))))
-
 (setq eglot-server-programs
-       '((typescript-mode . ("typescript-language-server" "--stdio"))
-	 (go-mode . ("gopls" "serve"))
-	 (java-mode . ("jdtls"
-         "-data" "/home/ice/.cache/jdtls-workspace"
-         "--add-modules=ALL-SYSTEM"
-         "--add-opens" "java.base/java.util=ALL-UNNAMED"
-         "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
-     (templ-ts-mode . ("templ" "lsp"))
-     (ruby-mode . ("ruby-lsp"))
-     (ruby-ts-mode . ("ruby-lsp"))
-	 (python-mode . ("uv" "run" "pylsp"))
-	 (php-mode . ("phpactor" "language-server"))
-	 (tsx-mode . ("typescript-language-server" "--stdio"))
-         (js-ts-mode . ("typescript-language-server" "--stdio"))))
+      '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
+        ((go-mode go-ts-mode) . ("gopls" "serve"))
+        (java-mode . ("jdtls"
+                      "-data" "/home/ice/.cache/jdtls-workspace"
+                      "--add-modules=ALL-SYSTEM"
+                      "--add-opens" "java.base/java.util=ALL-UNNAMED"
+                      "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
+        ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
+        (templ-ts-mode . ("templ" "lsp"))
+        ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
+        (python-mode . ("uv" "run" "pylsp"))
+        (php-mode . ("phpactor" "language-server"))))
 
 (add-hook 'java-mode-hook 'eglot-ensure)
 (add-hook 'eglot-managed-mode-hook 'eglot-java-mode)
@@ -196,10 +195,13 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'svelte-mode-hook 'eglot-ensure)
 (add-hook 'php-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
+(add-hook 'go-ts-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
 (add-hook 'ruby-mode-hook 'eglot-ensure)
 (add-hook 'ruby-ts-mode-hook 'eglot-ensure)
 (add-hook 'templ-ts-mode-hook 'eglot-ensure)
+(add-hook 'html-mode-hook 'eglot-ensure)
+(add-hook 'html-ts-mode-hook 'eglot-ensure)
 
 ;; change string casing
 (require 'string-inflection)
