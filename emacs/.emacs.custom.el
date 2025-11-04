@@ -119,6 +119,14 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
+;; tree-sitter
+(setq treesit-font-lock-level 4)
+(setq treesit-auto-install 'prompt)
+
+;; templ golang
+(require 'templ-ts-mode)
+(add-to-list 'auto-mode-alist '("\\.templ\\'" . templ-ts-mode))
+
 (require 'yaml-mode)
 (require 'php-mode)
 (require 'go-mode)
@@ -127,11 +135,13 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'eglot)
 (require 'prettier-js)
 (require 'php-cs-fixer)
-(require 'dotenv-mode)
 (require 'eglot-java)
 (require 'ruby-mode)
 
+;; dot-env
+(require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
+
 (add-hook 'eglot-managed-mode-hook
           (lambda ()
             (setq-local company-backends my/company-default-backends)))
@@ -170,6 +180,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
          "--add-modules=ALL-SYSTEM"
          "--add-opens" "java.base/java.util=ALL-UNNAMED"
          "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
+     (templ-ts-mode . ("templ" "lsp"))
      (ruby-mode . ("ruby-lsp"))
      (ruby-ts-mode . ("ruby-lsp"))
 	 (python-mode . ("uv" "run" "pylsp"))
@@ -186,8 +197,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'php-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'python-mode-hook 'eglot-ensure)
-(add-hook 'ruby-mode 'eglot-ensure)
-(add-hook 'ruby-ts-mode 'eglot-ensure)
+(add-hook 'ruby-mode-hook 'eglot-ensure)
+(add-hook 'ruby-ts-mode-hook 'eglot-ensure)
+(add-hook 'templ-ts-mode-hook 'eglot-ensure)
 
 ;; change string casing
 (require 'string-inflection)
