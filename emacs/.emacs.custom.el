@@ -187,6 +187,14 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("uv" "run" "pylsp"))
         (php-mode . ("phpactor" "language-server"))))
 
+(defun my/eglot-find-type-definition-other-window ()
+  (interactive)
+  ;; run the command but don't change current window
+  (save-selected-window
+    (eglot-find-typeDefinition)))
+
+(global-set-key (kbd "<f9>") #'my/eglot-find-type-definition-other-window)
+
 ;; change string casing
 (require 'string-inflection)
 (global-set-key (kbd "<f12>") 'string-inflection-all-cycle)
