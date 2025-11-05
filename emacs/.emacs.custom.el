@@ -187,22 +187,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("uv" "run" "pylsp"))
         (php-mode . ("phpactor" "language-server"))))
 
-(add-hook 'java-mode-hook 'eglot-ensure)
-(add-hook 'eglot-managed-mode-hook 'eglot-java-mode)
-(add-hook 'typescript-mode-hook 'eglot-ensure)
-(add-hook 'tsx-ts-mode-hook 'eglot-ensure)
-(add-hook 'js-ts-mode-hook 'eglot-ensure)
-(add-hook 'svelte-mode-hook 'eglot-ensure)
-(add-hook 'php-mode-hook 'eglot-ensure)
-(add-hook 'go-mode-hook 'eglot-ensure)
-(add-hook 'go-ts-mode-hook 'eglot-ensure)
-(add-hook 'python-mode-hook 'eglot-ensure)
-(add-hook 'ruby-mode-hook 'eglot-ensure)
-(add-hook 'ruby-ts-mode-hook 'eglot-ensure)
-(add-hook 'templ-ts-mode-hook 'eglot-ensure)
-(add-hook 'html-mode-hook 'eglot-ensure)
-(add-hook 'html-ts-mode-hook 'eglot-ensure)
-
 ;; change string casing
 (require 'string-inflection)
 (global-set-key (kbd "<f12>") 'string-inflection-all-cycle)
