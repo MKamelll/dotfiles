@@ -131,7 +131,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'php-mode)
 (require 'go-mode)
 (require 'go-ts-mode)
+
+;; svelte
 (require 'svelte-mode)
+(add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
+
 (require 'typescript-mode)
 (require 'eglot)
 (require 'prettier-js)
@@ -181,6 +185,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
                       "--add-modules=ALL-SYSTEM"
                       "--add-opens" "java.base/java.util=ALL-UNNAMED"
                       "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
+        (svelte-mode . ("svelteserver" "--stdio"))
         ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
         (templ-ts-mode . ("templ" "lsp"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
