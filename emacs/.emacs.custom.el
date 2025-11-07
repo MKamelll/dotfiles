@@ -8,6 +8,7 @@
 ;; use spaces for everything
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq-default typescript-indent-level 4)
 
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
@@ -136,6 +137,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'svelte-mode)
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
 
+;; typescript
 (require 'typescript-mode)
 (require 'eglot)
 (require 'prettier-js)
