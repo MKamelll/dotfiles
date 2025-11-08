@@ -9,6 +9,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default typescript-indent-level 4)
+(setq-default python-indent-offset 4)
 
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
