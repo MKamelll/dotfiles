@@ -150,6 +150,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'ruby-mode)
 (require 'html-ts-mode)
 
+;; ocaml
+(require 'tuareg)
+(add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
+(require 'ocp-indent)
+
 ;; dot-env
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
@@ -198,6 +203,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (templ-ts-mode . ("templ" "lsp"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (python-mode . ("uv" "run" "pylsp"))
+        (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
