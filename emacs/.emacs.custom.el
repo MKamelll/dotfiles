@@ -132,6 +132,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'templ-ts-mode)
 (add-to-list 'auto-mode-alist '("\\.templ\\'" . templ-ts-mode))
 
+;; dune for ocaml
+(require 'dune)
+
 (require 'yaml-mode)
 (require 'php-mode)
 (require 'go-mode)
