@@ -139,6 +139,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'php-mode)
 (require 'go-mode)
 (require 'go-ts-mode)
+(require 'elixir-mode)
 
 ;; svelte
 (require 'svelte-mode)
@@ -207,6 +208,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (templ-ts-mode . ("templ" "lsp"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (python-mode . ("uv" "run" "pylsp"))
+        (elixir-mode . ("elixir-ls"))
         (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
 
