@@ -154,6 +154,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'ruby-mode)
 (require 'html-ts-mode)
 
+;; blazor
+(add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
+(add-to-list 'auto-mode-alist '("\\.razor?\\'" . csharp-mode))
+
 ;; ocaml
 (require 'tuareg)
 (add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
@@ -206,6 +210,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (svelte-mode . ("svelteserver" "--stdio"))
         ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
         (templ-ts-mode . ("templ" "lsp"))
+        (csharp-mode . ("OmniSharp" "-lsp"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
