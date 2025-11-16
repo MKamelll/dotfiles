@@ -9,6 +9,7 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default typescript-indent-level 4)
+(setq-default fsharp-indent-offset 2)
 
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
