@@ -153,6 +153,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'eglot-java)
 (require 'ruby-mode)
 (require 'html-ts-mode)
+(require 'fsharp-mode)
+(require 'eglot-fsharp)
+(setq eglot-fsharp-server-install-dir nil)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
@@ -216,6 +219,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
         (tuareg-mode . ("ocamllsp" "--stdio"))
+        (fsharp-mode . ("fsautocomplete"))
         (php-mode . ("phpactor" "language-server"))))
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
