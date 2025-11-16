@@ -6,6 +6,8 @@
 (package-initialize)
 
 ;; use spaces for everything
+(electric-indent-mode 1)
+(electric-pair-mode 1)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default typescript-indent-level 4)
