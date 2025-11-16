@@ -154,8 +154,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'ruby-mode)
 (require 'html-ts-mode)
 (require 'fsharp-mode)
-(require 'eglot-fsharp)
-(setq eglot-fsharp-server-install-dir nil)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
