@@ -217,10 +217,12 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
         (tuareg-mode . ("ocamllsp" "--stdio"))
-        (fsharp-mode . ("fsautocomplete"))
         (php-mode . ("phpactor" "language-server"))))
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
+
+;; setup eglot for f#
+(require 'eglot-fsharp)
 
 ;; change string casing
 (require 'string-inflection)
