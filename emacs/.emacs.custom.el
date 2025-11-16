@@ -180,6 +180,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (global-set-key (kbd "C-S-a") #'align)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(global-set-key (kbd "<f10>") 'eglot-code-action-quickfix)
 
 (defun my-eglot-or-other-format ()
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise Eglot."
