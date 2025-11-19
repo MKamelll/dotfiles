@@ -31,6 +31,15 @@
 (global-set-key (kbd "C-S-x") 'kill-region)
 (global-set-key (kbd "C-S-s") 'save-buffer)
 
+;; Delete region with Backspace (and Shift+Backspace)
+(defun my-backspace-or-delete-region ()
+  (interactive)
+  (if (use-region-p)
+      (delete-region (region-beginning) (region-end))
+    (call-interactively 'delete-backward-char)))
+
+(global-set-key (kbd "<backspace>") #'my-backspace-or-delete-region)
+
 ;; Undo and Redo
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-q") 'undo-redo)
