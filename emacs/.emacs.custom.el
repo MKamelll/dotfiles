@@ -7,6 +7,7 @@
 
 ;; use spaces for everything
 (electric-indent-mode 1)
+(delete-selection-mode t)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default typescript-indent-level 4)
