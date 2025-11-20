@@ -257,3 +257,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'multiple-cursors)
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
+
+;; compile
+(global-set-key (kbd "C-`") 'compile)
