@@ -162,7 +162,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'eglot)
 (require 'prettier-js)
 (require 'php-cs-fixer)
-(require 'eglot-java)
 (require 'ruby-mode)
 (require 'html-ts-mode)
 (require 'fsharp-mode)
