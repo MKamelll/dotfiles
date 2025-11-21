@@ -10,6 +10,7 @@
 (delete-selection-mode t)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+(setq-default svelte-basic-offset 4)
 (setq-default typescript-indent-level 4)
 (setq-default fsharp-indent-offset 2)
 
