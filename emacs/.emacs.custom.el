@@ -158,7 +158,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'svelte-mode)
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
 
-;; typescript
 (require 'typescript-mode)
 (require 'eglot)
 (require 'prettier-js)
@@ -166,6 +165,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'ruby-mode)
 (require 'html-ts-mode)
 (require 'fsharp-mode)
+(require 'crystal-mode)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
@@ -226,6 +226,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
+        (crystal-mode . ("crystalline"))
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
         (tuareg-mode . ("ocamllsp" "--stdio"))
