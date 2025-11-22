@@ -168,10 +168,12 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
-(require 'scala-mode)
-(require 'sbt-mode)
 (require 'eglot-java)
 (require 'groovy-mode)
+
+;; scala-ts-mode
+(require 'scala-ts-mode)
+(require 'sbt-mode)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
@@ -227,7 +229,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
-        ((scala-mode sbt-mode) . ("metals"))
+        ((sbt-mode scala-ts-mode) . ("metals"))
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
