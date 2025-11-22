@@ -199,7 +199,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (defvar my-php-cs-fixer-modes '(php-mode))
 
-(global-set-key (kbd "C-S-a") #'align)
+(global-set-key (kbd "C-S-a") #'align-regexp)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-set-key (kbd "<f10>") 'eglot-code-action-quickfix)
 
