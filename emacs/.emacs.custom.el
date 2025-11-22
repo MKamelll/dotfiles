@@ -160,6 +160,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (require 'typescript-mode)
 (require 'eglot)
+(setq eglot-connect-timeout 60)
+
 (require 'prettier-js)
 (require 'php-cs-fixer)
 (require 'ruby-mode)
