@@ -166,6 +166,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
+(require 'scala-mode)
+(require 'sbt-mode)
+(require 'eglot-java)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
@@ -213,18 +216,15 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(:java (:format (:enabled t
                :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
                                :profile "GoogleStyle")))))
+
 (setq eglot-server-programs
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
-        (java-mode . ("jdtls"
-                      "-data" "/home/ice/.cache/jdtls-workspace"
-                      "--add-modules=ALL-SYSTEM"
-                      "--add-opens" "java.base/java.util=ALL-UNNAMED"
-                      "--add-opens" "java.base/java.lang=ALL-UNNAMED"))
         (svelte-mode . ("svelteserver" "--stdio"))
         ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
+        (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
         (python-mode . ("uv" "run" "pylsp"))
