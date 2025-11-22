@@ -169,6 +169,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'scala-mode)
 (require 'sbt-mode)
 (require 'eglot-java)
+(require 'groovy-mode)
 
 ;; blazor
 (add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
