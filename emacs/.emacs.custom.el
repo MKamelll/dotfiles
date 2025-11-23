@@ -247,6 +247,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-set-key (kbd "C-<return>") 'compile)
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+(setq compilation-scroll-output t)
+(setq compilation-max-output-line-length nil)
 
 ;; setup eglot for f#
 (require 'eglot-fsharp)
