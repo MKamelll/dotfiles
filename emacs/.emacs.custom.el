@@ -252,7 +252,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 ;; git
 (require 'magit)
-(global-set-key (kbd "<f5>") 'magit-status)
+(setq magit-display-buffer-noselect t)
 
 ;; autosave and stuff
 (require 'no-littering)
