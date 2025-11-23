@@ -244,7 +244,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 ;; compile stuff
 (require 'compile)
-(global-set-key (kbd "<f5>") 'compile)
+(global-set-key (kbd "C-<return>") 'compile)
 (require 'ansi-color)
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
