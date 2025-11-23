@@ -168,6 +168,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
+
+;; java
 (require 'eglot-java)
 (require 'groovy-mode)
 
@@ -239,6 +241,12 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (php-mode . ("phpactor" "language-server"))))
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
+
+;; compile stuff
+(require 'compile)
+(global-set-key (kbd "<f5>") 'compile)
+(require 'ansi-color)
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 ;; setup eglot for f#
 (require 'eglot-fsharp)
