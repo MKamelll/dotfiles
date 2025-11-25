@@ -195,9 +195,12 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
+(define-derived-mode django-web-mode web-mode "django-web"
+  "Web-mode for Django templates.")
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
+
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
-        ("django" . "\\.djhtml\\'")
         ("blade"  . "\\.blade\\.")))
 
 (setq web-mode-attr-indent-offset 2)
@@ -265,6 +268,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
+        (django-web-mode . ("djls" "serve"))
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
