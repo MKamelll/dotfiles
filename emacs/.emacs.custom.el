@@ -186,9 +186,16 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
   :major-modes '(python-mode)
   :server-id 'uv-pylsp))
 
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection '("djls" "serve"))
+  :major-modes '(django-web-mode)
+  :server-id 'djls))
+
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'web-mode-hook #'lsp-deferred)
 (add-hook 'python-mode-hook #'lsp-deferred)
+(add-hook 'django-web-mode-hook #'lsp-deferred)
 
 ;; svelte
 (require 'svelte-mode)
@@ -225,11 +232,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-(setq web-mode-engines-alist
-      '(("php"    . "\\.phtml\\'")
-        ("blade"  . "\\.blade\\."))
-)
 (setq web-mode-attr-indent-offset 2)
 
 ;; use C-j to complete emmet
