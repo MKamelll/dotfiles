@@ -198,11 +198,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (define-derived-mode django-web-mode web-mode "django-web"
   "Web-mode for Django templates.")
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
-
-(setq web-mode-engines-alist
-      '(("php"    . "\\.phtml\\'")
-        ("blade"  . "\\.blade\\.")))
-
 (setq web-mode-attr-indent-offset 2)
 
 ;; use C-j to complete emmet
@@ -210,6 +205,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode)
+(add-hook 'django-web-mode 'emmet-mode)
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
 
