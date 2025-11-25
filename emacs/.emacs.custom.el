@@ -154,23 +154,44 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'go-ts-mode)
 (require 'elixir-mode)
 
+;; lsp-mode
+(require 'lsp-mode)
+(require 'lsp-ui)
+(require 'lsp-treemacs)
+(require 'helm-lsp)
+(require 'lsp-ivy)
+(require 'dap-mode)
+
+(add-to-list 'lsp-language-id-configuration
+             '(web-mode . "html"))
+
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
+  :major-modes '(web-mode)
+  :server-id 'html-ls))
+
+(lsp-register-client
+ (make-lsp-client
+  :new-connection (lsp-stdio-connection '("uv" "run" "pylsp"))
+  :major-modes '(python-mode)
+  :server-id 'uv-pylsp))
+
+(add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'web-mode-hook #'lsp-deferred)
+(add-hook 'python-mode-hook #'lsp-deferred)
+
 ;; svelte
 (require 'svelte-mode)
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
 
 (require 'typescript-mode)
-(require 'eglot)
-(setq eglot-connect-timeout 60)
-
 (require 'prettier-js)
 (require 'php-cs-fixer)
 (require 'ruby-mode)
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
-
-;; java
-(require 'eglot-java)
 (require 'groovy-mode)
 
 ;; scala-ts-mode
@@ -186,11 +207,43 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
 (require 'ocp-indent)
 
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(setq web-mode-engines-alist
+      '(("php"    . "\\.phtml\\'")
+        ("django" . "\\.djhtml\\'")
+        ("blade"  . "\\.blade\\."))
+)
+(setq web-mode-attr-indent-offset 2)
+(setq web-mode-enable-auto-closing t)
+(setq web-mode-enable-auto-pairing t)
+
+;; use C-j to complete emmet
+(require 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook  'emmet-mode)
+(add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
+(add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
+
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(yas-global-mode 1)
+
 ;; dot-env
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
 
-(add-hook 'eglot-managed-mode-hook
+(add-hook 'lsp-managed-mode-hook
           (lambda ()
             (setq-local company-backends my/company-default-backends)))
 
@@ -203,42 +256,21 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (global-set-key (kbd "C-S-a") #'align-regexp)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(global-set-key (kbd "<f10>") 'eglot-code-action-quickfix)
+(global-set-key (kbd "<f10>") 'lsp-execute-code-action)
 
-(defun my-eglot-or-other-format ()
-  "Format using prettier-js or php-cs-fixer depending on mode, otherwise Eglot."
+(defun my-lsp-or-other-format ()
+  "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
   (interactive)
-  (when (eglot-managed-p)
+  (when (lsp-buffer-live-p)
     (cond
      ((memq major-mode my-prettier-modes)
       (prettier-js-prettify))
      ((memq major-mode my-php-cs-fixer-modes)
       (php-cs-fixer-fix))
      (t
-      (eglot-format-buffer)))))
+      (lsp-format-buffer)))))
 
-(global-set-key (kbd "C-f") #'my-eglot-or-other-format)
-
-(setq eglot-workspace-configuration
-      '(:java (:format (:enabled t
-               :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
-                               :profile "GoogleStyle")))))
-
-(setq eglot-server-programs
-      '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
-        ((go-mode go-ts-mode) . ("gopls" "serve"))
-        (svelte-mode . ("svelteserver" "--stdio"))
-        ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
-        (templ-ts-mode . ("templ" "lsp"))
-        (csharp-mode . ("OmniSharp" "-lsp"))
-        ((sbt-mode scala-ts-mode) . ("metals"))
-        (java-mode . ("jdtls"))
-        ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
-        (crystal-mode . ("crystalline"))
-        (python-mode . ("uv" "run" "pylsp"))
-        (elixir-mode . ("elixir-ls"))
-        (tuareg-mode . ("ocamllsp" "--stdio"))
-        (php-mode . ("phpactor" "language-server"))))
+(global-set-key (kbd "C-f") #'my-lsp-or-other-format)
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
 
@@ -249,9 +281,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 (setq compilation-scroll-output t)
 (setq compilation-max-output-line-length nil)
-
-;; setup eglot for f#
-(require 'eglot-fsharp)
 
 ;; change string casing
 (require 'string-inflection)
@@ -275,6 +304,3 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'multiple-cursors)
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
-
-;; compile
-(global-set-key (kbd "C-`") 'compile)
