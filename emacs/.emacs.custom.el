@@ -161,9 +161,18 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'helm-lsp)
 (require 'lsp-ivy)
 (require 'dap-mode)
+(setq lsp-enable-suggest-server-download nil)
 
 (add-to-list 'lsp-language-id-configuration
              '(web-mode . "html"))
+
+(define-derived-mode django-web-mode web-mode "django-web"
+  "Web-mode for Django templates.")
+
+(add-to-list 'lsp-language-id-configuration
+             '(django-web-mode . "html"))
+
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
 
 (lsp-register-client
  (make-lsp-client
@@ -215,17 +224,13 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
 (setq web-mode-engines-alist
       '(("php"    . "\\.phtml\\'")
-        ("django" . "\\.djhtml\\'")
         ("blade"  . "\\.blade\\."))
 )
 (setq web-mode-attr-indent-offset 2)
-(setq web-mode-enable-auto-closing t)
-(setq web-mode-enable-auto-pairing t)
 
 ;; use C-j to complete emmet
 (require 'emmet-mode)
@@ -258,17 +263,20 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-set-key (kbd "<f10>") 'lsp-execute-code-action)
 
+(require 'reformatter)
+(reformatter-define djlint-format
+  :program "djlint"
+  :args '("--reformat" "-")
+  :lighter " DJ")
+
 (defun my-lsp-or-other-format ()
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
   (interactive)
-  (when (lsp-buffer-live-p)
     (cond
-     ((memq major-mode my-prettier-modes)
-      (prettier-js-prettify))
-     ((memq major-mode my-php-cs-fixer-modes)
-      (php-cs-fixer-fix))
-     (t
-      (lsp-format-buffer)))))
+     ((memq major-mode my-prettier-modes) (prettier-js-prettify))
+     ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
+     ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
+     ((lsp-buffer-live-p (current-buffer)) (lsp-format-buffer))))
 
 (global-set-key (kbd "C-f") #'my-lsp-or-other-format)
 
