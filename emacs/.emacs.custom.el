@@ -153,49 +153,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'go-mode)
 (require 'go-ts-mode)
 (require 'elixir-mode)
-
-;; lsp-mode
-(require 'lsp-mode)
-(require 'lsp-ui)
-(require 'lsp-treemacs)
-(require 'helm-lsp)
-(require 'lsp-ivy)
-(require 'dap-mode)
-(setq lsp-enable-suggest-server-download nil)
-
-(add-to-list 'lsp-language-id-configuration
-             '(web-mode . "html"))
-
-(define-derived-mode django-web-mode web-mode "django-web"
-  "Web-mode for Django templates.")
-
-(add-to-list 'lsp-language-id-configuration
-             '(django-web-mode . "html"))
-
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
-
-(lsp-register-client
- (make-lsp-client
-  :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
-  :major-modes '(web-mode)
-  :server-id 'html-ls))
-
-(lsp-register-client
- (make-lsp-client
-  :new-connection (lsp-stdio-connection '("uv" "run" "pylsp"))
-  :major-modes '(python-mode)
-  :server-id 'uv-pylsp))
-
-(lsp-register-client
- (make-lsp-client
-  :new-connection (lsp-stdio-connection '("djls" "serve"))
-  :major-modes '(django-web-mode)
-  :server-id 'djls))
-
-(add-hook 'go-mode-hook #'lsp-deferred)
-(add-hook 'web-mode-hook #'lsp-deferred)
-(add-hook 'python-mode-hook #'lsp-deferred)
-(add-hook 'django-web-mode-hook #'lsp-deferred)
+(require 'eglot)
+(setq eglot-connect-timeout 60)
 
 ;; svelte
 (require 'svelte-mode)
@@ -208,6 +167,9 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
+
+;; java
+(require 'eglot-java)
 (require 'groovy-mode)
 
 ;; scala-ts-mode
@@ -232,6 +194,12 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(setq web-mode-engines-alist
+      '(("php"    . "\\.phtml\\'")
+        ("django" . "\\.djhtml\\'")
+        ("blade"  . "\\.blade\\.")))
+
 (setq web-mode-attr-indent-offset 2)
 
 ;; use C-j to complete emmet
@@ -250,7 +218,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
 
-(add-hook 'lsp-managed-mode-hook
+(add-hook 'eglot-managed-mode-hook
           (lambda ()
             (setq-local company-backends my/company-default-backends)))
 
@@ -263,7 +231,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (global-set-key (kbd "C-S-a") #'align-regexp)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(global-set-key (kbd "<f10>") 'lsp-execute-code-action)
+(global-set-key (kbd "<f10>") 'eglot-code-action-quickfix)
 
 (require 'reformatter)
 (reformatter-define djlint-format
@@ -271,18 +239,42 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
   :args '("--reformat" "-")
   :lighter " DJ")
 
-(defun my-lsp-or-other-format ()
-  "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
+(defun my-eglot-or-other-format ()
+  "Format using prettier-js or php-cs-fixer depending on mode, otherwise eglot."
   (interactive)
     (cond
      ((memq major-mode my-prettier-modes) (prettier-js-prettify))
      ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
      ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
-     ((lsp-buffer-live-p (current-buffer)) (lsp-format-buffer))))
+     ((eglot-managed-p) (eglot-format-buffer))))
 
-(global-set-key (kbd "C-f") #'my-lsp-or-other-format)
+(global-set-key (kbd "C-f") #'my-eglot-or-other-format)
 
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
+
+(setq eglot-workspace-configuration
+      '(:java (:format (:enabled t
+               :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
+                               :profile "GoogleStyle")))))
+
+(setq eglot-server-programs
+      '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
+        ((go-mode go-ts-mode) . ("gopls" "serve"))
+        (svelte-mode . ("svelteserver" "--stdio"))
+        ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
+        (templ-ts-mode . ("templ" "lsp"))
+        (csharp-mode . ("OmniSharp" "-lsp"))
+        ((sbt-mode scala-ts-mode) . ("metals"))
+        (java-mode . ("jdtls"))
+        ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
+        (crystal-mode . ("crystalline"))
+        (python-mode . ("uv" "run" "pylsp"))
+        (elixir-mode . ("elixir-ls"))
+        (tuareg-mode . ("ocamllsp" "--stdio"))
+        (php-mode . ("phpactor" "language-server"))))
+
+;; setup eglot for f#
+(require 'eglot-fsharp)
 
 ;; compile stuff
 (require 'compile)
