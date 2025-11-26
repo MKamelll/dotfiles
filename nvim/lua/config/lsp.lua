@@ -10,6 +10,11 @@ vim.lsp.config("emmet_ls", {
 })
 vim.lsp.enable("emmet_ls")
 
+vim.lsp.config("djls", {
+    capabilities = capabilities
+})
+vim.lsp.enable("djls")
+
 vim.lsp.config("ts_ls", {
     capabilities = capabilities
 })
