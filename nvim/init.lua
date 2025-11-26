@@ -1,0 +1,6 @@
+require("config.lazy")
+require("config.lsp")
+require("config.general")
+require("config.treesitter")
+require("config.comment")
+require("config.nvim-cmp")
