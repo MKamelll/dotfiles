@@ -28,3 +28,5 @@ vim.filetype.add({
 		djhtml = "htmldjango",
 	},
 })
+
+vim.keymap.set("n", "fs", ":Ex<CR>", { desc = "Opens directory structure" })
