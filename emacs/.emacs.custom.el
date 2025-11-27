@@ -5,9 +5,24 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-;; use spaces for everything
+;; global stuff
 (electric-indent-mode 1)
 (delete-selection-mode t)
+(ido-mode 1)
+(ido-everywhere 1)
+
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+
+(require 'ido-completing-read+)
+(ido-ubiquitous-mode 1)
+
+(require 'amx)
+(amx-mode 1)
+
+;; use spaces for everything
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default svelte-basic-offset 4)
@@ -209,10 +224,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
 (add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
 
-(require 'yasnippet)
-(require 'yasnippet-snippets)
-(yas-global-mode 1)
-
 ;; dot-env
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
@@ -260,11 +271,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
         (svelte-mode . ("svelteserver" "--stdio"))
-        ((html-mode html-ts-mode) . ("vscode-html-language-server" "--stdio"))
+        ((html-mode html-ts-mode django-web-mode) . ("vscode-html-language-server" "--stdio"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
-        (django-web-mode . ("djls" "serve"))
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
