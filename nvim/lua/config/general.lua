@@ -5,6 +5,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.o.clipboard = "unnamedplus"
+vim.o.hlsearch = false
 
 -- move lines
 vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==")

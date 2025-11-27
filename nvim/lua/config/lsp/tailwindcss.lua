@@ -1,7 +1,9 @@
 local util = require("lspconfig.util")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 vim.lsp.config("tailwindcss", {
 	cmd = { "tailwindcss-language-server", "--stdio" },
 	-- filetypes copied and adjusted from tailwindcss-intellisense
+	capabilities = capabilities,
 	filetypes = {
 		-- html
 		"aspnetcorerazor",
@@ -57,13 +59,6 @@ vim.lsp.config("tailwindcss", {
 		"vue",
 		"svelte",
 		"templ",
-	},
-	capabilities = {
-		workspace = {
-			didChangeWatchedFiles = {
-				dynamicRegistration = true,
-			},
-		},
 	},
 	settings = {
 		tailwindCSS = {
