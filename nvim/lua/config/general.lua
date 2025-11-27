@@ -30,3 +30,12 @@ vim.filetype.add({
 })
 
 vim.keymap.set("n", "fs", ":Ex<CR>", { desc = "Opens directory structure" })
+
+-- navigation
+vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Buffer next" })
+vim.keymap.set("n", "bp", ":bprevious<CR>", { desc = "Buffer previous" })
+vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Buffer delete" })
+
+vim.keymap.set("n", "tn", ":tabnext<CR>", { desc = "Tab next" })
+vim.keymap.set("n", "tp", ":tabprevious<CR>", { desc = "Tab previous" })
+vim.keymap.set("n", "td", ":tabclose<CR>", { desc = "Tab close" })
