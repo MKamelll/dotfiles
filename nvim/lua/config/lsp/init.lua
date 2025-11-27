@@ -1,0 +1,6 @@
+require("lsp.djls")
+require("lsp.emmet_ls")
+require("lsp.lua_ls")
+require("lsp.pylsp")
+require("lsp.tailwindcss")
+require("lsp.ts_ls")
