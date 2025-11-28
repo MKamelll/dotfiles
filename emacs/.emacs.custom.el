@@ -81,22 +81,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (add-hook 'minibuffer-setup-hook #'my-setup-minibuffer-backspace)
 
-;; Moving a line up and down
-(defun move-line-up ()
-  "Move current line up by one."
-  (interactive)
-  (transpose-lines 1)
-  (forward-line -2))
-
-(defun move-line-down ()
-  "Move current line down by one."
-  (interactive)
-  (forward-line 1)
-  (transpose-lines 1)
-  (forward-line -1))
-
-(global-set-key (kbd "M-<up>") 'move-line-up)
-(global-set-key (kbd "M-<down>") 'move-line-down)
+;; move region or line up and down with alt and arrows
+(require 'drag-stuff)
+(drag-stuff-global-mode 1)
+(global-set-key (kbd "M-<up>") 'drag-stuff-up)
+(global-set-key (kbd "M-<down>") 'drag-stuff-down)
 
 ;; Start in fullscreen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -271,7 +260,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
         (svelte-mode . ("svelteserver" "--stdio"))
-        ((html-mode html-ts-mode django-web-mode) . ("vscode-html-language-server" "--stdio"))
+        ((html-mode html-ts-mode django-web-mode) . ("/home/ice/playground/slipper/slipper"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
