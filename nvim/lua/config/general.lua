@@ -6,6 +6,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
+vim.o.cursorline = true
 
 -- move lines
 vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==")
@@ -19,15 +20,15 @@ vim.keymap.set("v", "<S-Tab>", "<gv")
 
 --[[ -- delete trailing whitespace on save -- ]]
 vim.api.nvim_create_autocmd("BufWritePre", {
-	callback = function()
-		vim.cmd([[%s/\s\+$//e]])
-	end,
+    callback = function()
+        vim.cmd([[%s/\s\+$//e]])
+    end,
 })
 
 vim.filetype.add({
-	extension = {
-		djhtml = "htmldjango",
-	},
+    extension = {
+        djhtml = "htmldjango",
+    },
 })
 
 -- buffers
