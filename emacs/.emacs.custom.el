@@ -91,13 +91,13 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Bindings for switching windows
-(global-set-key (kbd "C-<tab>") 'switch-to-buffer)
 (global-set-key (kbd "<f8>") 'other-window)
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
 (global-set-key (kbd "<f2>") 'switch-to-next-buffer)
 (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
+(global-set-key (kbd "<f3>") 'switch-to-buffer)
 
 (defun select-current-line ()
   "Select the current line."
