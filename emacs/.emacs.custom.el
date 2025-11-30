@@ -92,7 +92,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Bindings for switching windows
-(global-set-key (kbd "<f8>") 'other-window)
+(global-set-key (kbd "C-x 5") 'other-window)
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
