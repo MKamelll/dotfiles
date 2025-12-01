@@ -172,6 +172,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
+(require 'rust-mode)
 
 ;; java
 (require 'eglot-java)
@@ -270,6 +271,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (crystal-mode . ("crystalline"))
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
+        ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
         (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
 
