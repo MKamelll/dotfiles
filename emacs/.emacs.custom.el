@@ -174,6 +174,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'fsharp-mode)
 (require 'crystal-mode)
 (require 'rust-mode)
+(require 'lua-mode)
 
 ;; java
 (require 'eglot-java)
@@ -272,6 +273,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (crystal-mode . ("crystalline"))
         (python-mode . ("uv" "run" "pylsp"))
         (elixir-mode . ("elixir-ls"))
+        (lua-mode .    ("lua-language-server"))
         ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
         (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
