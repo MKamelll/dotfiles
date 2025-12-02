@@ -160,6 +160,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'elixir-mode)
 (require 'eglot)
 (setq eglot-connect-timeout 60)
+(setq project-vc-extra-root-markers '("pyproject.toml"))
 
 ;; svelte
 (require 'svelte-mode)
