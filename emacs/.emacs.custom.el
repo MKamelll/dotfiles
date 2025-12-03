@@ -29,6 +29,7 @@
 (setq-default typescript-indent-level 4)
 (setq-default fsharp-indent-offset 2)
 (setq-default go-ts-mode-indent-offset 4)
+(setq-default lua-indent-level 4)
 
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
@@ -92,7 +93,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Bindings for switching windows
-(global-set-key (kbd "C-x 5") 'other-window)
+(global-set-key (kbd "C-x <Right>") 'windmove-right)
+(global-set-key (kbd "C-x <Left>") 'windmove-left)
+(global-set-key (kbd "C-x <Up>") 'windmove-up)
+(global-set-key (kbd "C-x <Down>") 'windmove-down)
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
@@ -271,7 +275,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
-        (python-mode . ("uv" "run" "pylsp"))
+        (python-mode . ("pylsp"))
         (elixir-mode . ("elixir-ls"))
         (lua-mode .    ("lua-language-server"))
         ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
