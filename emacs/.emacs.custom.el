@@ -93,10 +93,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;; Bindings for switching windows
-(global-set-key (kbd "C-x <Right>") 'windmove-right)
-(global-set-key (kbd "C-x <Left>") 'windmove-left)
-(global-set-key (kbd "C-x <Up>") 'windmove-up)
-(global-set-key (kbd "C-x <Down>") 'windmove-down)
+(global-set-key (kbd "C-x <right>") 'windmove-right)
+(global-set-key (kbd "C-x <left>") 'windmove-left)
+(global-set-key (kbd "C-x <up>") 'windmove-up)
+(global-set-key (kbd "C-x <down>") 'windmove-down)
 
 ;; Bindings for navigation
 (global-set-key (kbd "C-w") 'kill-buffer-and-window)
