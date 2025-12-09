@@ -273,6 +273,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
+        (perl-mode . ("pls"))
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
         (crystal-mode . ("crystalline"))
