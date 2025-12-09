@@ -175,6 +175,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'prettier-js)
 (require 'php-cs-fixer)
 (require 'ruby-mode)
+(require 'rubocopfmt)
 (require 'html-ts-mode)
 (require 'fsharp-mode)
 (require 'crystal-mode)
@@ -254,6 +255,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
      ((memq major-mode my-prettier-modes) (prettier-js-prettify))
      ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
      ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
+     ((memq major-mode '(ruby-mode)) (rubocopfmt))
      ((eglot-managed-p) (eglot-format-buffer))))
 
 (global-set-key (kbd "C-f") #'my-eglot-or-other-format)
