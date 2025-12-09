@@ -275,7 +275,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         ((sbt-mode scala-ts-mode) . ("metals"))
         (perl-mode . ("pls"))
         (java-mode . ("jdtls"))
-        ((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
+        ((ruby-mode ruby-ts-mode) . ("solargraph" "stdio"))
         (crystal-mode . ("crystalline"))
         (python-mode . ("pylsp"))
         (elixir-mode . ("elixir-ls"))
