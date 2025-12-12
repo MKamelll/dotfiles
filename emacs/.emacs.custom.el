@@ -250,6 +250,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (defun my-eglot-or-other-format ()
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise eglot."
   (interactive)
+  (delete-trailing-whitespace)
     (cond
      ((memq major-mode my-prettier-modes) (prettier-js-prettify))
      ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
