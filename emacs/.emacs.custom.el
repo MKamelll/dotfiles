@@ -279,7 +279,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (java-mode . ("jdtls"))
         ((ruby-mode ruby-ts-mode) . ("solargraph" "stdio"))
         (crystal-mode . ("crystalline"))
-        (python-mode . ("uv" "run" "pylsp"))
+        (python-mode . ("pylsp"))
         (elixir-mode . ("elixir-ls"))
         (lua-mode .    ("lua-language-server"))
         ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
