@@ -181,6 +181,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'crystal-mode)
 (require 'rust-mode)
 (require 'lua-mode)
+(require 'meson-mode)
 
 ;; java
 (require 'eglot-java)
