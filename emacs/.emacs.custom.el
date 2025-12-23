@@ -183,6 +183,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'lua-mode)
 (require 'meson-mode)
 (require 'qt-pro-mode)
+(require 'cmake-mode)
 
 ;; java
 (require 'eglot-java)
@@ -284,7 +285,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("pylsp"))
         (elixir-mode . ("elixir-ls"))
         (lua-mode .    ("lua-language-server"))
-        ((c-mode c++-mode) . ("clangd"))
+        ((c-mode c++-mode) . ("clangd"
+                              "--clang-tidy"
+                              "--clang-tidy-checks=clang-analyzer-*,bugprone-*,performance-*"
+                              "--completion-style=detailed"
+                              "--header-insertion=never"))
         ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
         (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
