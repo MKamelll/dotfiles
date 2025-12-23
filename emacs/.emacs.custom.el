@@ -167,6 +167,14 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (setq eglot-connect-timeout 60)
 (setq project-vc-extra-root-markers '("pyproject.toml"))
 
+;; use flycheck for c++/c
+(use-package flycheck
+  :hook ((c-mode c++-mode) . flycheck-mode))
+
+(use-package flycheck-clang-tidy
+  :after flycheck
+  :hook (flycheck-mode . flycheck-clang-tidy-setup))
+
 ;; svelte
 (require 'svelte-mode)
 (add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
@@ -285,7 +293,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
         (python-mode . ("pylsp"))
         (elixir-mode . ("elixir-ls"))
         (lua-mode .    ("lua-language-server"))
-        ((c-mode c++-mode) . ("clangd" "--clang-tidy" "--completion-style=detailed" "--header-insertion=never"))
+        ((c-mode c++-mode) . ("clangd" "--completion-style=detailed" "--header-insertion=never"))
         ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
         (tuareg-mode . ("ocamllsp" "--stdio"))
         (php-mode . ("phpactor" "language-server"))))
