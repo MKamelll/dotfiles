@@ -176,9 +176,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'crystal-mode)
 (require 'rust-mode)
 (require 'lua-mode)
-(require 'meson-mode)
 (require 'qt-pro-mode)
 (require 'cmake-mode)
+(require 'meson-mode)
+(with-eval-after-load 'meson-mode
+  (define-key meson-mode-map [f1] nil))
 
 ;; java
 (require 'eglot-java)
