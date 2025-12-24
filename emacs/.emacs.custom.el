@@ -5,6 +5,9 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+(require 'projectile)
+(projectile-mode 1)
+
 ;; global stuff
 (electric-indent-mode 1)
 (delete-selection-mode t)
@@ -116,21 +119,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-set-key (kbd "C-/") 'comment-region)
 (global-set-key (kbd "C-S-/") 'uncomment-region)
 
-;; Setting emacs to symlink the compile_commands.json file to the root directory
-;; if using meson and the build directory is "builddir"
-(defun my/meson-setup-compile-commands ()
-  "Automatically link compile_commands.json from Meson builddir to project root."
-  (let* ((root (project-root (project-current t)))
-         (builddir (expand-file-name "builddir/compile_commands.json" root))
-         (link (expand-file-name "compile_commands.json" root)))
-    (when (and (file-exists-p builddir)
-               (not (file-exists-p link)))
-      (make-symbolic-link builddir link t)
-      (message "Linked compile_commands.json from builddir."))))
-
-;; Hook into opening a C/C++ file
-(add-hook 'c-mode-common-hook #'my/meson-setup-compile-commands)
-
 ;; Lsp things
 (require 'company)
 (global-company-mode t)
@@ -165,7 +153,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'elixir-mode)
 (require 'eglot)
 (setq eglot-connect-timeout 60)
-(setq project-vc-extra-root-markers '("pyproject.toml"))
 
 ;; use flycheck for c++/c
 (use-package flycheck
