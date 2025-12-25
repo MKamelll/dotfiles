@@ -124,6 +124,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-company-mode t)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
+(setq completion-ignore-case t)
 (defvar my/company-default-backends
   '((company-capf company-dabbrev-code company-dabbrev company-files))
   "Default company backends including LSP (capf) and local buffer completions.")
