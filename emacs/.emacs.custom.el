@@ -271,7 +271,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
         (svelte-mode . ("svelteserver" "--stdio"))
-        ((html-mode html-ts-mode django-web-mode) . ("/home/ice/playground/slipper/slipper"))
+        ((django-web-mode) . ("rass" "django"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
