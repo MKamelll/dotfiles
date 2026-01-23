@@ -271,6 +271,16 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
                :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
                                :profile "GoogleStyle")))))
 
+(with-eval-after-load 'flymake
+  (setq flymake-no-changes-timeout 0.5)
+  (setq help-at-pt-display-when-idle t)
+  (help-at-pt-set-timer))
+
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (setq-local eldoc-documentation-functions
+                        (cons #'flymake-eldoc-function
+                              (remove #'flymake-eldoc-function eldoc-documentation-functions)))))
 (setq eglot-server-programs
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
