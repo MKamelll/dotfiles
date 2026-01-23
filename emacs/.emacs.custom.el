@@ -154,6 +154,10 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'eglot)
 (setq eglot-connect-timeout 60)
 
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(yas-minor-mode-on)
+
 ;; use flycheck for c++/c
 (use-package flycheck
   :hook ((c-mode c++-mode) . flycheck-mode))
@@ -271,7 +275,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
       '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
         ((go-mode go-ts-mode) . ("gopls" "serve"))
         (svelte-mode . ("svelteserver" "--stdio"))
-        ((django-web-mode) . ("rass" "django"))
+        (django-web-mode . ("rass" "django"))
         (templ-ts-mode . ("templ" "lsp"))
         (csharp-mode . ("OmniSharp" "-lsp"))
         ((sbt-mode scala-ts-mode) . ("metals"))
