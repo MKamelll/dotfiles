@@ -6,6 +6,10 @@ vim.opt.smartindent = true
 vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
 
+-- jump a whole paragraph
+vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
+vim.keymap.set({ "n", "v" }, "<C-Up>", "{")
+
 -- move lines
 vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==")
 vim.keymap.set("n", "<M-Down>", ":m .+1<CR>==")
