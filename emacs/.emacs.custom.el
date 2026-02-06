@@ -54,6 +54,9 @@
 
 ;; Map C-g to ESC
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+(with-eval-after-load 'magit
+  (define-key magit-mode-map (kbd "<escape>") 'keyboard-escape-quit)
+  (define-key magit-mode-map (kbd "C-w") 'kill-buffer-and-window))
 
 ;; Bindings for copying and pasting
 (global-set-key (kbd "C-S-c") 'kill-ring-save)
