@@ -5,6 +5,12 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+(require 'modus-themes)
+(setq modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil)
+(load-theme 'modus-vivendi :no-confirm)
+(define-key global-map (kbd "C-<f5>") #'modus-themes-toggle)
+
 (require 'projectile)
 (projectile-mode 1)
 
