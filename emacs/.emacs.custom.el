@@ -40,6 +40,7 @@
 (setq-default go-ts-mode-indent-offset 4)
 (setq-default lua-indent-level 4)
 (setq-default python-indent-offset 4)
+(setq-default c-basic-offset 4)
 
 ;; Relative line numbers
 (global-display-line-numbers-mode t)
