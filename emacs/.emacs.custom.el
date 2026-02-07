@@ -10,6 +10,16 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)
+        (c-mode . c-ts-mode)
+        (c++-mode . c++-ts-mode)
+        (go-mode . go-ts-mode)
+        (js-mode . javascript-ts-mode)
+        (yaml-mode . yaml-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        ))
+
 (require 'projectile)
 (projectile-mode 1)
 
