@@ -35,6 +35,10 @@ vim.filetype.add({
     },
 })
 
+-- netrw
+vim.keymap.set("n", "ee", ":Ex <CR>", { desc = "Open Netrw" })
+vim.keymap.set("n", "eee", ":Vexplore <CR>", { desc = "Open Netrw in vertical window" })
+
 -- buffers
 vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Buffer next" })
 vim.keymap.set("n", "bp", ":bprevious<CR>", { desc = "Buffer previous" })
