@@ -43,7 +43,7 @@ vim.keymap.set("n", "eee", ":Vexplore <CR>", { desc = "Open Netrw in vertical wi
 vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Buffer next" })
 vim.keymap.set("n", "bp", ":bprevious<CR>", { desc = "Buffer previous" })
 vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Buffer delete" })
-vim.keymap.set("n", "bb", ":b #<CR>", { desc = "Switch to most recent buffer" })
+vim.keymap.set("n", "bm", ":b #<CR>", { desc = "Switch to most recent buffer" })
 
 -- tabs
 vim.keymap.set("n", "tn", ":tabnext<CR>", { desc = "Tab next" })
