@@ -5,6 +5,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
+vim.o.swapfile = false
 
 -- jump a whole paragraph
 vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
