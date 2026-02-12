@@ -10,6 +10,8 @@ vim.o.swapfile = false
 -- jump a whole paragraph
 vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
 vim.keymap.set({ "n", "v" }, "<C-Up>", "{")
+vim.keymap.set("i", "<C-Down>", "<C-o>}")
+vim.keymap.set("i", "<C-Up>", "<C-o>{")
 
 -- move lines
 vim.keymap.set("n", "<M-Up>", ":m .-2<CR>==")
