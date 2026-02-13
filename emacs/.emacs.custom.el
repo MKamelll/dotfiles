@@ -10,6 +10,9 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+(require 'indent-bars)
+(add-hook 'prog-mode-hook #'indent-bars-mode)
+
 ;; use ts-mode by default
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)
@@ -142,7 +145,7 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 ;; company
 (require 'yasnippet)
 (require 'yasnippet-snippets)
-(yas-minor-mode)
+(yas-minor-mode t)
 
 (require 'company)
 (global-company-mode t)
@@ -159,6 +162,21 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
 
+;; web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(define-derived-mode django-web-mode web-mode "django-web"
+  "Web-mode for Django templates.")
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
+(setq web-mode-attr-indent-offset 2)
+
 (require 'flycheck)
 (use-package flycheck-clang-tidy
   :after flycheck
@@ -170,6 +188,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
             (setq-local company-backends my/company-default-backends)))
 
 (setq lsp-headerline-breadcrumb-enable nil)
+(setq lsp-enabled-clients nil)
+(setq gc-cons-threshold 100000000)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
@@ -180,6 +200,40 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (setq lsp-pylsp-plugins-mypy-enabled t)
 (setq lsp-pylsp-plugins-pydocstyle-enabled t)
 (setq lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
+
+;; django
+(with-eval-after-load 'lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
+  
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("djls" "serve"))
+    :major-modes '(django-web-mode)
+    :add-on? t
+    :server-id 'djls))
+  
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
+    :major-modes '(django-web-mode)
+    :server-id 'html-ls))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("emmet-ls" "--stdio"))
+    :major-modes '(django-web-mode)
+    :add-on? t
+    :server-id 'emmet-ls))
+  
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
+    :major-modes '(django-web-mode)
+    :add-on? t
+    :server-id 'tailwindcss-ls)))
+
+
+(add-hook 'django-web-mode-hook #'lsp-deferred)
 
 ;; c/c++
 (add-hook 'c-common-mode-hook #'lsp-deferred)
@@ -234,30 +288,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'tuareg)
 (add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
 (require 'ocp-indent)
-
-;; web-mode
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-(define-derived-mode django-web-mode web-mode "django-web"
-  "Web-mode for Django templates.")
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
-(setq web-mode-attr-indent-offset 2)
-
-;; use C-j to complete emmet
-(require 'emmet-mode)
-(add-hook 'web-mode-hook 'emmet-mode)
-(add-hook 'sgml-mode-hook 'emmet-mode)
-(add-hook 'css-mode-hook  'emmet-mode)
-(add-hook 'django-web-mode 'emmet-mode)
-(add-hook 'emmet-mode-hook (lambda () (setq emmet-indent-after-insert nil)))
-(add-hook 'emmet-mode-hook (lambda () (setq emmet-indentation 2)))
 
 ;; dot-env
 (require 'dotenv-mode)
