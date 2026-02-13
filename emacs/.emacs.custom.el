@@ -90,14 +90,24 @@
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-q") 'undo-redo)
 
-;; --- Disable automatic clipboard copying on selection ---
-(defun backward-delete-word (arg)
-  "Delete characters backward until encountering the beginning of a word.
-Unlike `backward-kill-word', this does not save the deleted text to the kill ring."
-  (interactive "p")
-  (delete-region (point) (progn (backward-word arg) (point))))
+(defun vscode-backward-delete-word ()
+  "Delete word backward like VS Code: 
+If there's whitespace, delete only whitespace. 
+If at a word, delete the word. 
+Does not save to kill-ring."
+  (interactive)
+  (cond
+   ((bobp) nil)
+   ((looking-back "[[:space:]\n]" 1)
+    (let ((beg (point)))
+      (skip-chars-backward "[:space:]\n")
+      (delete-region beg (point))))
+   (t
+    (let ((beg (point)))
+      (backward-word 1)
+      (delete-region beg (point))))))
 
-(global-set-key (kbd "C-<backspace>") #'backward-delete-word)
+(global-set-key (kbd "C-<backspace>") #'vscode-backward-delete-word)
 
 (defun my-setup-minibuffer-backspace ()
   "Make C-Backspace delete word without copying in all minibuffers."
