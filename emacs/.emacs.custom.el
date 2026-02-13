@@ -10,6 +10,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; use ts-mode by default
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)
         (c-mode . c-ts-mode)
@@ -138,7 +139,11 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (global-set-key (kbd "C-/") 'comment-region)
 (global-set-key (kbd "C-S-/") 'uncomment-region)
 
-;; Lsp things
+;; company
+(require 'yasnippet)
+(require 'yasnippet-snippets)
+(yas-minor-mode)
+
 (require 'company)
 (global-company-mode t)
 (setq company-idle-delay 0)
@@ -153,6 +158,31 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-SPC") #'company-complete))
+
+(require 'flycheck)
+(use-package flycheck-clang-tidy
+  :after flycheck
+  :hook (flycheck-mode . flycheck-clang-tidy-setup))
+
+(require 'lsp-mode)
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (setq-local company-backends my/company-default-backends)))
+
+(setq lsp-headerline-breadcrumb-enable nil)
+
+;; python
+(add-hook 'python-ts-mode-hook #'lsp-deferred)
+(setq lsp-pylsp-plugins-autopep8-enabled nil)
+(setq lsp-pylsp-plugins-yapf-enabled nil)
+(setq lsp-pylsp-plugins-black-enabled t)
+(setq lsp-pylsp-plugins-flake8-enabled t)
+(setq lsp-pylsp-plugins-mypy-enabled t)
+(setq lsp-pylsp-plugins-pydocstyle-enabled t)
+(setq lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
+
+;; c/c++
+(add-hook 'c-common-mode-hook #'lsp-deferred)
 
 ;; tree-sitter
 (setq treesit-font-lock-level 4)
@@ -170,20 +200,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'go-mode)
 (require 'go-ts-mode)
 (require 'elixir-mode)
-(require 'eglot)
-(setq eglot-connect-timeout 60)
-
-(require 'yasnippet)
-(require 'yasnippet-snippets)
-(yas-minor-mode-on)
-
-;; use flycheck for c++/c
-(use-package flycheck
-  :hook ((c-mode c++-mode) . flycheck-mode))
-
-(use-package flycheck-clang-tidy
-  :after flycheck
-  :hook (flycheck-mode . flycheck-clang-tidy-setup))
 
 ;; svelte
 (require 'svelte-mode)
@@ -204,9 +220,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 (require 'meson-mode)
 (with-eval-after-load 'meson-mode
   (define-key meson-mode-map [f1] nil))
-
-;; java
-(require 'eglot-java)
 (require 'groovy-mode)
 
 ;; scala-ts-mode
@@ -249,11 +262,6 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 ;; dot-env
 (require 'dotenv-mode)
 (add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
-
-(add-hook 'eglot-managed-mode-hook
-          (lambda ()
-            (setq-local company-backends my/company-default-backends)))
-
 (setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
 
 (defvar my-prettier-modes '(typescript-mode tsx-ts-mode js-ts-mode json-mode svelte-mode)
@@ -261,8 +269,14 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
 
 (defvar my-php-cs-fixer-modes '(php-mode))
 
-(global-set-key (kbd "C-S-a") #'align-regexp)
-(global-set-key (kbd "<f10>") 'eglot-code-action-quickfix)
+(global-set-key (kbd "C-S-a") 'mark-whole-buffer)
+
+(defun lsp-code-action-quickfix ()
+  "Execute quickfix code actions."
+  (interactive)
+  (lsp-execute-code-action-by-kind "quickfix"))
+
+(global-set-key (kbd "<f10>") 'lsp-code-action-quickfix)
 
 (require 'reformatter)
 (reformatter-define djlint-format
@@ -270,8 +284,8 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
   :args '("--reformat" "-")
   :lighter " DJ")
 
-(defun my-eglot-or-other-format ()
-  "Format using prettier-js or php-cs-fixer depending on mode, otherwise eglot."
+(defun my-lsp-mode-or-other-format ()
+  "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
   (interactive)
   (delete-trailing-whitespace)
     (cond
@@ -279,50 +293,17 @@ Unlike `backward-kill-word', this does not save the deleted text to the kill rin
      ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
      ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
      ((memq major-mode '(ruby-mode)) (rubocopfmt))
-     ((eglot-managed-p) (eglot-format-buffer))))
+     ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
-(global-set-key (kbd "C-f") #'my-eglot-or-other-format)
-
+(global-set-key (kbd "C-f") #'my-lsp-mode-or-other-format)
 (global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
 
-(setq eglot-workspace-configuration
-      '(:java (:format (:enabled t
-               :settings (:url "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml"
-                               :profile "GoogleStyle")))))
-
-(with-eval-after-load 'flymake
-  (setq flymake-no-changes-timeout 0.5)
-  (setq help-at-pt-display-when-idle t)
-  (help-at-pt-set-timer))
-
-(add-hook 'eglot-managed-mode-hook
-          (lambda ()
-            (setq-local eldoc-documentation-functions
-                        (cons #'flymake-eldoc-function
-                              (remove #'flymake-eldoc-function eldoc-documentation-functions)))))
-(setq eglot-server-programs
-      '(((typescript-mode tsx-ts-mode js-ts-mode) . ("typescript-language-server" "--stdio"))
-        ((go-mode go-ts-mode) . ("gopls" "serve"))
-        (svelte-mode . ("svelteserver" "--stdio"))
-        ((django-web-mode :language-id "html") . ("rass" "django"))
-        ((web-mode :language-id "html") . ("rass" "web"))
-        (templ-ts-mode . ("templ" "lsp"))
-        (csharp-mode . ("OmniSharp" "-lsp"))
-        ((sbt-mode scala-ts-mode) . ("metals"))
-        (perl-mode . ("pls"))
-        (java-mode . ("jdtls"))
-        ((ruby-mode ruby-ts-mode) . ("solargraph" "stdio"))
-        (crystal-mode . ("crystalline"))
-        (python-mode . ("pylsp"))
-        (elixir-mode . ("elixir-ls"))
-        (lua-mode .    ("lua-language-server"))
-        ((c-mode c++-mode) . ("clangd" "--completion-style=detailed" "--header-insertion=never"))
-        ((rust-ts-mode rust-mode) . ("rust-analyzer" :initializationOptions (:check (:command "clippy"))))
-        (tuareg-mode . ("ocamllsp" "--stdio"))
-        (php-mode . ("phpactor" "language-server"))))
-
-;; setup eglot for f#
-(require 'eglot-fsharp)
+(defun query-replace-whole-buffer (from to)
+  "Query and replace something in the whole buffer"
+  (interactive "sQuery replace: \nsQuery replace %s with: ")
+  (save-excursion
+  (goto-char (point-min))
+  (query-replace from to)))
 
 ;; compile stuff
 (require 'compile)
