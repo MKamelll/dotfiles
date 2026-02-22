@@ -200,6 +200,7 @@ Does not save to kill-ring."
 (setq lsp-headerline-breadcrumb-enable nil)
 (setq lsp-enabled-clients nil)
 (setq gc-cons-threshold 100000000)
+(setq lsp-enable-snippet nil)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
