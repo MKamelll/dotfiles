@@ -203,7 +203,7 @@ Does not save to kill-ring."
 (setq lsp-enable-snippet nil)
 (setq lsp-eldoc-enable-hover t
       lsp-signature-auto-activate t
-      lsp-signature-render-documentation nil)
+      lsp-signature-render-documentation t)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
