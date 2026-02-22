@@ -201,6 +201,9 @@ Does not save to kill-ring."
 (setq lsp-enabled-clients nil)
 (setq gc-cons-threshold 100000000)
 (setq lsp-enable-snippet nil)
+(setq lsp-eldoc-enable-hover t
+      lsp-signature-auto-activate t
+      lsp-signature-render-documentation nil)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
