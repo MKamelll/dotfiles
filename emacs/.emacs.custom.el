@@ -337,7 +337,7 @@ Does not save to kill-ring."
      ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
 (global-set-key (kbd "C-f") #'my-lsp-mode-or-other-format)
-(global-set-key (kbd "<f9>") #'eldoc-doc-buffer)
+(global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
 (defun query-replace-whole-buffer (from to)
   "Query and replace something in the whole buffer"
