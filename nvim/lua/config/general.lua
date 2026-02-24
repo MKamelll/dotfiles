@@ -7,6 +7,11 @@ vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
 vim.o.swapfile = false
 
+-- diagnostics
+vim.keymap.set("n", "fl", function()
+    vim.diagnostic.setqflist({ open = true })
+end)
+
 -- use a to enter insert mode because i keep hitting fucking u or p ffs
 vim.keymap.set("n", "a", "i")
 vim.keymap.set("n", "i", "<nop>")
