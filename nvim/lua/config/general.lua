@@ -7,6 +7,10 @@ vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
 vim.o.swapfile = false
 
+-- use a to enter insert mode because i keep hitting fucking u or p ffs
+vim.keymap.set("n", "a", "i")
+vim.keymap.set("n", "i", "<nop>")
+
 -- jump a whole paragraph
 vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
 vim.keymap.set({ "n", "v" }, "<C-Up>", "{")

@@ -64,6 +64,7 @@ end
 vim.lsp.config("clangd", {
     cmd = { 'clangd' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+    compile_flags = { '--header-insertion=never' },
     root_markers = {
         '.clangd',
         '.clang-tidy',
