@@ -16,6 +16,9 @@ end)
 vim.keymap.set("n", "a", "i")
 vim.keymap.set("n", "i", "<nop>")
 
+vim.keymap.set("n", "A", "o")
+vim.keymap.set("n", "o", "<nop>")
+
 -- jump a whole paragraph
 vim.keymap.set({ "n", "v" }, "<C-Down>", "}")
 vim.keymap.set({ "n", "v" }, "<C-Up>", "{")
