@@ -68,3 +68,6 @@ vim.keymap.set("n", "bm", ":b #<CR>", { desc = "Switch to most recent buffer" })
 vim.keymap.set("n", "tn", ":tabnext<CR>", { desc = "Tab next" })
 vim.keymap.set("n", "tp", ":tabprevious<CR>", { desc = "Tab previous" })
 vim.keymap.set("n", "td", ":tabclose<CR>", { desc = "Tab close" })
+
+-- lsp
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "goto definition" })
