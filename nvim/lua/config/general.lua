@@ -8,14 +8,6 @@ vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
 vim.o.swapfile = false
 
--- disable treesitter indent for fucking python
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "*",
-    callback = function()
-        vim.opt_local.indentexpr = ""
-    end,
-})
-
 -- diagnostics
 vim.keymap.set("n", "fl", function()
     vim.diagnostic.setqflist({ open = true })
