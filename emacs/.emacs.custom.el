@@ -187,7 +187,10 @@ Does not save to kill-ring."
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
 (setq web-mode-attr-indent-offset 2)
 
-(require 'flycheck)
+(use-package flycheck
+  :ensure t
+  :hook ((c-mode . flycheck-mode)
+         (c++-mode . flycheck-mode)))
 (use-package flycheck-clang-tidy
   :after flycheck
   :hook (flycheck-mode . flycheck-clang-tidy-setup))
@@ -204,8 +207,9 @@ Does not save to kill-ring."
       lsp-completion-enable t
       lsp-enable-snippet nil
       lsp-signature-auto-activate t
-      lsp-signature-render-documentation t
-      lsp-keep-workspace-alive nil)
+      lsp-signature-render-documentation nil
+      lsp-keep-workspace-alive nil
+      lsp-diagnostics-provider :flymake)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
