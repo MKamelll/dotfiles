@@ -1,0 +1,14 @@
+{
+	"font_face": "Hack Nerd Font Mono",
+	"font_size": 16,
+	"theme": "Adaptive.sublime-theme",
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+	"color_scheme": "OLED.sublime-color-scheme",
+	"index_files": true,
+	"translate_tabs_to_spaces": true,
+	"highlight_line": true,
+	"console_max_history_lines": 3000,
+}

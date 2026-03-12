@@ -1,0 +1,25 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"ayu",
+		"Catppuccin color schemes",
+		"Djaneiro",
+		"Formatter",
+		"LSP",
+		"LSP-pylsp",
+		"LSP-rust-analyzer",
+		"LSP-tailwindcss",
+		"Monokai Gray",
+		"Move By Paragraph",
+		"OLED Color Scheme",
+		"Package Control",
+		"Tailwind CSS",
+		"Terminal",
+		"Theme - Monokai Pro",
+		"Tomorrow Color Schemes",
+	],
+}

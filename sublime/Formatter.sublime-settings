@@ -1,0 +1,11 @@
+{
+    "debug": "status",
+    "formatters": {
+        "django": {
+            "enable": true,
+            "format_on_save": true,
+            "args": ["djlint", "--reformat", "-"],
+            "syntaxes": ["html.django", "text.html.django", "django"]
+        }
+    }
+}
