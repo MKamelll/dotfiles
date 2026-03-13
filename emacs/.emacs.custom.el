@@ -63,7 +63,7 @@
 (tool-bar-mode -1)
 
 ;; Set the font weight to 16
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 180)
 
 ;; Map C-g to ESC
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -187,10 +187,7 @@ Does not save to kill-ring."
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
 (setq web-mode-attr-indent-offset 2)
 
-(use-package flycheck
-  :ensure t
-  :hook ((c-mode . flycheck-mode)
-         (c++-mode . flycheck-mode)))
+(require 'flycheck)
 (use-package flycheck-clang-tidy
   :after flycheck
   :hook (flycheck-mode . flycheck-clang-tidy-setup))
@@ -209,7 +206,7 @@ Does not save to kill-ring."
       lsp-signature-auto-activate t
       lsp-signature-render-documentation nil
       lsp-keep-workspace-alive nil
-      lsp-diagnostics-provider :flymake)
+      lsp-diagnostics-provider :flycheck)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
