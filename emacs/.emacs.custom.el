@@ -213,13 +213,15 @@ Does not save to kill-ring."
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
-(setq lsp-pylsp-plugins-autopep8-enabled nil)
-(setq lsp-pylsp-plugins-yapf-enabled nil)
-(setq lsp-pylsp-plugins-black-enabled t)
-(setq lsp-pylsp-plugins-flake8-enabled t)
-(setq lsp-pylsp-plugins-mypy-enabled t)
-(setq lsp-pylsp-plugins-pydocstyle-enabled t)
-(setq lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
+(setq lsp-pylsp-plugins-autopep8-enabled nil
+      lsp-pylsp-plugins-yapf-enabled nil
+      lsp-pylsp-plugins-black-enabled t
+      lsp-pylsp-plugins-flake8-enabled t
+      lsp-pylsp-plugins-mypy-enabled t
+      lsp-pylsp-plugins-mypy-live-mode t
+      lsp-pylsp-plugins-mypy-strict t
+      lsp-pylsp-plugins-pydocstyle-enabled t
+      lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
 
 (add-hook 'go-ts-mode #'lsp-deferred)
 (add-hook 'rust-ts-mode #'lsp-deferred)
