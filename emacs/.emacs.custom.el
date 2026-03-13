@@ -4,6 +4,7 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
+(setq gc-cons-threshold 100000000)
 
 (setq inhibit-startup-screen t)
 (menu-bar-mode -1)
@@ -17,6 +18,7 @@
 (setq major-mode-remap-alist
       '((python-mode . python-ts-mode)
         (c-mode . c-ts-mode)
+        (rust-mode . rust-ts-mode)
         (c++-mode . c++-ts-mode)
         (go-mode . go-ts-mode)
         (js-mode . javascript-ts-mode)
@@ -199,7 +201,6 @@ Does not save to kill-ring."
 
 (setq lsp-headerline-breadcrumb-enable nil)
 (setq lsp-enabled-clients nil)
-(setq gc-cons-threshold 100000000)
 (setq lsp-eldoc-enable-hover t
       lsp-completion-enable t
       lsp-enable-snippet nil
@@ -217,6 +218,10 @@ Does not save to kill-ring."
 (setq lsp-pylsp-plugins-mypy-enabled t)
 (setq lsp-pylsp-plugins-pydocstyle-enabled t)
 (setq lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
+
+(add-hook 'go-ts-mode #'lsp-deferred)
+(add-hook 'rust-ts-mode #'lsp-deferred)
+(add-hook 'typescript-ts-mode #'lsp-deferred)
 
 ;; django
 (with-eval-after-load 'lsp-mode
