@@ -351,7 +351,7 @@ Does not save to kill-ring."
      ((memq major-mode '(ruby-mode)) (rubocopfmt))
      ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
-(global-set-key (kbd "C-f") #'my-lsp-mode-or-other-format)
+(add-hook 'before-save-hook #'my-lsp-mode-or-other-format)
 (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
 (defun query-replace-whole-buffer (from to)
