@@ -93,9 +93,9 @@
 (global-set-key (kbd "C-q") 'undo-redo)
 
 (defun vscode-backward-delete-word ()
-  "Delete word backward like VS Code: 
-If there's whitespace, delete only whitespace. 
-If at a word, delete the word. 
+  "Delete word backward like VS Code:
+If there's whitespace, delete only whitespace.
+If at a word, delete the word.
 Does not save to kill-ring."
   (interactive)
   (cond
@@ -167,7 +167,8 @@ Does not save to kill-ring."
   '((company-capf company-dabbrev-code company-dabbrev company-files))
   "Default company backends including LSP (capf) and local buffer completions.")
 (setq company-backends my/company-default-backends)
-(setq company-dabbrev-downcase nil       ;; keep original case
+(setq company-dabbrev-ignore-case t
+      completion-ignore-case t
       company-dabbrev-other-buffers t    ;; search other buffers too
       company-dabbrev-code-everywhere t) ;; include comments and strings
 
@@ -230,14 +231,14 @@ Does not save to kill-ring."
 ;; django
 (with-eval-after-load 'lsp-mode
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
-  
+
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("djls" "serve"))
     :major-modes '(django-web-mode)
     :add-on? t
     :server-id 'djls))
-  
+
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
@@ -250,7 +251,7 @@ Does not save to kill-ring."
     :major-modes '(django-web-mode)
     :add-on? t
     :server-id 'emmet-ls))
-  
+
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
