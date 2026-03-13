@@ -161,8 +161,8 @@ Does not save to kill-ring."
 
 (require 'company)
 (global-company-mode t)
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 1)
+(setq company-idle-delay 0.2)
+(setq company-minimum-prefix-length 2)
 (defvar my/company-default-backends
   '((company-capf company-dabbrev-code company-dabbrev company-files))
   "Default company backends including LSP (capf) and local buffer completions.")
@@ -207,7 +207,9 @@ Does not save to kill-ring."
       lsp-signature-auto-activate t
       lsp-signature-render-documentation nil
       lsp-keep-workspace-alive nil
-      lsp-diagnostics-provider :flycheck)
+      lsp-diagnostics-provider :flycheck
+      lsp-log-io nil
+      lsp-enable-suggest-server-download nil)
 
 ;; python
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
