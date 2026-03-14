@@ -4,93 +4,13 @@
 ;; and `package-pinned-packages`. Most users will not need or want to do this.
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
-(setq gc-cons-threshold 100000000)
 
-(setq inhibit-startup-screen t)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-(require 'indent-bars)
-(add-hook 'prog-mode-hook #'indent-bars-mode)
-
-;; use ts-mode by default
-(setq major-mode-remap-alist
-      '((python-mode . python-ts-mode)
-        (c-mode . c-ts-mode)
-        (rust-mode . rust-ts-mode)
-        (c++-mode . c++-ts-mode)
-        (go-mode . go-ts-mode)
-        (js-mode . javascript-ts-mode)
-        (yaml-mode . yaml-ts-mode)
-        (typescript-mode . typescript-ts-mode)
-        ))
-
-(require 'projectile)
-(projectile-mode 1)
-
-;; global stuff
-(electric-indent-mode 1)
-(delete-selection-mode t)
-(ido-mode 1)
-(ido-everywhere 1)
-
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-
-(require 'ido-completing-read+)
-(ido-ubiquitous-mode 1)
-
-(require 'amx)
-(amx-mode 1)
-
-;; use spaces for everything
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(setq-default svelte-basic-offset 4)
-(setq-default typescript-indent-level 4)
-(setq-default fsharp-indent-offset 2)
-(setq-default go-ts-mode-indent-offset 4)
-(setq-default lua-indent-level 4)
-(setq-default python-indent-offset 4)
-(setq-default c-basic-offset 4)
-
-;; Relative line numbers
-(global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
-
-;; Remove the bar below to main menu
-(tool-bar-mode -1)
-
-;; Set the font weight to 16
-(set-face-attribute 'default nil :height 180)
-
-;; Map C-g to ESC
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-(with-eval-after-load 'magit
-  (define-key magit-mode-map (kbd "<escape>") 'keyboard-escape-quit)
-  (define-key magit-mode-map (kbd "C-w") 'kill-buffer-and-window))
-
-;; Bindings for copying and pasting
-(global-set-key (kbd "C-S-c") 'kill-ring-save)
-(global-set-key (kbd "C-S-v") 'yank)
-(global-set-key (kbd "C-S-x") 'kill-region)
-(global-set-key (kbd "C-S-s") 'save-buffer)
-
-;; Delete region with Backspace (and Shift+Backspace)
 (defun my-backspace-or-delete-region ()
+  "Delete region with Backspace (and Shift+Backspace)"
   (interactive)
   (if (use-region-p)
       (delete-region (region-beginning) (region-end))
     (call-interactively 'delete-backward-char)))
-
-(global-set-key (kbd "<backspace>") #'my-backspace-or-delete-region)
-
-;; Undo and Redo
-(global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-q") 'undo-redo)
 
 (defun vscode-backward-delete-word ()
   "Delete word backward like VS Code:
@@ -109,8 +29,6 @@ Does not save to kill-ring."
       (backward-word 1)
       (delete-region beg (point))))))
 
-(global-set-key (kbd "C-<backspace>") #'vscode-backward-delete-word)
-
 (defun my-setup-minibuffer-backspace ()
   "Make C-Backspace delete word without copying in all minibuffers."
   (dolist (keymap (list minibuffer-local-map
@@ -120,29 +38,6 @@ Does not save to kill-ring."
                         minibuffer-local-filename-completion-map))
     (define-key keymap (kbd "C-<backspace>") #'backward-delete-word)))
 
-(add-hook 'minibuffer-setup-hook #'my-setup-minibuffer-backspace)
-
-;; move region or line up and down with alt and arrows
-(require 'drag-stuff)
-(drag-stuff-global-mode 1)
-(global-set-key (kbd "M-<up>") 'drag-stuff-up)
-(global-set-key (kbd "M-<down>") 'drag-stuff-down)
-
-;; Start in fullscreen
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; Bindings for switching windows
-(global-set-key (kbd "C-x <right>") 'windmove-right)
-(global-set-key (kbd "C-x <left>") 'windmove-left)
-(global-set-key (kbd "C-x <up>") 'windmove-up)
-(global-set-key (kbd "C-x <down>") 'windmove-down)
-
-;; Bindings for navigation
-(global-set-key (kbd "C-w") 'kill-buffer-and-window)
-(global-set-key (kbd "<f2>") 'switch-to-next-buffer)
-(global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
-(global-set-key (kbd "<f3>") 'switch-to-buffer)
-
 (defun select-current-line ()
   "Select the current line."
   (interactive)
@@ -150,71 +45,138 @@ Does not save to kill-ring."
   (set-mark-command nil)
   (end-of-line))
 
-(global-set-key (kbd "C-l") 'select-current-line)
-(global-set-key (kbd "C-/") 'comment-region)
-(global-set-key (kbd "C-S-/") 'uncomment-region)
+(use-package indent-bars
+  :ensure t
+  :hook
+  (prog-mode . indent-bars-mode))
 
-;; company
-(require 'yasnippet)
-(require 'yasnippet-snippets)
-(yas-minor-mode t)
+(use-package projectile
+  :ensure t
+  :config (projectile-mode 1))
 
-(require 'company)
-(global-company-mode t)
-(setq company-idle-delay 0.2)
-(setq company-minimum-prefix-length 2)
-(defvar my/company-default-backends
-  '((company-capf company-dabbrev-code company-dabbrev company-files))
+(use-package smex
+  :ensure t
+  :config
+  (smex-initialize)
+  (global-set-key (kbd "M-x") 'smex)
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+
+(use-package ido-completing-read+
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1))
+
+(use-package amx
+  :ensure t
+  :config
+  (amx-mode 1))
+
+(use-package magit
+  :ensure t
+  :init
+  (setq magit-display-buffer-noselect t)
+  :bind (:map magit-mode-map
+              ("<escape>" . keyboard-escape-quit)
+              ("C-w" . kill-buffer-and-window)))
+
+
+(use-package drag-stuff
+  :ensure t
+  :config
+  (drag-stuff-global-mode 1)
+  :bind (("M-<up>" . drag-stuff-up)
+         ("M-<down>" . drag-stuff-down)))
+
+(use-package yasnippet
+  :ensure t
+  :config
+  (require 'yasnippet-snippets)
+  (yas-minor-mode t))
+
+(use-package company
+  :ensure t
+  :init
+  (setq company-idle-delay 0.2
+        company-minimum-prefix-length 2
+        company-dabbrev-ignore-case t
+        completion-ignore-case t
+        company-dabbrev-other-buffers t
+        company-dabbrev-code-everywhere t)
+
+  (defvar my/company-default-backends
+    '((company-capf company-dabbrev-code company-dabbrev company-files))
   "Default company backends including LSP (capf) and local buffer completions.")
-(setq company-backends my/company-default-backends)
-(setq company-dabbrev-ignore-case t
-      completion-ignore-case t
-      company-dabbrev-other-buffers t    ;; search other buffers too
-      company-dabbrev-code-everywhere t) ;; include comments and strings
+  (setq company-backends my/company-default-backends)
 
-(with-eval-after-load 'company
-  (define-key company-mode-map (kbd "C-SPC") #'company-complete))
+  :config
+  (global-company-mode 1)
+  (define-key company-mode-map (kbd "C-SPC") #'company-complete)
+  )
 
-;; web-mode
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
-(define-derived-mode django-web-mode web-mode "django-web"
-  "Web-mode for Django templates.")
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
-(setq web-mode-attr-indent-offset 2)
+(use-package web-mode
+  :ensure t
+  :mode (("\\.phtml\\'"       . web-mode)
+         ("\\.tpl\\.php\\'"   . web-mode)
+         ("\\.[agj]sp\\'"    . web-mode)
+         ("\\.as[cp]x\\'"    . web-mode)
+         ("\\.erb\\'"         . web-mode)
+         ("\\.mustache\\'"    . web-mode)
+         ("\\.html?\\'"       . web-mode))
+  :config
+  (define-derived-mode django-web-mode web-mode "django-web"
+    "Web-mode for Django templates.")
+  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
 
-(require 'flycheck)
+  ;; other pref
+  (setq web-mode-attr-indent-offset 2)
+  )
+
+(use-package flycheck
+  :ensure t)
+
 (use-package flycheck-clang-tidy
   :after flycheck
   :hook (flycheck-mode . flycheck-clang-tidy-setup))
 
-(require 'lsp-mode)
-(add-hook 'lsp-managed-mode-hook
-          (lambda ()
-            (setq-local company-backends my/company-default-backends)))
+(use-package lsp-mode
+  :ensure t
+  :init (setq lsp-headerline-breadcrumb-enable nil
+              lsp-enabled-clients nil
+              lsp-eldoc-enable-hover t
+              lsp-completion-enable t
+              lsp-enable-snippet nil
+              lsp-signature-auto-activate t
+              lsp-signature-render-documentation nil
+              lsp-keep-workspace-alive nil
+              lsp-diagnostics-provider :flycheck
+              lsp-log-io nil
+              lsp-enable-suggest-server-download nil)
+  :commands (lsp lsp-deferred)
 
-(setq lsp-headerline-breadcrumb-enable nil)
-(setq lsp-enabled-clients nil)
-(setq lsp-eldoc-enable-hover t
-      lsp-completion-enable t
-      lsp-enable-snippet nil
-      lsp-signature-auto-activate t
-      lsp-signature-render-documentation nil
-      lsp-keep-workspace-alive nil
-      lsp-diagnostics-provider :flycheck
-      lsp-log-io nil
-      lsp-enable-suggest-server-download nil)
+  :hook
+  (lsp-managed-mode .
+                    (lambda ()
+                      (setq-local company-backends my/company-default-backends)))
+  (python-ts-mode . lsp-deferred)
+  (go-ts-mode . lsp-deferred)
+  (rust-ts-mode . lsp-deferred)
+  (typescript-ts-mode . lsp-deferred)
+  (django-web-mode . lsp-deferred)
+  (c-common-mode . lsp-deferred)
 
-;; python
-(add-hook 'python-ts-mode-hook #'lsp-deferred)
-(setq lsp-pylsp-plugins-autopep8-enabled nil
+  :config
+  (defun lsp-code-action-quickfix ()
+  "Execute quickfix code actions."
+  (interactive)
+  (lsp-execute-code-action-by-kind "quickfix"))
+
+  ;; shortcuts
+  (global-set-key (kbd "<f10>") #'lsp-code-action-quickfix)
+  (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
+
+  ;; pylsp
+  (setq lsp-pylsp-plugins-autopep8-enabled nil
       lsp-pylsp-plugins-yapf-enabled nil
       lsp-pylsp-plugins-black-enabled t
       lsp-pylsp-plugins-flake8-enabled t
@@ -224,12 +186,7 @@ Does not save to kill-ring."
       lsp-pylsp-plugins-pydocstyle-enabled t
       lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
 
-(add-hook 'go-ts-mode #'lsp-deferred)
-(add-hook 'rust-ts-mode #'lsp-deferred)
-(add-hook 'typescript-ts-mode #'lsp-deferred)
-
-;; django
-(with-eval-after-load 'lsp-mode
+  ;; django
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
 
   (lsp-register-client
@@ -257,89 +214,152 @@ Does not save to kill-ring."
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
     :major-modes '(django-web-mode)
     :add-on? t
-    :server-id 'tailwindcss-ls)))
-
-
-(add-hook 'django-web-mode-hook #'lsp-deferred)
-
-;; c/c++
-(add-hook 'c-common-mode-hook #'lsp-deferred)
-
-;; tree-sitter
-(setq treesit-font-lock-level 4)
-(setq treesit-auto-install 'prompt)
+    :server-id 'tailwindcss-ls))
+  )
 
 ;; templ golang
-(require 'templ-ts-mode)
-(add-to-list 'auto-mode-alist '("\\.templ\\'" . templ-ts-mode))
+(use-package templ-ts-mode
+  :ensure t
+  :defer t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.templ\\'" . templ-ts-mode))
+  )
 
-;; dune for ocaml
-(require 'dune)
+(use-package dune
+  :ensure t
+  :defer t)
 
-(require 'yaml-mode)
-(require 'php-mode)
-(require 'go-mode)
-(require 'go-ts-mode)
-(require 'elixir-mode)
+(use-package yaml-mode
+  :ensure t
+  :defer t)
 
-;; svelte
-(require 'svelte-mode)
-(add-to-list 'auto-mode-alist '("\\.svelte\\'" . svelte-mode))
+(use-package php-mode
+  :ensure t
+  :defer t)
 
-(require 'typescript-mode)
-(require 'prettier-js)
-(require 'php-cs-fixer)
-(require 'ruby-mode)
-(require 'rubocopfmt)
-(require 'html-ts-mode)
-(require 'fsharp-mode)
-(require 'crystal-mode)
-(require 'rust-mode)
-(require 'lua-mode)
-(require 'qt-pro-mode)
-(require 'cmake-mode)
-(require 'meson-mode)
-(with-eval-after-load 'meson-mode
-  (define-key meson-mode-map [f1] nil))
-(require 'groovy-mode)
+(use-package go-mode
+  :ensure t
+  :defer t)
 
-;; scala-ts-mode
-(require 'scala-ts-mode)
-(require 'sbt-mode)
+(use-package elixir-mode
+  :ensure t
+  :defer t)
 
-;; blazor
-(add-to-list 'auto-mode-alist '("\\.cshtml?\\'" . csharp-mode))
-(add-to-list 'auto-mode-alist '("\\.razor?\\'" . csharp-mode))
+(use-package svelte-mode
+  :ensure t
+  :defer t
+  :mode ("\\.svelte\\'" . svelte-mode)
+  )
 
-;; ocaml
-(require 'tuareg)
-(add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
-(require 'ocp-indent)
+(use-package typescript-mode
+  :ensure t
+  :defer t)
 
-;; dot-env
-(require 'dotenv-mode)
-(add-to-list 'auto-mode-alist '("\\.env\\..*\\'" . dotenv-mode))
-(setq read-process-output-max (* 1024 1024)) ;; 1MB, default is 4k
+(use-package prettier-js
+  :ensure t
+  :defer t)
+
+(use-package php-cs-fixer
+  :ensure t
+  :defer t)
+
+(use-package ruby-mode
+  :ensure t
+  :defer t)
+
+(use-package rubocopfmt
+  :ensure t
+  :defer t)
+
+(use-package fsharp-mode
+  :ensure t
+  :defer t)
+
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-font-lock-level 4)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(use-package fsharp-mode
+  :ensure t
+  :defer t)
+
+(use-package crystal-mode
+  :ensure t
+  :defer t)
+
+(use-package rust-mode
+  :ensure t
+  :defer t)
+
+(use-package lua-mode
+  :ensure t
+  :defer t)
+
+(use-package qt-pro-mode
+  :ensure t
+  :defer t)
+
+(use-package cmake-mode
+  :ensure t
+  :defer t)
+
+(use-package meson-mode
+  :ensure t
+  :defer t
+  :config
+  (define-key meson-mode-map [f1] nil)
+  )
+
+(use-package groovy-mode
+  :ensure t
+  :defer t)
+
+(use-package scala-ts-mode
+  :ensure t
+  :defer t)
+
+(use-package sbt-mode
+  :ensure t
+  :defer t)
+
+(use-package csharp-mode
+  :ensure t
+  :defer t
+  :mode (("\\.cshtml?\\'" . csharp-mode)
+         ("\\.razor?\\'" . csharp-mode))
+  )
+
+(use-package tuareg
+  :ensure t
+  :defer t
+  :config
+  (add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
+  (require 'ocp-indent)
+  (add-hook 'tuareg-mode-hook 'ocp-setup-indent))
+
+(use-package dotenv-mode
+  :ensure t
+  :defer t
+  :mode ("\\.env\\..*\\'" . dotenv-mode))
 
 (defvar my-prettier-modes '(typescript-mode tsx-ts-mode js-ts-mode json-mode svelte-mode)
   "A list of major modes where Prettier should be used for formatting.")
 
 (defvar my-php-cs-fixer-modes '(php-mode))
 
-(global-set-key (kbd "C-S-a") 'mark-whole-buffer)
-
-(defun lsp-code-action-quickfix ()
-  "Execute quickfix code actions."
-  (interactive)
-  (lsp-execute-code-action-by-kind "quickfix"))
-
-(global-set-key (kbd "<f10>") 'lsp-code-action-quickfix)
-
-(require 'reformatter)
-(reformatter-define djlint-format
-  :program "djlint"
-  :args '("--reformat" "-")
-  :lighter " DJ")
+(use-package reformatter
+  :ensure t
+  :config
+  (reformatter-define djlint-format
+    :program "djlint"
+    :args '("--reformat" "-")
+    :lighter " DJ")
+  )
 
 (defun my-lsp-mode-or-other-format ()
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
@@ -352,9 +372,6 @@ Does not save to kill-ring."
      ((memq major-mode '(ruby-mode)) (rubocopfmt))
      ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
-(add-hook 'before-save-hook #'my-lsp-mode-or-other-format)
-(global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
-
 (defun query-replace-whole-buffer (from to)
   "Query and replace something in the whole buffer"
   (interactive "sQuery replace: \nsQuery replace %s with: ")
@@ -362,33 +379,106 @@ Does not save to kill-ring."
   (goto-char (point-min))
   (query-replace from to)))
 
-;; compile stuff
-(require 'compile)
-(global-set-key (kbd "C-<return>") 'compile)
-(require 'ansi-color)
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
-(setq compilation-scroll-output t)
-(setq compilation-max-output-line-length nil)
+(use-package compile
+  :defer t
+  :init
+  (setq compilation-scroll-output t
+        compilation-max-output-line-length nil)
+  :bind
+  ("C-<return>" . compile))
 
-;; change string casing
-(require 'string-inflection)
-(global-set-key (kbd "<f12>") 'string-inflection-all-cycle)
+(use-package ansi-color
+  :ensure t
+  :hook (compilation-filter-hook . ansi-color-compilation-filter))
 
-;; spell checking
-(global-set-key (kbd "<f11>") #'ispell-word)
 
-;; git
-(require 'magit)
-(setq magit-display-buffer-noselect t)
+(use-package string-inflection
+  :ensure t
+  :defer t
+  :bind ("<f12>" . string-inflection-all-cycle))
 
-;; autosave and stuff
-(require 'no-littering)
-(let ((dir (no-littering-expand-var-file-name "lock-files/")))
-  (make-directory dir t)
-  (setq lock-file-name-transforms `((".*" ,dir t))))
-(no-littering-theme-backups)
+(use-package no-littering
+  :ensure t
+  :defer t
+  :config
+  (let ((dir (no-littering-expand-var-file-name "lock-files/")))
+    (make-directory dir t)
+    (setq lock-file-name-transforms `((".*" ,dir t))))
+  (no-littering-theme-backups)
+  )
 
-;; multiple-cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-d") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
+(use-package multiple-cursors
+  :ensure t
+  :config
+  (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
+  )
+
+(use-package emacs
+  :init
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (setq inhibit-startup-screen t
+        gc-cons-threshold 100000000
+        read-process-output-max (* 1024 1024)
+        display-line-numbers-type 'relative)
+
+  (setq-default indent-tabs-mode nil
+                tab-width 4
+                svelte-basic-offset 4
+                typescript-indent-level 4
+                fsharp-indent-offset 2
+                lua-indent-level 4
+                python-indent-offset 4
+                c-basic-offset 4)
+
+  :hook
+  (minibuffer-setup . my-setup-minibuffer-backspace)
+  (before-save . my-lsp-mode-or-other-format)
+
+  :config
+  ;; ui stuff
+  (set-face-attribute 'default nil :height 180)
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (electric-indent-mode 1)
+  (delete-selection-mode t)
+  (ido-mode 1)
+  (ido-everywhere 1)
+  (global-display-line-numbers-mode 1)
+  (column-number-mode 1)
+
+  ;; spell checking
+  (global-set-key (kbd "<f11>") #'ispell-word)
+
+  ;; cancel things with esc
+  (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+  ;; text stuff shortcuts
+  (global-set-key (kbd "C-S-c") 'kill-ring-save)
+  (global-set-key (kbd "C-S-v") 'yank)
+  (global-set-key (kbd "C-S-x") 'kill-region)
+  (global-set-key (kbd "C-S-s") 'save-buffer)
+  (global-set-key (kbd "C-z") 'undo)
+  (global-set-key (kbd "C-q") 'undo-redo)
+  (global-set-key (kbd "C-/") 'comment-region)
+  (global-set-key (kbd "C-S-/") 'uncomment-region)
+  (global-set-key (kbd "C-l") 'select-current-line)
+  (global-set-key (kbd "C-S-a") 'mark-whole-buffer)
+
+  ;; shortcuts for user functions
+  (global-set-key (kbd "<backspace>") #'my-backspace-or-delete-region)
+  (global-set-key (kbd "C-<backspace>") #'vscode-backward-delete-word)
+
+  ;; Bindings for switching windows
+  (global-set-key (kbd "C-x <right>") 'windmove-right)
+  (global-set-key (kbd "C-x <left>") 'windmove-left)
+  (global-set-key (kbd "C-x <up>") 'windmove-up)
+  (global-set-key (kbd "C-x <down>") 'windmove-down)
+
+  ;; Bindings for navigation
+  (global-set-key (kbd "C-w") 'kill-buffer-and-window)
+  (global-set-key (kbd "<f2>") 'switch-to-next-buffer)
+  (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
+  (global-set-key (kbd "<f3>") 'switch-to-buffer)
+  )
