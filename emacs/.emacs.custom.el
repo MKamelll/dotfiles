@@ -12,22 +12,14 @@
       (delete-region (region-beginning) (region-end))
     (call-interactively 'delete-backward-char)))
 
-(defun vscode-backward-delete-word ()
-  "Delete word backward like VS Code:
-If there's whitespace, delete only whitespace.
-If at a word, delete the word.
-Does not save to kill-ring."
+(defun my/backward-kill-word ()
+  "Kill word backward, stopping at line beginning."
   (interactive)
-  (cond
-   ((bobp) nil)
-   ((looking-back "[[:space:]\n]" 1)
-    (let ((beg (point)))
-      (skip-chars-backward "[:space:]\n")
-      (delete-region beg (point))))
-   (t
-    (let ((beg (point)))
-      (backward-word 1)
-      (delete-region beg (point))))))
+  (let ((limit (line-beginning-position)))
+    (if (> (point) limit)
+        (kill-region (max limit (save-excursion (backward-word) (point)))
+                     (point))
+      (delete-char -1))))
 
 (defun my-setup-minibuffer-backspace ()
   "Make C-Backspace delete word without copying in all minibuffers."
@@ -221,37 +213,34 @@ Does not save to kill-ring."
     :server-id 'tailwindcss-ls))
 
   ;; clangd
-  (setq lsp-clients-clangd-args
-        '("--header-insertion=never" "--fallback-style={IndentWidth: 4, AccessModifierOffset: -4, IndentAccessModifiers: false, SortIncludes: false}"))
+  (setq lsp-clients-clangd-args '("--header-insertion=never"))
   )
 
 ;; templ golang
 (use-package templ-ts-mode
   :ensure t
   :defer t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.templ\\'" . templ-ts-mode))
+  :mode
+  ("\\.templ\\'" . templ-ts-mode)
   )
 
 (use-package dune
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package yaml-mode
   :ensure t
-  :defer t)
+  :mode
+  ("\\.clang-format\\'" . yaml-mode)
+  )
 
 (use-package php-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package go-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package elixir-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package svelte-mode
   :ensure t
@@ -260,28 +249,22 @@ Does not save to kill-ring."
   )
 
 (use-package typescript-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package prettier-js
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package php-cs-fixer
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package ruby-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package rubocopfmt
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package fsharp-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package treesit-auto
   :ensure t
@@ -293,20 +276,16 @@ Does not save to kill-ring."
   (global-treesit-auto-mode))
 
 (use-package fsharp-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package crystal-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package rust-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package lua-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package qt-pro-mode
   :ensure t
@@ -314,38 +293,31 @@ Does not save to kill-ring."
   :mode ("\\.pro\\'" . qt-pro-mode))
 
 (use-package cmake-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package meson-mode
   :ensure t
-  :defer t
   :config
   (define-key meson-mode-map [f1] nil)
   )
 
 (use-package groovy-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package scala-ts-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package sbt-mode
-  :ensure t
-  :defer t)
+  :ensure t)
 
 (use-package csharp-mode
   :ensure t
-  :defer t
   :mode (("\\.cshtml?\\'" . csharp-mode)
          ("\\.razor?\\'" . csharp-mode))
   )
 
 (use-package tuareg
   :ensure t
-  :defer t
   :config
   (add-to-list 'load-path "/home/ice/.opam/default/share/emacs/site-lisp")
   (require 'ocp-indent)
@@ -353,7 +325,6 @@ Does not save to kill-ring."
 
 (use-package dotenv-mode
   :ensure t
-  :defer t
   :mode ("\\.env\\..*\\'" . dotenv-mode))
 
 (defvar my-prettier-modes '(typescript-mode tsx-ts-mode js-ts-mode json-mode svelte-mode)
@@ -389,7 +360,6 @@ Does not save to kill-ring."
   (query-replace from to)))
 
 (use-package compile
-  :defer t
   :init
   (setq compilation-scroll-output t
         compilation-max-output-line-length nil)
@@ -403,7 +373,6 @@ Does not save to kill-ring."
 
 (use-package string-inflection
   :ensure t
-  :defer t
   :bind ("<f12>" . string-inflection-all-cycle))
 
 (use-package no-littering
@@ -438,7 +407,8 @@ Does not save to kill-ring."
                 lua-indent-level 4
                 python-indent-offset 4
                 c-basic-offset 4
-                c-ts-mode-indent-offset 4)
+                c-ts-mode-indent-offset 4
+                c-ts-common-indent-offset 4)
 
   :hook
   (minibuffer-setup . my-setup-minibuffer-backspace)
@@ -477,7 +447,7 @@ Does not save to kill-ring."
 
   ;; shortcuts for user functions
   (global-set-key (kbd "<backspace>") #'my-backspace-or-delete-region)
-  (global-set-key (kbd "C-<backspace>") #'vscode-backward-delete-word)
+  (global-set-key (kbd "C-<backspace>") #'my/backward-kill-word)
 
   ;; Bindings for switching windows
   (global-set-key (kbd "C-x <right>") 'windmove-right)
