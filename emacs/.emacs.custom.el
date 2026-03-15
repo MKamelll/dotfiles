@@ -400,7 +400,6 @@ Does not save to kill-ring."
 
 (use-package no-littering
   :ensure t
-  :defer t
   :config
   (let ((dir (no-littering-expand-var-file-name "lock-files/")))
     (make-directory dir t)
