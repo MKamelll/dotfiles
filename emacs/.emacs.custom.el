@@ -136,6 +136,7 @@ Does not save to kill-ring."
   :ensure t)
 
 (use-package flycheck-clang-tidy
+  :ensure t
   :after flycheck
   :hook (flycheck-mode . flycheck-clang-tidy-setup))
 
@@ -144,6 +145,7 @@ Does not save to kill-ring."
   :init (setq lsp-headerline-breadcrumb-enable nil
               lsp-enabled-clients nil
               lsp-eldoc-enable-hover t
+              lsp-enable-on-type-formatting nil
               lsp-completion-enable t
               lsp-enable-snippet nil
               lsp-signature-auto-activate t
@@ -155,17 +157,19 @@ Does not save to kill-ring."
   :commands (lsp lsp-deferred)
 
   :hook
-  (lsp-managed-mode .
-                    (lambda ()
-                      (setq-local company-backends my/company-default-backends)))
   (python-ts-mode . lsp-deferred)
   (go-ts-mode . lsp-deferred)
   (rust-ts-mode . lsp-deferred)
   (typescript-ts-mode . lsp-deferred)
   (django-web-mode . lsp-deferred)
-  (c-common-mode . lsp-deferred)
+  (c-ts-mode . lsp-deferred)
+  (c++-ts-mode . lsp-deferred)
 
   :config
+  (add-hook 'lsp-managed-mode-hook
+            (lambda ()
+              (setq-local company-backends my/company-default-backends)))
+
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
   (interactive)
@@ -215,6 +219,10 @@ Does not save to kill-ring."
     :major-modes '(django-web-mode)
     :add-on? t
     :server-id 'tailwindcss-ls))
+
+  ;; clangd
+  (setq lsp-clients-clangd-args
+        '("--header-insertion=never" "--fallback-style={IndentWidth: 4, AccessModifierOffset: -4, IndentAccessModifiers: false}"))
   )
 
 ;; templ golang
@@ -429,7 +437,8 @@ Does not save to kill-ring."
                 fsharp-indent-offset 2
                 lua-indent-level 4
                 python-indent-offset 4
-                c-basic-offset 4)
+                c-basic-offset 4
+                c-ts-mode-indent-offset 4)
 
   :hook
   (minibuffer-setup . my-setup-minibuffer-backspace)
