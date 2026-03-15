@@ -222,7 +222,7 @@ Does not save to kill-ring."
 
   ;; clangd
   (setq lsp-clients-clangd-args
-        '("--header-insertion=never" "--fallback-style={IndentWidth: 4, AccessModifierOffset: -4, IndentAccessModifiers: false}"))
+        '("--header-insertion=never" "--fallback-style={IndentWidth: 4, AccessModifierOffset: -4, IndentAccessModifiers: false, SortIncludes: false}"))
   )
 
 ;; templ golang
