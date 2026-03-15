@@ -302,7 +302,8 @@ Does not save to kill-ring."
 
 (use-package qt-pro-mode
   :ensure t
-  :defer t)
+  :defer t
+  :mode ("\\.pro\\'" . qt-pro-mode))
 
 (use-package cmake-mode
   :ensure t
