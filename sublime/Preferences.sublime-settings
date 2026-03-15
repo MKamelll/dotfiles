@@ -6,9 +6,10 @@
 	[
 		"Vintage",
 	],
-	"color_scheme": "OLED.sublime-color-scheme",
+	"color_scheme": "gruber-darker.sublime-color-scheme",
 	"index_files": true,
 	"translate_tabs_to_spaces": true,
 	"highlight_line": true,
 	"console_max_history_lines": 3000,
+	"sidebar_on_right": true,
 }

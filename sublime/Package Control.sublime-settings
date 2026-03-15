@@ -10,6 +10,7 @@
 		"Djaneiro",
 		"Formatter",
 		"LSP",
+		"LSP-clangd",
 		"LSP-gopls",
 		"LSP-pylsp",
 		"LSP-rust-analyzer",

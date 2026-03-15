@@ -8,6 +8,5 @@
     { "keys": ["alt+up"], "command": "swap_line_up" },
     { "keys": ["alt+down"], "command": "swap_line_down" },
     { "keys": ["ctrl+`"], "command": "open_terminal_project_folder" },
-    { "keys": ["ctrl+enter"], "command": "build" }
-
+    { "keys": ["ctrl+enter"], "command": "build" },
 ]

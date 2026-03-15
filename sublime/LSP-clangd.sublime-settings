@@ -1,0 +1,6 @@
+// Settings in here override those in "LSP-clangd/LSP-clangd.sublime-settings"
+
+{
+    "clangd.clang-tidy": true,
+    "clangd.header-insertion": "never",
+}
