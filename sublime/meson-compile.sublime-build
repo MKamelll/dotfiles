@@ -1,0 +1,3 @@
+{
+    "shell_cmd": "meson compile -C build && ./build/\\$(basename \\$(pwd))"
+}

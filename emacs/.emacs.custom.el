@@ -141,7 +141,8 @@
               lsp-completion-enable t
               lsp-enable-snippet nil
               lsp-signature-auto-activate t
-              lsp-signature-render-documentation nil
+              lsp-signature-render-documentation t
+              lsp-signature-doc-lines 3
               lsp-keep-workspace-alive nil
               lsp-diagnostics-provider :flycheck
               lsp-log-io nil
