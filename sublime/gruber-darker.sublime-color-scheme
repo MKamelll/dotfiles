@@ -148,6 +148,11 @@
             "scope": "variable.other",
             "foreground": "var(gruber-darker-fg)"
         },
+        {
+            "scope": "storage.type",
+            "foreground": "var(gruber-darker-yellow)",
+            "font_style": "bold"
+        }
     ]
 }
 
