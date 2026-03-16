@@ -12,4 +12,5 @@
 	"highlight_line": true,
 	"console_max_history_lines": 3000,
 	"sidebar_on_right": true,
+	"translate_tabs_to_spaces": true,
 }
