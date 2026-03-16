@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"AutoFileName",
 		"ayu",
 		"Catppuccin color schemes",
 		"Djaneiro",
