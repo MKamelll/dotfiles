@@ -1,4 +1,7 @@
 // Settings in here override those in "LSP-pylsp/LSP-pylsp.sublime-settings"
 
 {
+    "pylsp.plugins.pylsp_mypy.enabled": true,
+    "pylsp.plugins.pylsp_mypy.strict": true,
+    "pylsp.plugins.pylsp_mypy.live_mode": true,
 }
