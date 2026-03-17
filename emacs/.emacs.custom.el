@@ -63,6 +63,10 @@
   :config
   (amx-mode 1))
 
+(use-package transient
+  :config
+  (define-key transient-map [escape] #'transient-quit-one))
+
 (use-package magit
   :ensure t
   :init
