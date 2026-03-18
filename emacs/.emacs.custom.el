@@ -46,6 +46,18 @@
   :ensure t
   :config (projectile-mode 1))
 
+(use-package emms
+  :ensure t
+  :defer t
+  :init
+  (setq-default emms-player-list '(emms-player-mpv)
+                emms-player-mpv-environment '("PULSE_PROP_media.role=music")
+                emms-player-mpv-parameters
+                '("--quiet" "--really-quiet" "--no-audio-display" "--force-window=no" "--vo=null"))
+  :config
+  (emms-all)
+)
+
 (use-package smex
   :ensure t
   :config
