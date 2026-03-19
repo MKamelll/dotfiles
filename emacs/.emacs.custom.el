@@ -188,6 +188,11 @@
   (global-set-key (kbd "<f10>") #'lsp-code-action-quickfix)
   (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
+  (define-key lsp-signature-mode-map (kbd "<tab>") #'lsp-signature-next)
+  (define-key lsp-signature-mode-map (kbd "TAB") #'lsp-signature-next)
+  (define-key lsp-signature-mode-map (kbd "<backtab>") #'lsp-signature-previous)
+
+
   ;; pylsp
   (setq lsp-pylsp-plugins-autopep8-enabled nil
       lsp-pylsp-plugins-yapf-enabled nil
@@ -230,7 +235,7 @@
     :server-id 'tailwindcss-ls))
 
   ;; clangd
-  (setq lsp-clients-clangd-args '("--header-insertion=never"))
+  (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed"))
   )
 
 ;; templ golang
