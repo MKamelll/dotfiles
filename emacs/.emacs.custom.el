@@ -414,7 +414,10 @@
   (setq inhibit-startup-screen t
         gc-cons-threshold 100000000
         read-process-output-max (* 1024 1024)
-        display-line-numbers-type 'relative)
+        display-line-numbers-type 'relative
+        select-enable-clipboard nil
+        select-enable-primary nil
+        mouse-drag-copy-region nil)
 
   (setq-default indent-tabs-mode nil
                 tab-width 4
@@ -451,9 +454,9 @@
   (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
   ;; text stuff shortcuts
-  (global-set-key (kbd "C-S-c") 'kill-ring-save)
-  (global-set-key (kbd "C-S-v") 'yank)
-  (global-set-key (kbd "C-S-x") 'kill-region)
+  (global-set-key (kbd "C-S-c") 'clipboard-kill-ring-save)
+  (global-set-key (kbd "C-S-v") 'clipboard-yank)
+  (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
   (global-set-key (kbd "C-S-s") 'save-buffer)
   (global-set-key (kbd "C-z") 'undo)
   (global-set-key (kbd "C-q") 'undo-redo)
