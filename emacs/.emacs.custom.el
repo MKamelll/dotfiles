@@ -188,9 +188,9 @@
   (global-set-key (kbd "<f10>") #'lsp-code-action-quickfix)
   (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
-  (define-key lsp-signature-mode-map (kbd "<tab>") #'lsp-signature-next)
-  (define-key lsp-signature-mode-map (kbd "TAB") #'lsp-signature-next)
-  (define-key lsp-signature-mode-map (kbd "<backtab>") #'lsp-signature-previous)
+  (define-key lsp-signature-mode-map (kbd "C-<tab>") #'lsp-signature-next)
+  (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
+  (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
 
   ;; pylsp
