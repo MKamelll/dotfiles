@@ -95,6 +95,9 @@
   :bind (("M-<up>" . drag-stuff-up)
          ("M-<down>" . drag-stuff-down)))
 
+(use-package yasnippet-snippets
+  :ensure t)
+
 (use-package yasnippet
   :ensure t
   :config
@@ -337,6 +340,9 @@
   :mode (("\\.cshtml?\\'" . csharp-mode)
          ("\\.razor?\\'" . csharp-mode))
   )
+
+(use-package ocp-indent
+  :ensure t)
 
 (use-package tuareg
   :ensure t
