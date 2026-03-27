@@ -110,9 +110,12 @@
   (setq company-idle-delay 0.2
         company-minimum-prefix-length 2
         company-dabbrev-ignore-case t
+        company-dabbrev-downcase nil
         completion-ignore-case t
         company-dabbrev-other-buffers t
-        company-dabbrev-code-everywhere t)
+        company-dabbrev-code-everywhere t
+        company-transformers '(company-sort-prefer-same-case-prefix)
+        )
 
   (defvar my/company-default-backends
     '((company-capf company-dabbrev-code company-dabbrev company-files))
@@ -497,7 +500,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(modus-vivendi))
+ '(custom-enabled-themes '(gruber-darker))
+ '(custom-safe-themes
+   '("e13beeb34b932f309fb2c360a04a460821ca99fe58f69e65557d6c1b10ba18c7"
+     default))
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
