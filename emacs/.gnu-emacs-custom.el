@@ -198,7 +198,6 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
-
   ;; pylsp
   (setq lsp-pylsp-plugins-autopep8-enabled nil
       lsp-pylsp-plugins-yapf-enabled nil
@@ -460,6 +459,11 @@
   (ido-everywhere 1)
   (global-display-line-numbers-mode 1)
   (column-number-mode 1)
+
+  (add-hook 'c++-ts-mode-hook
+          (lambda ()
+            (define-key c++-ts-mode-map (kbd "TAB") nil)
+            (define-key c++-ts-mode-map (kbd "<tab>") nil)))
 
   ;; spell checking
   (global-set-key (kbd "<f11>") #'ispell-word)
