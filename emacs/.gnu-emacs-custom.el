@@ -125,6 +125,11 @@
   :config
   (global-company-mode 1)
   (define-key company-mode-map (kbd "C-SPC") #'company-complete)
+  (define-key company-mode-map (kbd "TAB") nil)
+  (define-key company-mode-map (kbd "<tab>") nil)
+  (define-key company-active-map (kbd "TAB") #'company-select-next)
+  (define-key company-active-map (kbd "<tab>") #'company-select-next)
+  (define-key company-active-map (kbd "<backtab>") #'company-select-previous)
   )
 
 
@@ -194,6 +199,8 @@
   (global-set-key (kbd "<f10>") #'lsp-code-action-quickfix)
   (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
+  (define-key lsp-mode-map (kbd "<tab>") nil)
+  (define-key lsp-mode-map (kbd "TAB") nil)
   (define-key lsp-signature-mode-map (kbd "C-<tab>") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
