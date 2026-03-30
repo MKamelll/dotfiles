@@ -127,9 +127,8 @@
   (define-key company-mode-map (kbd "C-SPC") #'company-complete)
   (define-key company-mode-map (kbd "TAB") nil)
   (define-key company-mode-map (kbd "<tab>") nil)
-  (define-key company-active-map (kbd "TAB") #'company-select-next)
-  (define-key company-active-map (kbd "<tab>") #'company-select-next)
-  (define-key company-active-map (kbd "<backtab>") #'company-select-previous)
+  (define-key company-active-map (kbd "TAB") #'company-complete-common-or-cycle)
+  (define-key company-active-map (kbd "<tab>") #'company-complete-common-or-cycle)
   )
 
 
