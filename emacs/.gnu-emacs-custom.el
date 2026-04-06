@@ -117,11 +117,6 @@
         company-transformers '(company-sort-prefer-same-case-prefix)
         )
 
-  (defvar my/company-default-backends
-    '((company-capf company-dabbrev-code company-dabbrev company-files))
-  "Default company backends including LSP (capf) and local buffer completions.")
-  (setq company-backends my/company-default-backends)
-
   :config
   (global-company-mode 1)
   (define-key company-mode-map (kbd "C-SPC") #'company-complete)
@@ -130,7 +125,6 @@
   (define-key company-active-map (kbd "TAB") #'company-complete-common-or-cycle)
   (define-key company-active-map (kbd "<tab>") #'company-complete-common-or-cycle)
   )
-
 
 (use-package web-mode
   :ensure t
@@ -187,7 +181,9 @@
   :config
   (add-hook 'lsp-managed-mode-hook
             (lambda ()
-              (setq-local company-backends my/company-default-backends)))
+              (setq-local company-backends
+                          '((company-capf company-dabbrev-code company-dabbrev company-files)))
+              ))
 
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
