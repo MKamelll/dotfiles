@@ -427,6 +427,11 @@
   (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
   )
 
+(use-package gruber-darker-theme
+  :ensure t
+  :config
+  (load-theme 'gruber-darker t))
+
 (use-package emacs
   :init
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -455,7 +460,7 @@
 
   :config
   ;; ui stuff
-  (set-face-attribute 'default nil :height 180)
+  (set-face-attribute 'default nil :height 160)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
@@ -505,20 +510,3 @@
   (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
   (global-set-key (kbd "<f3>") 'switch-to-buffer)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(gruber-darker))
- '(custom-safe-themes
-   '("01a9797244146bbae39b18ef37e6f2ca5bebded90d9fe3a2f342a9e863aaa4fd"
-     "e13beeb34b932f309fb2c360a04a460821ca99fe58f69e65557d6c1b10ba18c7"
-     default))
- '(package-selected-packages nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
