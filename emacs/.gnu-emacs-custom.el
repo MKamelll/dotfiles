@@ -147,11 +147,6 @@
 (use-package flycheck
   :ensure t)
 
-(use-package flycheck-clang-tidy
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-clang-tidy-setup))
-
 (use-package lsp-mode
   :ensure t
   :init (setq lsp-headerline-breadcrumb-enable nil
@@ -242,7 +237,7 @@
     :server-id 'tailwindcss-ls))
 
   ;; clangd
-  (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed" "--query-driver=/usr/bin/g++"))
+  (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed" "--query-driver=/usr/bin/g++" "--clang-tidy"))
   )
 
 ;; templ golang
@@ -506,3 +501,15 @@
   (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
   (global-set-key (kbd "<f3>") 'switch-to-buffer)
   )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
