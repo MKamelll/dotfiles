@@ -5,7 +5,7 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
-(defun my-backspace-or-delete-region ()
+(defun my/backspace-or-delete-region ()
   "Delete region with Backspace (and Shift+Backspace)"
   (interactive)
   (if (use-region-p)
@@ -21,7 +21,7 @@
                      (point))
       (delete-char -1))))
 
-(defun my-setup-minibuffer-backspace ()
+(defun my/setup-minibuffer-backspace ()
   "Make C-Backspace delete word without copying in all minibuffers."
   (dolist (keymap (list minibuffer-local-map
                         minibuffer-local-ns-map
@@ -368,7 +368,7 @@
     :lighter " DJ")
   )
 
-(defun my-lsp-mode-or-other-format ()
+(defun my/lsp-mode-or-other-format ()
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
   (interactive)
   (delete-trailing-whitespace)
@@ -416,6 +416,8 @@
   :config
   (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
+  (add-to-list 'mc/cmds-to-run-for-all 'my/backspace-or-delete-region)
+  (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word)
   )
 
 (use-package gruber-darker-theme
@@ -446,8 +448,8 @@
                 c-ts-common-indent-offset 4)
 
   :hook
-  (minibuffer-setup . my-setup-minibuffer-backspace)
-  (before-save . my-lsp-mode-or-other-format)
+  (minibuffer-setup . my/setup-minibuffer-backspace)
+  (before-save . my/lsp-mode-or-other-format)
 
   :config
   ;; ui stuff
@@ -486,7 +488,7 @@
   (global-set-key (kbd "C-S-a") 'mark-whole-buffer)
 
   ;; shortcuts for user functions
-  (global-set-key (kbd "<backspace>") #'my-backspace-or-delete-region)
+  (global-set-key (kbd "<backspace>") #'my/backspace-or-delete-region)
   (global-set-key (kbd "C-<backspace>") #'my/backward-kill-word)
 
   ;; Bindings for switching windows
