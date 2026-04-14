@@ -87,6 +87,8 @@
               ("<escape>" . keyboard-escape-quit)
               ("C-w" . kill-buffer-and-window)))
 
+(use-package git-commit
+  :config (remove-hook 'git-commit-setup-hook #'git-commit-setup-capf))
 
 (use-package drag-stuff
   :ensure t
