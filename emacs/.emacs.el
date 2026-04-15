@@ -471,6 +471,9 @@
             (define-key c++-ts-mode-map (kbd "TAB") nil)
             (define-key c++-ts-mode-map (kbd "<tab>") nil)))
 
+  ;; flycheck
+  (global-set-key (kbd "C-f") 'flycheck-list-errors)
+
   ;; spell checking
   (global-set-key (kbd "<f11>") #'ispell-word)
 
