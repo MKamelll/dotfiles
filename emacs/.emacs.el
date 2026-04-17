@@ -163,7 +163,8 @@
               lsp-keep-workspace-alive nil
               lsp-diagnostics-provider :flycheck
               lsp-log-io nil
-              lsp-enable-suggest-server-download nil)
+              lsp-enable-suggest-server-download nil
+              lsp-auto-guess-root t)
   :commands (lsp lsp-deferred)
 
   :hook
@@ -203,6 +204,7 @@
       lsp-pylsp-plugins-black-enabled t
       lsp-pylsp-plugins-flake8-enabled t
       lsp-pylsp-plugins-mypy-enabled t
+      lsp-pylsp-plugins-mypy-dmypy-enabled t
       lsp-pylsp-plugins-mypy-live-mode t
       lsp-pylsp-plugins-mypy-strict t
       lsp-pylsp-plugins-pydocstyle-enabled t
