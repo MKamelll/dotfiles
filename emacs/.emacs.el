@@ -130,18 +130,19 @@
 
 (use-package web-mode
   :ensure t
+  :init
+  (define-derived-mode django-web-mode web-mode "django-web"
+    "Web-mode for Django templates.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
          ("\\.as[cp]x\\'"    . web-mode)
          ("\\.erb\\'"         . web-mode)
          ("\\.mustache\\'"    . web-mode)
-         ("\\.html?\\'"       . web-mode))
+         ("\\.html?\\'"       . web-mode)
+         ("\\.djhtml\\'" . django-web-mode))
   :config
-  (define-derived-mode django-web-mode web-mode "django-web"
-    "Web-mode for Django templates.")
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . django-web-mode))
-
   ;; other pref
   (setq web-mode-attr-indent-offset 2)
   )
@@ -506,9 +507,9 @@
 
   ;; Bindings for navigation
   (global-set-key (kbd "C-w") 'kill-buffer-and-window)
-  (global-set-key (kbd "<f2>") 'switch-to-next-buffer)
-  (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
-  (global-set-key (kbd "<f3>") 'switch-to-buffer)
+  (global-set-key (kbd "<f3>") 'switch-to-next-buffer)
+  (global-set-key (kbd "<f2>") 'switch-to-prev-buffer)
+  (global-set-key (kbd "<f1>") 'switch-to-buffer)
   )
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
