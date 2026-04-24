@@ -148,6 +148,11 @@
   :config
   ;; other pref
   (setq web-mode-attr-indent-offset 2)
+  (add-hook 'django-web-mode-hook
+          (lambda ()
+            (web-mode-set-engine "django")
+            (font-lock-flush)
+            (font-lock-ensure)))
   )
 
 (use-package flycheck
