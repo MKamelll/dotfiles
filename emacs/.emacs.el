@@ -97,14 +97,17 @@
   :bind (("M-<up>" . drag-stuff-up)
          ("M-<down>" . drag-stuff-down)))
 
-(use-package yasnippet-snippets
-  :ensure t)
 
 (use-package yasnippet
   :ensure t
   :config
-  (require 'yasnippet-snippets)
-  (yas-minor-mode t))
+  (yas-reload-all)
+  (yas-global-mode 1)
+  )
+
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
 
 (use-package company
   :ensure t
@@ -223,23 +226,10 @@
 
   (lsp-register-client
    (make-lsp-client
-    :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
-    :major-modes '(django-web-mode)
-    :server-id 'html-ls))
-
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection '("emmet-ls" "--stdio"))
-    :major-modes '(django-web-mode)
-    :add-on? t
-    :server-id 'emmet-ls))
-
-  (lsp-register-client
-   (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
     :major-modes '(django-web-mode)
     :add-on? t
-    :server-id 'tailwindcss-ls))
+    :server-id 'tailwindcss-ls-django))
 
   ;; clangd
   (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed" "--query-driver=/usr/bin/g++" "--clang-tidy"))
