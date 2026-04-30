@@ -137,6 +137,9 @@
   (define-derived-mode django-web-mode web-mode "django-web"
     "Web-mode for Django templates.")
 
+  (define-derived-mode svelte-mode web-mode "svelte"
+    "Web-mode for svelte files.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
@@ -144,13 +147,25 @@
          ("\\.erb\\'"         . web-mode)
          ("\\.mustache\\'"    . web-mode)
          ("\\.html?\\'"       . web-mode)
+         ("\\.svelte\\'" . svelte-mode)
          ("\\.djhtml\\'" . django-web-mode))
   :config
   ;; other pref
-  (setq web-mode-attr-indent-offset 2)
+  (setq web-mode-markup-indent-offset 4
+        web-mode-css-indent-offset 4
+        web-mode-code-indent-offset 4
+        web-mode-attr-indent-offset 4
+        web-mode-script-padding 4)
+
   (add-hook 'django-web-mode-hook
           (lambda ()
             (web-mode-set-engine "django")
+            (font-lock-flush)
+            (font-lock-ensure)))
+
+  (add-hook 'svelte-mode-hook
+          (lambda ()
+            (web-mode-set-engine "svelte")
             (font-lock-flush)
             (font-lock-ensure)))
   )
@@ -267,11 +282,6 @@
 (use-package elixir-mode
   :ensure t)
 
-(use-package svelte-mode
-  :ensure t
-  :mode ("\\.svelte\\'" . svelte-mode)
-  )
-
 (use-package json-mode
   :ensure t
   :defer t
@@ -280,7 +290,10 @@
   )
 
 (use-package typescript-mode
-  :ensure t)
+  :ensure t
+  :config
+  (setq typescript-indent-level 4)
+  )
 
 (use-package prettier-js
   :ensure t)
@@ -438,8 +451,6 @@
 
   (setq-default indent-tabs-mode nil
                 tab-width 4
-                svelte-basic-offset 4
-                typescript-indent-level 4
                 treesit-font-lock-level 4
                 treesit-auto-install 'prompt
                 fsharp-indent-offset 2
@@ -518,9 +529,8 @@
          json-mode lsp-mode lua-mode magit meson-mode multiple-cursors
          no-littering ocp-indent php-cs-fixer php-mode prettier-js
          projectile qt-pro-mode reformatter rubocopfmt rust-mode
-         sbt-mode scala-ts-mode smex string-inflection svelte-mode
-         templ-ts-mode tuareg typescript-mode web-mode yaml-mode
-         yasnippet-snippets)))
+         sbt-mode scala-ts-mode smex string-inflection templ-ts-mode
+         tuareg typescript-mode web-mode yaml-mode yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
