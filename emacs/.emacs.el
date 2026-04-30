@@ -184,6 +184,7 @@
   (django-web-mode . lsp-deferred)
   (c-ts-mode . lsp-deferred)
   (c++-ts-mode . lsp-deferred)
+  (svelte-mode . lsp-deferred)
 
   :config
   (add-hook 'lsp-managed-mode-hook
@@ -270,6 +271,13 @@
   :ensure t
   :defer t
   :mode ("\\.svelte\\'" . svelte-mode)
+  )
+
+(use-package json-mode
+  :ensure t
+  :defer t
+  :mode
+  ("\\.prettierrc\\'" . json-mode)
   )
 
 (use-package typescript-mode
@@ -516,7 +524,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil))
+ '(package-selected-packages
+   '(amx cmake-mode company crystal-mode dotenv-mode drag-stuff dune
+         elixir-mode emms flycheck fsharp-mode go-mode groovy-mode
+         gruber-darker-theme ido-completing-read+ indent-bars
+         json-mode lsp-mode lua-mode magit meson-mode multiple-cursors
+         no-littering ocp-indent php-cs-fixer php-mode prettier-js
+         projectile qt-pro-mode reformatter rubocopfmt rust-mode
+         sbt-mode scala-ts-mode smex string-inflection svelte-mode
+         templ-ts-mode treesit-auto tuareg typescript-mode web-mode
+         yaml-mode yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
