@@ -177,13 +177,13 @@
   :commands (lsp lsp-deferred)
 
   :hook
-  (python-ts-mode . lsp-deferred)
-  (go-ts-mode . lsp-deferred)
-  (rust-ts-mode . lsp-deferred)
-  (typescript-ts-mode . lsp-deferred)
+  (python-mode . lsp-deferred)
+  (go-mode . lsp-deferred)
+  (rust-mode . lsp-deferred)
+  (typescript-mode . lsp-deferred)
   (django-web-mode . lsp-deferred)
-  (c-ts-mode . lsp-deferred)
-  (c++-ts-mode . lsp-deferred)
+  (c-mode . lsp-deferred)
+  (c++-mode . lsp-deferred)
   (svelte-mode . lsp-deferred)
 
   :config
@@ -269,7 +269,6 @@
 
 (use-package svelte-mode
   :ensure t
-  :defer t
   :mode ("\\.svelte\\'" . svelte-mode)
   )
 
@@ -294,18 +293,6 @@
 
 (use-package rubocopfmt
   :ensure t)
-
-(use-package fsharp-mode
-  :ensure t)
-
-(use-package treesit-auto
-  :ensure t
-  :custom
-  (treesit-auto-install 'prompt)
-  (treesit-font-lock-level 4)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
 
 (use-package fsharp-mode
   :ensure t)
@@ -362,7 +349,7 @@
   :ensure t
   :mode ("\\.env\\..*\\'" . dotenv-mode))
 
-(defvar my-prettier-modes '(typescript-mode tsx-ts-mode js-ts-mode json-mode svelte-mode)
+(defvar my-prettier-modes '(typescript-mode tsx-mode js-mode json-mode svelte-mode)
   "A list of major modes where Prettier should be used for formatting.")
 
 (defvar my-php-cs-fixer-modes '(php-mode))
@@ -453,12 +440,12 @@
                 tab-width 4
                 svelte-basic-offset 4
                 typescript-indent-level 4
+                treesit-font-lock-level 4
+                treesit-auto-install 'prompt
                 fsharp-indent-offset 2
                 lua-indent-level 4
                 python-indent-offset 4
-                c-basic-offset 4
-                c-ts-mode-indent-offset 4
-                c-ts-common-indent-offset 4)
+                c-basic-offset 4)
 
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
@@ -477,10 +464,10 @@
   (global-display-line-numbers-mode 1)
   (column-number-mode 1)
 
-  (add-hook 'c++-ts-mode-hook
+  (add-hook 'c++-mode-hook
           (lambda ()
-            (define-key c++-ts-mode-map (kbd "TAB") nil)
-            (define-key c++-ts-mode-map (kbd "<tab>") nil)))
+            (define-key c++-mode-map (kbd "TAB") nil)
+            (define-key c++-mode-map (kbd "<tab>") nil)))
 
   ;; flycheck
   (global-set-key (kbd "C-f") 'flycheck-list-errors)
@@ -532,8 +519,8 @@
          no-littering ocp-indent php-cs-fixer php-mode prettier-js
          projectile qt-pro-mode reformatter rubocopfmt rust-mode
          sbt-mode scala-ts-mode smex string-inflection svelte-mode
-         templ-ts-mode treesit-auto tuareg typescript-mode web-mode
-         yaml-mode yasnippet-snippets)))
+         templ-ts-mode tuareg typescript-mode web-mode yaml-mode
+         yasnippet-snippets)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
