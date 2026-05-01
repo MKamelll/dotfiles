@@ -143,13 +143,16 @@
   (define-derived-mode vue-mode web-mode "vue"
     "Web-mode for vue files.")
 
+  (define-derived-mode html-web-mode web-mode "html-web"
+    "Web-mode for html files.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
          ("\\.as[cp]x\\'"    . web-mode)
          ("\\.erb\\'"         . web-mode)
          ("\\.mustache\\'"    . web-mode)
-         ("\\.html?\\'"       . web-mode)
+         ("\\.html?\\'"       . html-web-mode)
          ("\\.svelte\\'" . svelte-mode)
          ("\\.vue\\'" . vue-mode)
          ("\\.djhtml\\'" . django-web-mode))
@@ -177,6 +180,12 @@
   (add-hook 'vue-mode-hook
             (lambda ()
               (web-mode-set-engine "vue")
+              (font-lock-flush)
+              (font-lock-ensure)))
+
+  (add-hook 'html-web-mode-hook
+            (lambda ()
+              (web-mode-set-engine "html")
               (font-lock-flush)
               (font-lock-ensure)))
   )
@@ -212,6 +221,7 @@
   (c++-mode . lsp-deferred)
   (svelte-mode . lsp-deferred)
   (vue-mode . lsp-deferred)
+  (html-web-mode . lsp-deferred)
 
   :config
   (add-hook 'lsp-managed-mode-hook
@@ -235,6 +245,12 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
+  ;; html-web-mode
+  (add-hook 'html-web-mode-hook
+            (lambda ()
+              (setq-local lsp-enable-snippet t
+                          lsp-disabled-clients '(emmet-ls))))
+
   ;; pylsp
   (setq lsp-pylsp-plugins-autopep8-enabled nil
       lsp-pylsp-plugins-yapf-enabled nil
@@ -249,6 +265,11 @@
 
   ;; django
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
+  (add-hook 'django-web-mode-hook
+            (lambda ()
+              (setq-local lsp-enable-snippet t
+                          lsp-disabled-clients '(emmet-ls))))
+
 
   (lsp-register-client
    (make-lsp-client
@@ -260,9 +281,9 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
-    :major-modes '(django-web-mode)
+    :major-modes '(django-web-mode svelte-mode)
     :add-on? t
-    :server-id 'tailwindcss-ls-django))
+    :server-id 'tailwindcss-ls))
 
   ;; clangd
   (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed" "--query-driver=/usr/bin/g++" "--clang-tidy"))
