@@ -140,6 +140,9 @@
   (define-derived-mode svelte-mode web-mode "svelte"
     "Web-mode for svelte files.")
 
+  (define-derived-mode vue-mode web-mode "vue"
+    "Web-mode for vue files.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
@@ -148,7 +151,9 @@
          ("\\.mustache\\'"    . web-mode)
          ("\\.html?\\'"       . web-mode)
          ("\\.svelte\\'" . svelte-mode)
+         ("\\.vue\\'" . vue-mode)
          ("\\.djhtml\\'" . django-web-mode))
+
   :config
   ;; other pref
   (setq web-mode-markup-indent-offset 4
@@ -168,6 +173,12 @@
             (web-mode-set-engine "svelte")
             (font-lock-flush)
             (font-lock-ensure)))
+
+  (add-hook 'vue-mode-hook
+            (lambda ()
+              (web-mode-set-engine "vue")
+              (font-lock-flush)
+              (font-lock-ensure)))
   )
 
 (use-package flycheck
@@ -200,6 +211,7 @@
   (c-mode . lsp-deferred)
   (c++-mode . lsp-deferred)
   (svelte-mode . lsp-deferred)
+  (vue-mode . lsp-deferred)
 
   :config
   (add-hook 'lsp-managed-mode-hook
