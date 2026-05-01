@@ -320,6 +320,7 @@
   :defer t
   :mode
   ("\\.prettierrc\\'" . json-mode)
+  ("\\.djlintrc\\'" . json-mode)
   )
 
 (use-package typescript-mode
