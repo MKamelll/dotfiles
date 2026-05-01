@@ -281,7 +281,7 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode)
+    :major-modes '(django-web-mode svelte-mode html-web-mode)
     :add-on? t
     :server-id 'tailwindcss-ls))
 
