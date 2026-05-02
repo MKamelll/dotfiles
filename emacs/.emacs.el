@@ -252,7 +252,9 @@
         lsp-pylsp-plugins-flake8-enabled t
         lsp-pylsp-plugins-mypy-enabled t
         lsp-pylsp-plugins-mypy-dmypy-enabled t
+        lsp-pylsp-plugins-mypy-live-mode t
         lsp-pylsp-plugins-pydocstyle-enabled t
+        lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"]
         )
 
   ;; html-web-mode
