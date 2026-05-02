@@ -245,23 +245,21 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
+  ;; pylsp
+  (setq lsp-pylsp-plugins-autopep8-enabled nil
+        lsp-pylsp-plugins-yapf-enabled nil
+        lsp-pylsp-plugins-black-enabled t
+        lsp-pylsp-plugins-flake8-enabled t
+        lsp-pylsp-plugins-mypy-enabled t
+        lsp-pylsp-plugins-mypy-dmypy-enabled t
+        lsp-pylsp-plugins-pydocstyle-enabled t
+        )
+
   ;; html-web-mode
   (add-hook 'html-web-mode-hook
             (lambda ()
               (setq-local lsp-enable-snippet t
                           lsp-disabled-clients '(emmet-ls))))
-
-  ;; pylsp
-  (setq lsp-pylsp-plugins-autopep8-enabled nil
-      lsp-pylsp-plugins-yapf-enabled nil
-      lsp-pylsp-plugins-black-enabled t
-      lsp-pylsp-plugins-flake8-enabled t
-      lsp-pylsp-plugins-mypy-enabled t
-      lsp-pylsp-plugins-mypy-dmypy-enabled t
-      lsp-pylsp-plugins-mypy-live-mode t
-      lsp-pylsp-plugins-mypy-strict t
-      lsp-pylsp-plugins-pydocstyle-enabled t
-      lsp-pylsp-plugins-pydocstyle-ignore ["D100" "D101" "D102" "D103" "D104" "D105" "D106" "D107"])
 
   ;; django
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
@@ -269,7 +267,6 @@
             (lambda ()
               (setq-local lsp-enable-snippet t
                           lsp-disabled-clients '(emmet-ls))))
-
 
   (lsp-register-client
    (make-lsp-client
