@@ -528,7 +528,6 @@
   (before-save . my/lsp-mode-or-other-format)
 
   :config
-  ;; ui stuff
   (set-face-attribute 'default nil :height 160)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
@@ -539,6 +538,7 @@
   (ido-everywhere 1)
   (global-display-line-numbers-mode 1)
   (column-number-mode 1)
+  (setq ido-auto-merge-work-directories-length -1)
 
   (add-hook 'c++-mode-hook
           (lambda ()
