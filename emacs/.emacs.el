@@ -222,6 +222,7 @@
   (svelte-mode . lsp-deferred)
   (vue-mode . lsp-deferred)
   (html-web-mode . lsp-deferred)
+  (templ-ts-mode . lsp-deferred)
 
   :config
   (add-hook 'lsp-managed-mode-hook
@@ -244,6 +245,19 @@
   (define-key lsp-signature-mode-map (kbd "C-<tab>") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
+
+  ;; templ-ts-mode
+  (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "html"))
+  (add-hook 'templ-ts-mode-hook
+            (lambda ()
+              (setq-local lsp-enable-snippet t)))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("templ" "lsp"))
+    :major-modes '(templ-ts-mode)
+    :priority 1
+    :server-id 'templ-ls))
 
   ;; pylsp
   (setq lsp-pylsp-plugins-autopep8-enabled nil
@@ -281,7 +295,7 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode)
+    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode)
     :add-on? t
     :server-id 'tailwindcss-ls))
 
@@ -295,6 +309,9 @@
   :defer t
   :mode
   ("\\.templ\\'" . templ-ts-mode)
+  :config
+  (setq go-ts-mode-indent-offset 4
+        js-indent-level 4)
   )
 
 (use-package dune
