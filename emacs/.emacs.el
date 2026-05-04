@@ -250,7 +250,9 @@
   ;; typescript-mode
   (add-hook 'typescript-mode-hook
             (lambda ()
-              (setq-local eldoc-echo-area-use-multiline-p 3)
+              (setq-local lsp-signature-auto-activate nil
+                          lsp-signature-render-documentation nil
+                          lsp-signature-doc-lines 1)
               ))
 
   ;; templ-ts-mode
