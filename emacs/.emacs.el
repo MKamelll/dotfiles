@@ -490,6 +490,19 @@
   (setq dired-dwim-target t)
   )
 
+(use-package treesit
+  :config
+  (defun my-treesit-reparse-on-save ()
+  "Force treesit to reparse the buffer if it matches specific modes."
+  (let ((allowed-modes '(templ-ts-mode)))
+    (when (and (memq major-mode allowed-modes)
+               (treesit-parser-list))
+      (font-lock-flush)
+      (font-lock-ensure))))
+
+  (add-hook 'after-save-hook #'my-treesit-reparse-on-save)
+)
+
 (use-package emacs
   :init
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
