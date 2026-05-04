@@ -214,6 +214,7 @@
   :hook
   (python-mode . lsp-deferred)
   (go-mode . lsp-deferred)
+  (go-ts-mode . lsp-deferred)
   (rust-mode . lsp-deferred)
   (typescript-mode . lsp-deferred)
   (django-web-mode . lsp-deferred)
