@@ -247,6 +247,12 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
+  ;; typescript-mode
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (setq-local eldoc-echo-area-use-multiline-p 3)
+              ))
+
   ;; templ-ts-mode
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "html"))
   (add-hook 'templ-ts-mode-hook
