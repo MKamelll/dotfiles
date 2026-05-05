@@ -252,7 +252,9 @@
             (lambda ()
               (setq-local lsp-signature-auto-activate nil
                           lsp-signature-render-documentation nil
-                          lsp-signature-doc-lines 1)
+                          lsp-signature-doc-lines 1
+                          lsp-typescript-preferences
+                          '(:importModuleSpecifierPreference "relative"))
               ))
 
   ;; templ-ts-mode
