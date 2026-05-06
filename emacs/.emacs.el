@@ -484,8 +484,8 @@
 (use-package multiple-cursors
   :ensure t
   :config
-  (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-S-d") 'mc/mark-previous-like-this)
+  (bind-key* "C-d" 'mc/mark-next-like-this)
+  (bind-key* "C-S-d" 'mc/mark-previous-like-this)
   (add-to-list 'mc/cmds-to-run-for-all 'my/backspace-or-delete-region)
   (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word)
   )
