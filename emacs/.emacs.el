@@ -251,6 +251,15 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
+  ;; emmet
+  (add-to-list 'lsp-disabled-clients 'emmet-ls)
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("emmet-language-server" "--stdio"))
+    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode)
+    :add-on? t
+    :server-id 'emmet-language-server))
+
   ;; typescript-mode
   (add-hook 'typescript-mode-hook
             (lambda ()
@@ -289,15 +298,13 @@
   ;; html-web-mode
   (add-hook 'html-web-mode-hook
             (lambda ()
-              (setq-local lsp-enable-snippet t
-                          lsp-disabled-clients '(emmet-ls))))
+              (setq-local lsp-enable-snippet t)))
 
   ;; django
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
   (add-hook 'django-web-mode-hook
             (lambda ()
-              (setq-local lsp-enable-snippet t
-                          lsp-disabled-clients '(emmet-ls))))
+              (setq-local lsp-enable-snippet t)))
 
   (lsp-register-client
    (make-lsp-client
