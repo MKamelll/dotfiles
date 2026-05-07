@@ -8,9 +8,13 @@
 (defun my/backspace-or-delete-region ()
   "Delete region with Backspace (and Shift+Backspace)"
   (interactive)
-  (if (use-region-p)
-      (delete-region (region-beginning) (region-end))
-    (call-interactively 'delete-backward-char)))
+  (cond
+   ((bound-and-true-p rectangle-mark-mode)
+    (call-interactively 'delete-rectangle))
+   ((use-region-p)
+    (delete-region (region-beginning) (region-end)))
+   (t
+    (call-interactively 'delete-backward-char))))
 
 (defun my/backward-kill-word ()
   "Kill word backward, stopping at line beginning."
