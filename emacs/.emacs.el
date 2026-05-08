@@ -566,6 +566,10 @@
             (define-key c++-mode-map (kbd "TAB") nil)
             (define-key c++-mode-map (kbd "<tab>") nil)))
 
+  ;; use django-web-mode for any .html file under a cotton dir
+  (add-to-list 'auto-mode-alist
+               '("/cotton/.*\\.html\\'" . django-web-mode))
+
   ;; flycheck
   (global-set-key (kbd "C-f") 'flycheck-list-errors)
 
