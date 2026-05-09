@@ -280,7 +280,7 @@
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("templ" "lsp"))
     :major-modes '(templ-ts-mode)
-    :priority 1
+    :add-on? t
     :server-id 'templ-ls))
 
   ;; pylsp
