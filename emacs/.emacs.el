@@ -447,6 +447,11 @@
     :program "djlint"
     :args '("--reformat" "-")
     :lighter " DJ")
+
+  (reformatter-define templ-format
+    :program "templ"
+    :args '("fmt")
+    :lighter " TEMPL")
   )
 
 (defun my/lsp-mode-or-other-format ()
@@ -458,6 +463,7 @@
      ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
      ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
      ((memq major-mode '(ruby-mode)) (rubocopfmt))
+     ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
      ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
 (defun query-replace-whole-buffer (from to)
