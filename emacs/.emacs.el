@@ -530,6 +530,31 @@
   (add-hook 'after-save-hook #'my-treesit-reparse-on-save)
 )
 
+(use-package ibuffer
+  :bind ("<f4>" . ibuffer)
+  :custom
+  (ibuffer-expert t)
+  (ibuffer-show-empty-filter-groups nil)
+  (ibuffer-saved-filter-groups
+   '(("default"
+      ("Dired"  (mode . dired-mode))
+      ("Emacs"  (or (name . "^\\*scratch\\*$")
+                    (name . "^\\*Messages\\*$")))
+      ("Help"   (or (mode . help-mode)
+                    (mode . apropos-mode)
+                    (mode . Info-mode)))
+      ("Magit"  (name . "^magit"))
+      ("Python" (mode . python-mode))
+      ("Web"    (or (mode . web-mode)
+                    (mode . css-mode)
+                    (mode . js-mode)))
+      ("Org"    (mode . org-mode)))))
+  :hook
+  (ibuffer-mode . ibuffer-auto-mode)
+  (ibuffer-mode . (lambda ()
+                    (ibuffer-switch-to-saved-filter-groups "default"))))
+
+
 (use-package emacs
   :init
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
