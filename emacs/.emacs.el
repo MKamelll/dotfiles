@@ -564,7 +564,11 @@
         display-line-numbers-type 'relative
         select-enable-clipboard nil
         select-enable-primary nil
-        mouse-drag-copy-region nil)
+        mouse-drag-copy-region nil
+        custom-file "~/.emacs.d/custom.el")
+  (unless (file-exists-p custom-file)
+    (write-region "" nil custom-file))
+  (load custom-file)
 
   (setq-default indent-tabs-mode nil
                 tab-width 4
@@ -638,23 +642,3 @@
   (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
   (global-set-key (kbd "<f3>") 'switch-to-buffer)
   )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(amx cmake-mode company crystal-mode dotenv-mode drag-stuff dune
-         elixir-mode emms flycheck fsharp-mode go-mode groovy-mode
-         gruber-darker-theme ido-completing-read+ indent-bars
-         json-mode lsp-mode lua-mode magit meson-mode multiple-cursors
-         no-littering ocp-indent php-cs-fixer php-mode prettier-js
-         projectile qt-pro-mode reformatter rubocopfmt rust-mode
-         sbt-mode scala-ts-mode smex string-inflection templ-ts-mode
-         tuareg typescript-mode web-mode yaml-mode yasnippet-snippets)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
