@@ -202,6 +202,8 @@
               lsp-enabled-clients nil
               lsp-eldoc-enable-hover t
               lsp-enable-on-type-formatting nil
+              lsp-enable-indentation nil
+              lsp-before-save-edits nil
               lsp-completion-enable t
               lsp-enable-snippet nil
               lsp-signature-auto-activate t
@@ -215,6 +217,7 @@
   :commands (lsp lsp-deferred)
 
   :hook
+  (before-save . my/lsp-mode-or-other-format)
   (python-mode . lsp-deferred)
   (go-mode . lsp-deferred)
   (go-ts-mode . lsp-deferred)
@@ -304,6 +307,13 @@
   (add-hook 'django-web-mode-hook
             (lambda ()
               (setq-local lsp-enable-snippet t)))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("djls" "serve"))
+    :major-modes '(django-web-mode)
+    :add-on? t
+    :server-id 'djls))
 
   ;; tailwindcss
   (lsp-register-client
@@ -486,8 +496,7 @@
   (let ((dir (no-littering-expand-var-file-name "lock-files/")))
     (make-directory dir t)
     (setq lock-file-name-transforms `((".*" ,dir t))))
-  (no-littering-theme-backups)
-  )
+  (no-littering-theme-backups))
 
 (use-package multiple-cursors
   :ensure t
@@ -495,8 +504,7 @@
   (bind-key* "C-d" 'mc/mark-next-like-this)
   (bind-key* "C-S-d" 'mc/mark-previous-like-this)
   (add-to-list 'mc/cmds-to-run-for-all 'my/backspace-or-delete-region)
-  (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word)
-  )
+  (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word))
 
 (use-package gruber-darker-theme
   :ensure t
@@ -557,6 +565,7 @@
         select-enable-primary nil
         mouse-drag-copy-region nil
         custom-file "~/.emacs.d/custom.el")
+
   (unless (file-exists-p custom-file)
     (write-region "" nil custom-file))
   (load custom-file)
@@ -572,7 +581,6 @@
 
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
-  (before-save . my/lsp-mode-or-other-format)
 
   :config
   (set-face-attribute 'default nil :height 160)
