@@ -304,7 +304,7 @@
   (add-hook 'django-web-mode-hook
             (lambda ()
               (setq-local lsp-enable-snippet t
-                          lsp-enable-on-type-formatting nil)))
+                          lsp-enable-indentation nil)))
 
   (lsp-register-client
    (make-lsp-client
