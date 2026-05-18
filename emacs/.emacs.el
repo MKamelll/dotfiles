@@ -303,15 +303,7 @@
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
   (add-hook 'django-web-mode-hook
             (lambda ()
-              (setq-local lsp-enable-snippet t
-                          lsp-enable-indentation nil)))
-
-  (lsp-register-client
-   (make-lsp-client
-    :new-connection (lsp-stdio-connection '("djls" "serve"))
-    :major-modes '(django-web-mode)
-    :add-on? t
-    :server-id 'djls))
+              (setq-local lsp-enable-snippet t)))
 
   ;; tailwindcss
   (lsp-register-client
@@ -458,13 +450,13 @@
   "Format using prettier-js or php-cs-fixer depending on mode, otherwise lsp-mode."
   (interactive)
   (delete-trailing-whitespace)
-    (cond
-     ((memq major-mode my-prettier-modes) (prettier-js-prettify))
-     ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
-     ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
-     ((memq major-mode '(ruby-mode)) (rubocopfmt))
-     ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
-     ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
+  (cond
+   ((memq major-mode my-prettier-modes) (prettier-js-prettify))
+   ((memq major-mode my-php-cs-fixer-modes) (php-cs-fixer-fix))
+   ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
+   ((memq major-mode '(ruby-mode)) (rubocopfmt))
+   ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
+   ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
 (defun query-replace-whole-buffer (from to)
   "Query and replace something in the whole buffer"
@@ -483,7 +475,6 @@
 (use-package ansi-color
   :ensure t
   :hook (compilation-filter-hook . ansi-color-compilation-filter))
-
 
 (use-package string-inflection
   :ensure t
