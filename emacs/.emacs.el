@@ -162,12 +162,15 @@
          ("\\.djhtml\\'" . django-web-mode))
 
   :config
-  ;; other pref
   (setq web-mode-markup-indent-offset 4
         web-mode-css-indent-offset 4
         web-mode-code-indent-offset 4
         web-mode-attr-indent-offset 4
         web-mode-script-padding 4)
+
+  (add-hook 'web-mode-hook
+          (lambda ()
+            (setq-local bidi-paragraph-direction 'left-to-right)))
 
   (add-hook 'django-web-mode-hook
           (lambda ()
@@ -304,7 +307,8 @@
   (add-to-list 'lsp-language-id-configuration '(django-web-mode . "html"))
   (add-hook 'django-web-mode-hook
             (lambda ()
-              (setq-local lsp-enable-snippet t)))
+              (setq-local lsp-enable-snippet t
+                          lsp-enable-on-type-formatting nil)))
 
   (lsp-register-client
    (make-lsp-client
@@ -600,6 +604,10 @@
           (lambda ()
             (define-key c++-mode-map (kbd "TAB") nil)
             (define-key c++-mode-map (kbd "<tab>") nil)))
+
+  (add-hook 'prog-mode-hook
+          (lambda ()
+            (setq-local bidi-paragraph-direction 'left-to-right)))
 
   ;; use django-web-mode for any .html file under a cotton dir
   (add-to-list 'auto-mode-alist
