@@ -168,10 +168,6 @@
         web-mode-attr-indent-offset 4
         web-mode-script-padding 4)
 
-  (add-hook 'web-mode-hook
-          (lambda ()
-            (setq-local bidi-paragraph-direction 'left-to-right)))
-
   (add-hook 'django-web-mode-hook
           (lambda ()
             (web-mode-set-engine "django")
@@ -604,10 +600,6 @@
           (lambda ()
             (define-key c++-mode-map (kbd "TAB") nil)
             (define-key c++-mode-map (kbd "<tab>") nil)))
-
-  (add-hook 'prog-mode-hook
-          (lambda ()
-            (setq-local bidi-paragraph-direction 'left-to-right)))
 
   ;; use django-web-mode for any .html file under a cotton dir
   (add-to-list 'auto-mode-alist
