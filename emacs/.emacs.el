@@ -618,7 +618,7 @@
   (global-set-key (kbd "C-S-v") 'clipboard-yank)
   (global-set-key (kbd "C-S-x") 'clipboard-kill-region)
   (global-set-key (kbd "C-S-s") 'save-buffer)
-  (global-set-key (kbd "C-z") 'undo)
+  (global-set-key (kbd "C-z") 'undo-only)
   (global-set-key (kbd "C-q") 'undo-redo)
   (global-set-key (kbd "C-/") 'comment-region)
   (global-set-key (kbd "C-S-/") 'uncomment-region)
