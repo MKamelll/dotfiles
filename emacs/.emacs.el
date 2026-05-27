@@ -593,7 +593,8 @@
   (ido-everywhere 1)
   (global-display-line-numbers-mode 1)
   (column-number-mode 1)
-  (setq ido-auto-merge-work-directories-length -1)
+  (setq ido-auto-merge-work-directories-length -1
+        ido-enable-flex-matching t)
 
   (add-hook 'c++-mode-hook
           (lambda ()
