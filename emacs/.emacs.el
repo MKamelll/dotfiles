@@ -1,3 +1,4 @@
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
@@ -338,17 +339,10 @@
         js-indent-level 4)
   )
 
-(use-package sly
+(use-package slime
   :ensure t
-  :bind (:map sly-mode-map
-              ("C-<return>" . sly-eval-buffer))
   :config
-  (setq inferior-lisp-program "sbcl")
-  :hook (lisp-mode . (lambda ()
-                       (sly-editing-mode 1)
-                       (unless (sly-connected-p)
-                         (save-excursion
-                           (sly-start :program "sbcl"))))))
+  (setq inferior-lisp-program "sbcl"))
 
 (use-package dune
   :ensure t)
@@ -593,9 +587,6 @@
 
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
-
-  :bind (:map emacs-lisp-mode-map
-              ("C-<return>" . eval-buffer))
 
   :config
   (set-face-attribute 'default nil :height 160)
