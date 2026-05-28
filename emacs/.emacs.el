@@ -342,6 +342,11 @@
 (use-package slime
   :ensure t
   :config
+  (defun my/slime-compile-and-switch-buffer ()
+    (interactive)
+    (slime-compile-and-load-file)
+    (pop-to-buffer (slime-output-buffer)))
+  (define-key slime-mode-map (kbd "C-<return>") #'my/slime-compile-and-switch-buffer)
   (setq inferior-lisp-program "sbcl"))
 
 (use-package dune
@@ -588,6 +593,8 @@
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
 
+  :bind (:map emacs-lisp-mode-map
+              ("C-<return>" . eval-buffer))
   :config
   (set-face-attribute 'default nil :height 160)
   (menu-bar-mode -1)
