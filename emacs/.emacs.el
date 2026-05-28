@@ -341,7 +341,7 @@
 (use-package sly
   :ensure t
   :bind (:map sly-mode-map
-              ("C-<return>" . sly-compile-and-load-file))
+              ("C-<return>" . sly-eval-buffer))
   :config
   (setq inferior-lisp-program "sbcl")
   :hook (lisp-mode . (lambda ()
