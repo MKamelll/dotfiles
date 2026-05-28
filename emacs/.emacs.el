@@ -338,6 +338,18 @@
         js-indent-level 4)
   )
 
+(use-package sly
+  :ensure t
+  :bind (:map sly-mode-map
+              ("C-<return>" . sly-compile-and-load-file))
+  :config
+  (setq inferior-lisp-program "sbcl")
+  :hook (lisp-mode . (lambda ()
+                       (sly-editing-mode 1)
+                       (unless (sly-connected-p)
+                         (save-excursion
+                           (sly-start :program "sbcl"))))))
+
 (use-package dune
   :ensure t)
 
@@ -581,6 +593,9 @@
 
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
+
+  :bind (:map emacs-lisp-mode-map
+              ("C-<return>" . eval-buffer))
 
   :config
   (set-face-attribute 'default nil :height 160)
