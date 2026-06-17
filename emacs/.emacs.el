@@ -1,4 +1,3 @@
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
@@ -231,6 +230,7 @@
   (vue-mode . lsp-deferred)
   (html-web-mode . lsp-deferred)
   (templ-ts-mode . lsp-deferred)
+  (vala-mode . lsp-deferred)
 
   :config
   (add-hook 'lsp-managed-mode-hook
@@ -245,7 +245,7 @@
   (lsp-execute-code-action-by-kind "quickfix"))
 
   ;; shortcuts
-  (global-set-key (kbd "<f10>") #'lsp-code-action-quickfix)
+  (global-set-key (kbd "M-<return>") #'lsp-code-action-quickfix)
   (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
 
   (define-key lsp-mode-map (kbd "<tab>") nil)
@@ -338,6 +338,9 @@
   (setq go-ts-mode-indent-offset 4
         js-indent-level 4)
   )
+
+(use-package vala-mode
+  :ensure t)
 
 (use-package slime
   :ensure t
@@ -605,6 +608,7 @@
   (delete-selection-mode t)
   (ido-mode 1)
   (ido-everywhere 1)
+  (electric-pair-mode 1)
   (global-display-line-numbers-mode 1)
   (column-number-mode 1)
   (setq ido-auto-merge-work-directories-length -1
