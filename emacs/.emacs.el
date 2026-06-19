@@ -48,7 +48,12 @@
 
 (use-package projectile
   :ensure t
-  :config (projectile-mode 1))
+  :config
+  (setq projectile-indexing-method 'hybrid)
+  (add-to-list 'projectile-globally-ignored-directories "3rdparty")
+  (add-to-list 'projectile-globally-ignored-file-suffixes ".so")
+  (add-to-list 'projectile-globally-ignored-file-suffixes ".o")
+  (projectile-mode 1))
 
 (use-package emms
   :ensure t
