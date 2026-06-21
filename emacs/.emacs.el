@@ -251,7 +251,7 @@
 
   ;; shortcuts
   (global-set-key (kbd "M-<return>") #'lsp-code-action-quickfix)
-  (global-set-key (kbd "<f9>") #'lsp-describe-thing-at-point)
+  (global-set-key (kbd "M-d") #'lsp-describe-thing-at-point)
 
   (define-key lsp-mode-map (kbd "<tab>") nil)
   (define-key lsp-mode-map (kbd "TAB") nil)
