@@ -495,12 +495,12 @@
    ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
    ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
-(defun query-replace-whole-buffer (from to)
-  "Query and replace something in the whole buffer"
-  (interactive "sQuery replace: \nsQuery replace %s with: ")
+(defun query-replace-from-beginning (orig-fun &rest args)
   (save-excursion
-  (goto-char (point-min))
-  (query-replace from to)))
+    (goto-char (point-min))
+    (apply orig-fun args)))
+
+(advice-add 'query-replace-regexp :around #'query-replace-from-beginning)
 
 (use-package compile
   :init
