@@ -46,10 +46,15 @@
   :hook
   (prog-mode . indent-bars-mode))
 
+(use-package ripgrep
+  :ensure t
+  :defer t)
+
 (use-package projectile
   :ensure t
   :config
   (setq projectile-indexing-method 'hybrid)
+  (setq projectile-use-git-grep t)
   (add-to-list 'projectile-globally-ignored-directories "3rdparty")
   (add-to-list 'projectile-globally-ignored-file-suffixes ".so")
   (add-to-list 'projectile-globally-ignored-file-suffixes ".o")
