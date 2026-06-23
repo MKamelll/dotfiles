@@ -497,7 +497,8 @@
 
 (defun query-replace-from-beginning (orig-fun &rest args)
   (save-excursion
-    (goto-char (point-min))
+    (unless (use-region-p)
+      (goto-char (point-min)))
     (apply orig-fun args)))
 
 (advice-add 'query-replace-regexp :around #'query-replace-from-beginning)
