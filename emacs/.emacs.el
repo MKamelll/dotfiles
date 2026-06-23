@@ -223,7 +223,6 @@
 
   :hook
   (before-save . my/lsp-mode-or-other-format)
-  (python-mode . lsp-deferred)
   (go-mode . lsp-deferred)
   (go-ts-mode . lsp-deferred)
   (rust-mode . lsp-deferred)
@@ -332,6 +331,14 @@
   ;; clangd
   (setq lsp-clients-clangd-args '("--header-insertion=never" "--completion-style=detailed" "--query-driver=/usr/bin/g++" "--clang-tidy"))
   )
+
+;; python
+(use-package lsp-pyright
+  :ensure t
+  :custom (lsp-pyright-langserver-command "basedpyright")
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))
 
 ;; templ golang
 (use-package templ-ts-mode
