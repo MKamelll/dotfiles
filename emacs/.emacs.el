@@ -123,27 +123,44 @@
   :ensure t
   :after yasnippet)
 
-(use-package company
+(use-package corfu
   :ensure t
   :init
-  (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2
-        company-dabbrev-ignore-case t
-        company-dabbrev-downcase nil
-        completion-ignore-case t
-        company-dabbrev-other-buffers t
-        company-dabbrev-code-everywhere t
-        company-transformers '(company-sort-prefer-same-case-prefix)
-        )
-
+  (global-corfu-mode 1)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-delay 0.2)
+  (corfu-auto-prefix 2)
+  (corfu-cycle t)
   :config
-  (global-company-mode 1)
-  (define-key company-mode-map (kbd "C-SPC") #'company-complete)
-  (define-key company-mode-map (kbd "TAB") nil)
-  (define-key company-mode-map (kbd "<tab>") nil)
-  (define-key company-active-map (kbd "TAB") #'company-complete-common-or-cycle)
-  (define-key company-active-map (kbd "<tab>") #'company-complete-common-or-cycle)
+  (setq corfu-preview-current nil
+        corfu-preselect 'valid
+        completion-ignore-case t))
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package cape
+  :ensure t
+  :after corfu
+  :init
+  (setq dabbrev-check-all-buffers t
+        dabbrev-check-other-buffers t)
+  :config
+  (add-hook 'completion-at-point-functions #'cape-dabbrev t)
+  (add-hook 'completion-at-point-functions #'cape-file t)
+  (add-hook 'completion-at-point-functions #'cape-keyword t)
+  (add-hook 'completion-at-point-functions #'cape-abbrev t)
   )
+
+(use-package corfu-terminal
+  :ensure t
+  :unless (display-graphic-p)
+  :config
+  (corfu-terminal-mode 1))
 
 (use-package web-mode
   :ensure t
@@ -223,7 +240,8 @@
               lsp-diagnostics-provider :flycheck
               lsp-log-io nil
               lsp-enable-suggest-server-download nil
-              lsp-auto-guess-root t)
+              lsp-auto-guess-root t
+              lsp-completion-provider :none)
   :commands (lsp lsp-deferred)
 
   :hook
@@ -242,12 +260,6 @@
   (vala-mode . lsp-deferred)
 
   :config
-  (add-hook 'lsp-managed-mode-hook
-            (lambda ()
-              (setq-local company-backends
-                          '((company-capf company-dabbrev-code company-dabbrev company-files)))
-              ))
-
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
   (interactive)
@@ -257,8 +269,6 @@
   (global-set-key (kbd "M-<return>") #'lsp-code-action-quickfix)
   (global-set-key (kbd "M-d") #'lsp-describe-thing-at-point)
 
-  (define-key lsp-mode-map (kbd "<tab>") nil)
-  (define-key lsp-mode-map (kbd "TAB") nil)
   (define-key lsp-signature-mode-map (kbd "C-<tab>") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
@@ -539,11 +549,6 @@
   (add-to-list 'mc/cmds-to-run-for-all 'my/backspace-or-delete-region)
   (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word))
 
-(use-package gruber-darker-theme
-  :ensure t
-  :config
-  (load-theme 'gruber-darker t))
-
 (use-package dired
   :init
   (setq dired-dwim-target t)
@@ -586,7 +591,6 @@
   (ibuffer-mode . (lambda ()
                     (ibuffer-switch-to-saved-filter-groups "default"))))
 
-
 (use-package emacs
   :init
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -605,12 +609,11 @@
 
   (setq-default indent-tabs-mode nil
                 tab-width 4
-                treesit-font-lock-level 4
-                treesit-auto-install 'prompt
                 fsharp-indent-offset 2
                 lua-indent-level 4
                 python-indent-offset 4
-                c-basic-offset 4)
+                c-basic-offset 4
+                tab-always-indent t)
 
   :hook
   (minibuffer-setup . my/setup-minibuffer-backspace)
@@ -632,10 +635,8 @@
   (setq ido-auto-merge-work-directories-length -1
         ido-enable-flex-matching t)
 
-  (add-hook 'c++-mode-hook
-          (lambda ()
-            (define-key c++-mode-map (kbd "TAB") nil)
-            (define-key c++-mode-map (kbd "<tab>") nil)))
+  ;; completion
+  (global-set-key (kbd "C-SPC") #'completion-at-point)
 
   ;; use django-web-mode for any .html file under a cotton dir
   (add-to-list 'auto-mode-alist
