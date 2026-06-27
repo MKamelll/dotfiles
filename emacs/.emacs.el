@@ -133,6 +133,8 @@
   (corfu-auto-prefix 2)
   (corfu-cycle t)
   :config
+  (define-key corfu-map (kbd "TAB") #'corfu-next)
+  (define-key corfu-map (kbd "<tab>") #'corfu-next)
   (setq corfu-preview-current nil
         corfu-preselect 'valid
         completion-ignore-case t))
@@ -260,6 +262,15 @@
   (vala-mode . lsp-deferred)
 
   :config
+  (add-hook 'lsp-managed-mode-hook
+            (lambda ()
+              (setq-local completion-at-point-functions
+                          (list #'lsp-completion-at-point
+                                #'cape-keyword
+                                #'cape-abbrev
+                                #'cape-dabbrev
+                                #'cape-file))))
+
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
   (interactive)
