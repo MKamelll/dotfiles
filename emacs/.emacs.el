@@ -126,15 +126,23 @@
 (use-package corfu
   :ensure t
   :init
-  (global-corfu-mode 1)
+  (global-corfu-mode)
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.2)
   (corfu-auto-prefix 2)
   (corfu-cycle t)
+  (corfu-preselect 'prompt)
+  :bind
+  (("C-SPC" . completion-at-point)
+   (:map corfu-map
+         ("C-SPC" . corfu-complete)
+         ("TAB" . corfu-next)
+         ([tab] . corfu-next)
+         ("S-TAB" . corfu-previous)
+         ([backtab] . corfu-previous)))
+
   :config
-  (define-key corfu-map (kbd "TAB") #'corfu-next)
-  (define-key corfu-map (kbd "<tab>") #'corfu-next)
   (setq corfu-preview-current nil
         corfu-preselect 'valid
         completion-ignore-case t))
@@ -645,9 +653,6 @@
   (column-number-mode 1)
   (setq ido-auto-merge-work-directories-length -1
         ido-enable-flex-matching t)
-
-  ;; completion
-  (global-set-key (kbd "C-SPC") #'completion-at-point)
 
   ;; use django-web-mode for any .html file under a cotton dir
   (add-to-list 'auto-mode-alist
