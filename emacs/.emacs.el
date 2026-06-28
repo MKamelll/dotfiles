@@ -268,8 +268,8 @@
     (setq-local completion-at-point-functions
                 (list
                  (cape-capf-buster #'lsp-completion-at-point)
-                 #'cape-keyword
                  #'cape-dabbrev
+                 #'cape-keyword
                  #'cape-file)))
 
   :commands (lsp lsp-deferred)
