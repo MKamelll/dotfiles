@@ -5,6 +5,14 @@
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 
+(defun my/describe-face-color-at-point ()
+  "shows the foreground color hex value of the face at point"
+  (interactive)
+  (let* ((face (face-at-point))
+         (color (face-foreground face nil 'default))
+         (hex (apply #'color-rgb-to-hex (append (color-name-to-rgb color) '(2)))))
+    (message "%s: %s -> %s" face color hex)))
+
 (defun my/backspace-or-delete-region ()
   "Delete region with Backspace (and Shift+Backspace)"
   (interactive)
