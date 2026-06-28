@@ -123,6 +123,15 @@
   :ensure t
   :after yasnippet)
 
+(use-package orderless
+  :ensure t
+  :init
+  ;; Tune the global completion style settings to your liking!
+  ;; This affects the minibuffer and non-lsp completion at point.
+  (setq completion-styles '(orderless partial-completion basic)
+        completion-category-defaults nil
+        completion-category-overrides nil))
+
 (use-package corfu
   :ensure t
   :init
@@ -252,9 +261,21 @@
               lsp-enable-suggest-server-download nil
               lsp-auto-guess-root t
               lsp-completion-provider :none)
+
+  (defun my/lsp-mode-setup-completion ()
+    (setf (alist-get 'styles (alist-get 'lsp-capf completion-category-defaults))
+          '(orderless))
+    (setq-local completion-at-point-functions
+                (list
+                 (cape-capf-buster #'lsp-completion-at-point)
+                 #'cape-keyword
+                 #'cape-dabbrev
+                 #'cape-file)))
+
   :commands (lsp lsp-deferred)
 
   :hook
+  (lsp-completion-mode . my/lsp-mode-setup-completion)
   (before-save . my/lsp-mode-or-other-format)
   (go-mode . lsp-deferred)
   (go-ts-mode . lsp-deferred)
@@ -273,10 +294,7 @@
   (add-hook 'lsp-managed-mode-hook
             (lambda ()
               (setq-local completion-at-point-functions
-                          (list #'cape-keyword
-                                #'lsp-completion-at-point
-                                #'cape-dabbrev
-                                #'cape-file))))
+                          (list ))))
 
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
