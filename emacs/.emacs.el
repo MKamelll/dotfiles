@@ -145,7 +145,8 @@
   :config
   (setq corfu-preview-current nil
         corfu-preselect 'valid
-        completion-ignore-case t))
+        completion-ignore-case t
+        dabbrev-case-fold-search nil))
 
 (use-package nerd-icons-corfu
   :ensure t
@@ -273,8 +274,8 @@
             (lambda ()
               (setq-local completion-at-point-functions
                           (list #'cape-keyword
-                                #'cape-dabbrev
                                 #'lsp-completion-at-point
+                                #'cape-dabbrev
                                 #'cape-file))))
 
   (defun lsp-code-action-quickfix ()
