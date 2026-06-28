@@ -163,7 +163,6 @@
   (add-hook 'completion-at-point-functions #'cape-dabbrev t)
   (add-hook 'completion-at-point-functions #'cape-file t)
   (add-hook 'completion-at-point-functions #'cape-keyword t)
-  (add-hook 'completion-at-point-functions #'cape-abbrev t)
   )
 
 (use-package corfu-terminal
@@ -273,10 +272,9 @@
   (add-hook 'lsp-managed-mode-hook
             (lambda ()
               (setq-local completion-at-point-functions
-                          (list #'lsp-completion-at-point
-                                #'cape-keyword
-                                #'cape-abbrev
+                          (list #'cape-keyword
                                 #'cape-dabbrev
+                                #'lsp-completion-at-point
                                 #'cape-file))))
 
   (defun lsp-code-action-quickfix ()
