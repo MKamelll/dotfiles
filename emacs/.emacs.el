@@ -291,11 +291,6 @@
   (vala-mode . lsp-deferred)
 
   :config
-  (add-hook 'lsp-managed-mode-hook
-            (lambda ()
-              (setq-local completion-at-point-functions
-                          (list ))))
-
   (defun lsp-code-action-quickfix ()
   "Execute quickfix code actions."
   (interactive)
