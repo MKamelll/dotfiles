@@ -630,6 +630,10 @@
   (ibuffer-mode . (lambda ()
                     (ibuffer-switch-to-saved-filter-groups "default"))))
 
+(use-package rainbow-mode
+  :ensure t
+  :hook (prog-mode text-mode))
+
 (use-package emacs
   :init
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
