@@ -138,7 +138,8 @@
   ;; This affects the minibuffer and non-lsp completion at point.
   (setq completion-styles '(orderless partial-completion basic)
         completion-category-defaults nil
-        completion-category-overrides nil))
+        completion-category-overrides nil
+        orderless-matching-styles '(orderless-literal orderless-regexp orderless-flex)))
 
 (use-package corfu
   :ensure t
@@ -633,6 +634,11 @@
 (use-package rainbow-mode
   :ensure t
   :hook (prog-mode text-mode))
+
+(use-package minions
+  :ensure t
+  :config
+  (minions-mode 1))
 
 (use-package emacs
   :init
