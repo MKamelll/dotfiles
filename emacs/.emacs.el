@@ -298,6 +298,7 @@
   (html-web-mode . lsp-deferred)
   (templ-ts-mode . lsp-deferred)
   (vala-mode . lsp-deferred)
+  (racket-mode . lsp-deferred)
 
   :config
   (defun lsp-code-action-quickfix ()
@@ -428,6 +429,12 @@
   :mode
   ("\\.clang-format\\'" . yaml-mode)
   )
+
+(use-package racket-mode
+  :ensure t
+  :config
+  (setq lisp-body-indent 2
+        lisp-indent-offset 2))
 
 (use-package php-mode
   :ensure t)
