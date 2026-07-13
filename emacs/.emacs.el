@@ -431,10 +431,7 @@
   )
 
 (use-package racket-mode
-  :ensure t
-  :config
-  (setq lisp-body-indent 2
-        lisp-indent-offset 2))
+  :ensure t)
 
 (use-package php-mode
   :ensure t)
@@ -555,6 +552,7 @@
    ((derived-mode-p 'django-web-mode) (djlint-format-buffer))
    ((memq major-mode '(ruby-mode)) (rubocopfmt))
    ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
+   ((memq major-mode '(racket-mode)) nil)
    ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
 (defun query-replace-from-beginning (orig-fun &rest args)
