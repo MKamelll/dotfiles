@@ -11,7 +11,8 @@
   (let* ((face (face-at-point))
          (color (face-foreground face nil 'default))
          (hex (apply #'color-rgb-to-hex (append (color-name-to-rgb color) '(2)))))
-    (message "%s: %s -> %s" face color hex)))
+    (message "%s: %s -> %s" face color hex)
+    (gui-set-selection 'CLIPBOARD (format "%s" hex))))
 
 (defun my/backspace-or-delete-region ()
   "Delete region with Backspace (and Shift+Backspace)"
