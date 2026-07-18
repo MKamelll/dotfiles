@@ -227,6 +227,7 @@
   (add-hook 'django-web-mode-hook
           (lambda ()
             (web-mode-set-engine "django")
+            (electric-pair-local-mode -1)
             (font-lock-flush)
             (font-lock-ensure)))
 
