@@ -499,8 +499,16 @@
 (use-package groovy-mode
   :ensure t)
 
-(use-package scala-ts-mode
+(use-package scala-mode
   :ensure t)
+
+(use-package lsp-metals
+  :ensure t
+  :custom
+  (lsp-metals-server-args '("-J-Dmetals.allow-multiline-string-formatting=off"
+                            "-J-Dmetals.icons=unicode"))
+  :hook
+  (scala-mode . lsp-deferred))
 
 (use-package sbt-mode
   :ensure t)
