@@ -230,7 +230,7 @@
 
   (add-hook 'twirl-mode-hook
           (lambda ()
-            (web-mode-set-engine "twirl")
+            (web-mode-set-engine "razor")
             (font-lock-flush)
             (font-lock-ensure)))
 
