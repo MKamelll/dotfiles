@@ -206,6 +206,9 @@
   (define-derived-mode html-web-mode web-mode "html-web"
     "Web-mode for html files.")
 
+  (define-derived-mode twirl-mode web-mode "twirl"
+    "Web-mode for scala twirl files.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
@@ -215,7 +218,8 @@
          ("\\.html?\\'"       . html-web-mode)
          ("\\.svelte\\'" . svelte-mode)
          ("\\.vue\\'" . vue-mode)
-         ("\\.djhtml\\'" . django-web-mode))
+         ("\\.djhtml\\'" . django-web-mode)
+         ("\\.scala\\.html\\'" . twirl-mode))
 
   :config
   (setq web-mode-markup-indent-offset 4
@@ -223,6 +227,12 @@
         web-mode-code-indent-offset 4
         web-mode-attr-indent-offset 4
         web-mode-script-padding 4)
+
+  (add-hook 'twirl-mode-hook
+          (lambda ()
+            (web-mode-set-engine "twirl")
+            (font-lock-flush)
+            (font-lock-ensure)))
 
   (add-hook 'django-web-mode-hook
           (lambda ()
@@ -301,6 +311,7 @@
   (templ-ts-mode . lsp-deferred)
   (vala-mode . lsp-deferred)
   (racket-mode . lsp-deferred)
+  (twirl-mode . lsp-deferred)
 
   :config
   (defun lsp-code-action-quickfix ()
@@ -321,7 +332,7 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("emmet-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode)
+    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode twirl-mode)
     :add-on? t
     :server-id 'emmet-language-server))
 
@@ -334,6 +345,12 @@
                           lsp-typescript-preferences
                           '(:importModuleSpecifierPreference "relative"))
               ))
+
+  ;; twirl-mode
+  (add-to-list 'lsp-language-id-configuration '(twirl-mode . "html"))
+  (add-hook 'twirl-mode-hook
+            (lambda ()
+              (setq-local lsp-enable-snippet t)))
 
   ;; templ-ts-mode
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "html"))
@@ -382,7 +399,7 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode)
+    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode twirl-mode)
     :add-on? t
     :server-id 'tailwindcss-ls))
 
