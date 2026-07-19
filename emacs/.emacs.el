@@ -222,6 +222,7 @@
          ("\\.scala\\.html\\'" . twirl-mode))
 
   :config
+  (set-face-attribute 'web-mode-block-face nil :background 'unspecified)
   (setq web-mode-markup-indent-offset 4
         web-mode-css-indent-offset 4
         web-mode-code-indent-offset 4
