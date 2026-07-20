@@ -209,6 +209,9 @@
   (define-derived-mode twirl-mode web-mode "twirl"
     "Web-mode for scala twirl files.")
 
+  (define-derived-mode razor-mode web-mode "razor"
+    "Web-mode for csharp razor files.")
+
   :mode (("\\.phtml\\'"       . web-mode)
          ("\\.tpl\\.php\\'"   . web-mode)
          ("\\.[agj]sp\\'"    . web-mode)
@@ -219,7 +222,9 @@
          ("\\.svelte\\'" . svelte-mode)
          ("\\.vue\\'" . vue-mode)
          ("\\.djhtml\\'" . django-web-mode)
-         ("\\.scala\\.html\\'" . twirl-mode))
+         ("\\.scala\\.html\\'" . twirl-mode)
+         ("\\.razor\\'" . razor-mode)
+         ("\\.cshtml\\'" . razor-mode))
 
   :config
   (set-face-attribute 'web-mode-block-face nil :background 'unspecified)
@@ -228,6 +233,12 @@
         web-mode-code-indent-offset 4
         web-mode-attr-indent-offset 4
         web-mode-script-padding 4)
+
+  (add-hook 'razor-mode-hook
+          (lambda ()
+            (web-mode-set-engine "razor")
+            (font-lock-flush)
+            (font-lock-ensure)))
 
   (add-hook 'twirl-mode-hook
           (lambda ()
@@ -313,6 +324,8 @@
   (vala-mode . lsp-deferred)
   (racket-mode . lsp-deferred)
   (twirl-mode . lsp-deferred)
+  (csharp-mode . lsp-deferred)
+  (razor-mode . lsp-deferred)
 
   :config
   (defun lsp-code-action-quickfix ()
@@ -328,12 +341,20 @@
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
+  ;; razor-mode
+  (add-to-list 'lsp-language-id-configuration '(razor-mode . "html"))
+  (add-hook 'razor-mode-hook
+            (lambda ()
+              (setq-local lsp-enable-snippet t)))
+
   ;; emmet
   (add-to-list 'lsp-disabled-clients 'emmet-ls)
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("emmet-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode twirl-mode)
+    :major-modes '(django-web-mode svelte-mode
+                                   html-web-mode vue-mode templ-ts-mode
+                                   twirl-mode razor-mode)
     :add-on? t
     :server-id 'emmet-language-server))
 
@@ -400,7 +421,10 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("tailwindcss-language-server" "--stdio"))
-    :major-modes '(django-web-mode svelte-mode html-web-mode vue-mode templ-ts-mode twirl-mode)
+    :major-modes '(django-web-mode svelte-mode
+                                   html-web-mode
+                                   vue-mode templ-ts-mode
+                                   twirl-mode razor-mode)
     :add-on? t
     :server-id 'tailwindcss-ls))
 
@@ -531,12 +555,6 @@
 (use-package sbt-mode
   :ensure t)
 
-(use-package csharp-mode
-  :ensure t
-  :mode (("\\.cshtml?\\'" . csharp-mode)
-         ("\\.razor?\\'" . csharp-mode))
-  )
-
 (use-package ocp-indent
   :ensure t)
 
@@ -568,6 +586,11 @@
     :program "templ"
     :args '("fmt")
     :lighter " TEMPL")
+
+  (reformatter-define csharpier-format
+    :program "csharpier"
+    :args '("format")
+    :lighter " CSharpier")
   )
 
 (defun my/lsp-mode-or-other-format ()
@@ -581,6 +604,7 @@
    ((memq major-mode '(ruby-mode)) (rubocopfmt))
    ((memq major-mode '(templ-ts-mode)) (templ-format-buffer))
    ((memq major-mode '(racket-mode)) nil)
+   ((memq major-mode '(csharp-mode)) (csharpier-format-buffer))
    ((bound-and-true-p lsp-mode) (lsp-format-buffer))))
 
 (defun query-replace-from-beginning (orig-fun &rest args)
