@@ -223,7 +223,6 @@
          ("\\.vue\\'" . vue-mode)
          ("\\.djhtml\\'" . django-web-mode)
          ("\\.scala\\.html\\'" . twirl-mode)
-         ("\\.razor\\'" . razor-mode)
          ("\\.cshtml\\'" . razor-mode))
 
   :config
