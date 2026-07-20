@@ -311,8 +311,6 @@
   (before-save . my/lsp-mode-or-other-format)
   (go-mode . lsp-deferred)
   (go-ts-mode . lsp-deferred)
-  (rust-mode . lsp-deferred)
-  (typescript-mode . lsp-deferred)
   (django-web-mode . lsp-deferred)
   (c-mode . lsp-deferred)
   (c++-mode . lsp-deferred)
@@ -356,16 +354,6 @@
                                    twirl-mode razor-mode)
     :add-on? t
     :server-id 'emmet-language-server))
-
-  ;; typescript-mode
-  (add-hook 'typescript-mode-hook
-            (lambda ()
-              (setq-local lsp-signature-auto-activate nil
-                          lsp-signature-render-documentation nil
-                          lsp-signature-doc-lines 1
-                          lsp-typescript-preferences
-                          '(:importModuleSpecifierPreference "relative"))
-              ))
 
   ;; twirl-mode
   (add-to-list 'lsp-language-id-configuration '(twirl-mode . "html"))
@@ -495,8 +483,16 @@
 
 (use-package typescript-mode
   :ensure t
+  :hook (typescript-mode . lsp-deferred)
   :config
-  (setq typescript-indent-level 4)
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (setq-local lsp-signature-auto-activate nil
+                          lsp-signature-render-documentation nil
+                          lsp-signature-doc-lines 1)))
+  (setq typescript-indent-level 4
+        lsp-typescript-preferences-import-module-specifier "relative"
+        lsp-typescript-preferences-import-module-specifier-ending "minimal")
   )
 
 (use-package prettier-js
@@ -518,7 +514,8 @@
   :ensure t)
 
 (use-package rust-mode
-  :ensure t)
+  :ensure t
+  :hook (rust-mode . lsp-deferred))
 
 (use-package lua-mode
   :ensure t)
