@@ -427,6 +427,15 @@
                           (require 'lsp-pyright)
                           (lsp-deferred))))
 
+;; java
+(use-package lsp-java
+  :ensure t
+  :hook (java-mode . lsp-deferred))
+
+(use-package lsp-java-boot
+  :ensure t
+  :after lsp-java)
+
 ;; templ golang
 (use-package templ-ts-mode
   :ensure t
