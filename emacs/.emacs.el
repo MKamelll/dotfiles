@@ -430,11 +430,9 @@
 ;; java
 (use-package lsp-java
   :ensure t
-  :hook (java-mode . lsp-deferred))
-
-(use-package lsp-java-boot
-  :ensure t
-  :after lsp-java)
+  :hook (java-mode . lsp-deferred)
+  :config
+  (require 'lsp-java-boot))
 
 ;; templ golang
 (use-package templ-ts-mode
