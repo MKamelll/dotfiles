@@ -431,8 +431,14 @@
 (use-package lsp-java
   :ensure t
   :hook (java-mode . lsp-deferred)
-  :config
-  (require 'lsp-java-boot))
+  :custom
+  (lsp-java-vmargs
+        '("-XX:+UseParallelGC"
+          "-XX:GCTimeRatio=4"
+          "-XX:AdaptiveSizePolicyWeight=90"
+          "-Dsun.zip.disableMemoryMapping=true"
+          "-Xmx2G"
+          "-Xms100m")))
 
 ;; templ golang
 (use-package templ-ts-mode
