@@ -50,6 +50,13 @@
   (set-mark-command nil)
   (end-of-line))
 
+(defun my/smart-compile ()
+  "Use projectile-compile-project if in a project, else fall back to compile."
+  (interactive)
+  (if (and (fboundp 'projectile-project-p) (projectile-project-p))
+      (projectile-compile-project nil)
+    (call-interactively #'compile)))
+
 (use-package indent-bars
   :ensure t
   :hook
@@ -626,7 +633,7 @@
   (setq compilation-scroll-output t
         compilation-max-output-line-length nil)
   :bind
-  ("C-<return>" . compile))
+  ("C-<return>" . #'my/smart-compile))
 
 (use-package ansi-color
   :ensure t
