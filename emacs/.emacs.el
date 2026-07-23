@@ -433,7 +433,8 @@
   :init
   (setq lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx2G" "-Xms100m")
         lsp-java-progress-reports-enabled nil
-        lsp-java-completion-max-results 50)
+        lsp-java-completion-max-results 50
+        lsp-java-autobuild-enabled nil)
   :hook (java-mode . lsp-deferred))
 
 ;; templ golang
