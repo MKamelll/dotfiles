@@ -430,15 +430,15 @@
 ;; java
 (use-package lsp-java
   :ensure t
-  :hook (java-mode . lsp-deferred)
-  :custom
-  (lsp-java-vmargs
-        '("-XX:+UseParallelGC"
-          "-XX:GCTimeRatio=4"
-          "-XX:AdaptiveSizePolicyWeight=90"
-          "-Dsun.zip.disableMemoryMapping=true"
-          "-Xmx2G"
-          "-Xms100m")))
+  :init
+  (setq lsp-java-vmargs '("-XX:+UseParallelGC" "-XX:GCTimeRatio=4" "-XX:AdaptiveSizePolicyWeight=90" "-Dsun.zip.disableMemoryMapping=true" "-Xmx2G" "-Xms100m")
+        lsp-java-progress-reports-enabled nil
+        lsp-java-completion-max-results 50)
+  :hook
+  (java-mode . lsp-deferred)
+  (java-mode . (lambda () (setq-local lsp-modeline-diagnostics-enable nil
+                                      lsp-modeline-code-actions-enable nil
+                                      lsp-modeline-workspace-status-enable nil))))
 
 ;; templ golang
 (use-package templ-ts-mode
