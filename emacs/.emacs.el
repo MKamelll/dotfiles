@@ -256,7 +256,11 @@
   (add-hook 'django-web-mode-hook
           (lambda ()
             (web-mode-set-engine "django")
-            (electric-pair-local-mode -1)
+            (setq electric-pair-inhibit-predicate
+                  (lambda (c)
+                    (if (char-equal c ?\{)
+                        t
+                      (electric-pair-default-inhibit c))))
             (font-lock-flush)
             (font-lock-ensure)))
 
