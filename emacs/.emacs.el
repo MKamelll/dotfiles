@@ -229,6 +229,7 @@
          ("\\.svelte\\'" . svelte-mode)
          ("\\.vue\\'" . vue-mode)
          ("\\.djhtml\\'" . django-web-mode)
+         ("\\.peb\\'" . django-web-mode)
          ("\\.scala\\.html\\'" . twirl-mode)
          ("\\.cshtml\\'" . razor-mode))
 
