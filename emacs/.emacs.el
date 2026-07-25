@@ -571,7 +571,8 @@
   :ensure t)
 
 (use-package scala-mode
-  :ensure t)
+  :ensure t
+  :interpreter ("scala" . scala-mode))
 
 (use-package lsp-metals
   :ensure t
