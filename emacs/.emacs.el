@@ -486,6 +486,17 @@
 (use-package racket-mode
   :ensure t)
 
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t
+  :bind (:map cider-mode-map
+              ("C-<return>" . cider-eval-buffer))
+  :config
+  (setq cider-repl-display-help-banner nil)
+  (setq cider-show-error-buffer 'only-in-repl))
+
 (use-package php-mode
   :ensure t)
 
