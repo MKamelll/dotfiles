@@ -159,9 +159,12 @@
   (corfu-auto-prefix 2)
   (corfu-cycle t)
   (corfu-preselect 'prompt)
+
   :bind
   (("C-SPC" . completion-at-point)
    (:map corfu-map
+         ("RET" . corfu-insert)
+         ([return] . corfu-insert)
          ("C-SPC" . corfu-complete)
          ("TAB" . corfu-next)
          ([tab] . corfu-next)
@@ -466,13 +469,21 @@
 (use-package slime
   :ensure t
   :config
-  (setq inferior-lisp-program "sbcl"
-        slime-load-failed-fasl 'never)
   (defun my/slime-compile-and-switch-buffer ()
     (interactive)
     (slime-compile-and-load-file)
     (pop-to-buffer (slime-output-buffer)))
+  (setq inferior-lisp-program "sbcl"
+        slime-load-failed-fasl 'never)
   (define-key slime-mode-map (kbd "C-<return>") #'my/slime-compile-and-switch-buffer))
+
+(use-package slime-repl
+  :after slime
+  :bind (:map slime-repl-mode-map
+              ("C-<up>" . backward-paragraph)
+              ("C-<down>" . forward-paragraph)
+              ("S-<up>" . slime-repl-previous-input)
+              ("S-<down>" . slime-repl-next-input)))
 
 (use-package dune
   :ensure t)
