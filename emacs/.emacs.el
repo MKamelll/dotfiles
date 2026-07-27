@@ -482,8 +482,8 @@
   :bind (:map slime-repl-mode-map
               ("C-<up>" . backward-paragraph)
               ("C-<down>" . forward-paragraph)
-              ("M-S-<up>" . slime-repl-previous-input)
-              ("M-S-<down>" . slime-repl-next-input)))
+              ("M-<up>" . slime-repl-previous-input)
+              ("M-<down>" . slime-repl-next-input)))
 
 (use-package dune
   :ensure t)
@@ -502,8 +502,13 @@
 
 (use-package cider
   :ensure t
+  :init
+  (defun my/cider-eval-and-pop-buffer ()
+    (interactive)
+    (cider-eval-buffer)
+    (pop-to-buffer (cider-current-repl)))
   :bind (:map cider-mode-map
-              ("C-<return>" . cider-eval-buffer))
+              ("C-<return>" . my/cider-eval-and-pop-buffer))
   :config
   (setq cider-repl-display-help-banner nil)
   (setq cider-show-error-buffer 'only-in-repl))
