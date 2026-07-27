@@ -507,8 +507,15 @@
     (interactive)
     (cider-eval-buffer)
     (pop-to-buffer (cider-current-repl)))
-  :bind (:map cider-mode-map
-              ("C-<return>" . my/cider-eval-and-pop-buffer))
+  :bind (:map
+         cider-mode-map
+         ("C-<return>" . my/cider-eval-and-pop-buffer)
+         :map
+         cider-repl-mode-map
+          ("C-<up>" . backward-paragraph)
+          ("C-<down>" . forward-paragraph)
+          ("M-<up>" . cider-repl-previous-input)
+          ("M-<down>" . cider-repl-next-input))
   :config
   (setq cider-repl-display-help-banner nil)
   (setq cider-show-error-buffer 'only-in-repl))
