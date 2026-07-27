@@ -354,10 +354,18 @@
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
 
   ;; razor-mode
+  (add-to-list 'lsp-disabled-clients 'csharp-ls)
   (add-to-list 'lsp-language-id-configuration '(razor-mode . "html"))
   (add-hook 'razor-mode-hook
             (lambda ()
               (setq-local lsp-enable-snippet t)))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("csharp-ls" "-f" "razor-support"))
+    :major-modes '(csharp-mode razor-mode)
+    :add-on? t
+    :server-id 'csharp-ls-with-razor))
 
   ;; emmet
   (add-to-list 'lsp-disabled-clients 'emmet-ls)
