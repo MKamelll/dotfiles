@@ -482,8 +482,8 @@
   :bind (:map slime-repl-mode-map
               ("C-<up>" . backward-paragraph)
               ("C-<down>" . forward-paragraph)
-              ("S-<up>" . slime-repl-previous-input)
-              ("S-<down>" . slime-repl-next-input)))
+              ("M-S-<up>" . slime-repl-previous-input)
+              ("M-S-<down>" . slime-repl-next-input)))
 
 (use-package dune
   :ensure t)
