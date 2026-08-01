@@ -338,6 +338,8 @@
   (twirl-mode . lsp-deferred)
   (csharp-mode . lsp-deferred)
   (razor-mode . lsp-deferred)
+  (typescript-ts-mode . lsp-deferred)
+  (tsx-ts-mode . lsp-deferred)
 
   :config
   (defun lsp-code-action-quickfix ()
@@ -352,6 +354,22 @@
   (define-key lsp-signature-mode-map (kbd "C-<tab>") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-TAB") #'lsp-signature-next)
   (define-key lsp-signature-mode-map (kbd "C-<backtab>") #'lsp-signature-previous)
+
+  ;; typescript
+  (add-hook 'typescript-ts-mode-hook
+            (lambda ()
+              (setq-local lsp-signature-auto-activate nil
+                          lsp-signature-render-documentation nil
+                          lsp-signature-doc-lines 1)))
+
+  (add-hook 'tsx-ts-mode-hook
+            (lambda ()
+              (setq-local lsp-signature-auto-activate nil
+                          lsp-signature-render-documentation nil
+                          lsp-signature-doc-lines 1)))
+
+  (setq lsp-typescript-preferences-import-module-specifier "relative"
+        lsp-typescript-preferences-import-module-specifier-ending "minimal")
 
   ;; razor-mode
   (add-to-list 'lsp-disabled-clients 'csharp-ls)
@@ -531,6 +549,18 @@
 (use-package php-mode
   :ensure t)
 
+(use-package typescript-ts-mode
+  :ensure nil
+  :mode ("\\.ts\\'" . typescript-ts-mode)
+  :config
+  (setq typescript-ts-mode-indent-offset 4))
+
+(use-package tsx-ts-mode
+  :ensure nil
+  :mode ("\\.tsx\\'" . tsx-ts-mode)
+  :config
+  (setq tsx-ts-mode-indent-offset 4))
+
 (use-package go-mode
   :ensure t)
 
@@ -543,20 +573,6 @@
   :mode
   ("\\.prettierrc\\'" . json-mode)
   ("\\.djlintrc\\'" . json-mode)
-  )
-
-(use-package typescript-mode
-  :ensure t
-  :hook (typescript-mode . lsp-deferred)
-  :config
-  (add-hook 'typescript-mode-hook
-            (lambda ()
-              (setq-local lsp-signature-auto-activate nil
-                          lsp-signature-render-documentation nil
-                          lsp-signature-doc-lines 1)))
-  (setq typescript-indent-level 4
-        lsp-typescript-preferences-import-module-specifier "relative"
-        lsp-typescript-preferences-import-module-specifier-ending "minimal")
   )
 
 (use-package prettier-js
@@ -630,7 +646,8 @@
   :ensure t
   :mode ("\\.env\\..*\\'" . dotenv-mode))
 
-(defvar my-prettier-modes '(typescript-mode tsx-mode js-mode json-mode svelte-mode vue-mode)
+(defvar my-prettier-modes '(typescript-ts-mode tsx-ts-mode
+                                               js-mode json-mode svelte-mode vue-mode)
   "A list of major modes where Prettier should be used for formatting.")
 
 (defvar my-php-cs-fixer-modes '(php-mode))
