@@ -630,7 +630,7 @@
   :ensure t
   :mode ("\\.env\\..*\\'" . dotenv-mode))
 
-(defvar my-prettier-modes '(typescript-mode tsx-mode js-mode json-mode svelte-mode)
+(defvar my-prettier-modes '(typescript-mode tsx-mode js-mode json-mode svelte-mode vue-mode)
   "A list of major modes where Prettier should be used for formatting.")
 
 (defvar my-php-cs-fixer-modes '(php-mode))
