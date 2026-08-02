@@ -866,4 +866,7 @@
   (global-set-key (kbd "<f2>") 'switch-to-next-buffer)
   (global-set-key (kbd "<f1>") 'switch-to-prev-buffer)
   (global-set-key (kbd "<f3>") 'switch-to-buffer)
-  )
+
+  ;; so lsp-mode could shut up
+  (add-to-list 'warning-suppress-log-types '(lsp-mode))
+  (add-to-list 'warning-suppress-types '(lsp-mode)))
