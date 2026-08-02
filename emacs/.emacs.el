@@ -822,9 +822,11 @@
   (ido-everywhere 1)
   (electric-pair-mode 1)
   (global-display-line-numbers-mode 1)
+  (global-auto-revert-mode 1)
   (column-number-mode 1)
   (setq ido-auto-merge-work-directories-length -1
-        ido-enable-flex-matching t)
+        ido-enable-flex-matching t
+        auto-revert-verbose nil)
 
   ;; use django-web-mode for any .html file under a cotton dir
   (add-to-list 'auto-mode-alist
