@@ -406,14 +406,22 @@
   (add-to-list 'lsp-language-id-configuration '(templ-ts-mode . "html"))
   (add-hook 'templ-ts-mode-hook
             (lambda ()
-              (setq-local lsp-enable-snippet t)))
+              (setq-local lsp-enable-snippet t
+                          lsp-disabled-clients '(html-ls))))
 
   (lsp-register-client
    (make-lsp-client
     :new-connection (lsp-stdio-connection '("templ" "lsp"))
     :major-modes '(templ-ts-mode)
-    :add-on? t
+    :priority 10
     :server-id 'templ-ls))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("vscode-html-language-server" "--stdio"))
+    :major-modes '(templ-ts-mode)
+    :add-on? t
+    :server-id 'html-ls-addon))
 
   ;; pylsp
   (setq lsp-pylsp-plugins-autopep8-enabled nil
@@ -481,7 +489,6 @@
 ;; templ golang
 (use-package templ-ts-mode
   :ensure t
-  :defer t
   :mode
   ("\\.templ\\'" . templ-ts-mode)
   :config
