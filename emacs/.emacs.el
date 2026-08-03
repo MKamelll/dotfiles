@@ -732,9 +732,9 @@
   (add-to-list 'mc/cmds-to-run-for-all 'my/backward-kill-word))
 
 (use-package dired
+  :bind ("<f4>" . dired-jump)
   :init
-  (setq dired-dwim-target t)
-  )
+  (setq dired-dwim-target t))
 
 (use-package treesit
   :config
@@ -750,7 +750,6 @@
 )
 
 (use-package ibuffer
-  :bind ("<f4>" . ibuffer)
   :custom
   (ibuffer-expert t)
   (ibuffer-show-empty-filter-groups nil)
