@@ -68,6 +68,7 @@
 
 (use-package projectile
   :ensure t
+  :bind ("C-S-f" . projectile-find-file)
   :config
   (setq projectile-indexing-method 'hybrid)
   (setq projectile-use-git-grep t)
@@ -811,7 +812,7 @@
   :bind (:map emacs-lisp-mode-map
               ("C-<return>" . eval-buffer))
   :config
-  (set-face-attribute 'default nil :height 160)
+  (set-face-attribute 'default nil :height 140)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
