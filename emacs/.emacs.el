@@ -812,7 +812,7 @@
   :bind (:map emacs-lisp-mode-map
               ("C-<return>" . eval-buffer))
   :config
-  (set-face-attribute 'default nil :height 140)
+  (set-face-attribute 'default nil :height 160)
   (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
