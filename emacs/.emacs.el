@@ -239,11 +239,11 @@
 
   :config
   (set-face-attribute 'web-mode-block-face nil :background 'unspecified)
-  (setq web-mode-markup-indent-offset 4
-        web-mode-css-indent-offset 4
-        web-mode-code-indent-offset 4
-        web-mode-attr-indent-offset 4
-        web-mode-script-padding 4)
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2
+        web-mode-attr-indent-offset 2
+        web-mode-script-padding 2)
 
   (add-hook 'razor-mode-hook
           (lambda ()
@@ -666,7 +666,7 @@
   :config
   (reformatter-define djlint-format
     :program "djlint"
-    :args '("--reformat" "-")
+    :args '("--reformat" "--indent" "2" "-")
     :lighter " DJ")
 
   (reformatter-define templ-format
