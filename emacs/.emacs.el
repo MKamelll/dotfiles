@@ -804,6 +804,7 @@
                 lua-indent-level 4
                 python-indent-offset 4
                 c-basic-offset 4
+                js-indent-level 2
                 tab-always-indent t)
 
   :hook
