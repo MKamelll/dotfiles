@@ -260,7 +260,7 @@
   (add-hook 'django-web-mode-hook
           (lambda ()
             (web-mode-set-engine "django")
-            (setq electric-pair-inhibit-predicate
+            (setq-local electric-pair-inhibit-predicate
                   (lambda (c)
                     (if (char-equal c ?\{)
                         t
@@ -341,6 +341,7 @@
   (razor-mode . lsp-deferred)
   (typescript-ts-mode . lsp-deferred)
   (tsx-ts-mode . lsp-deferred)
+  (js-mode . lsp-deferred)
 
   :config
   (defun lsp-code-action-quickfix ()
