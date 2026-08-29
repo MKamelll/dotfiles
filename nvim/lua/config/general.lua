@@ -51,10 +51,6 @@ vim.filetype.add({
     },
 })
 
--- netrw
-vim.keymap.set("n", "ee", ":Ex <CR>", { desc = "Open Netrw" })
-vim.keymap.set("n", "eee", ":Vexplore <CR>", { desc = "Open Netrw in vertical window" })
-
 -- general bindings
 vim.keymap.set("n", "ww", ":w <CR>", { desc = "Write file" })
 vim.keymap.set("n", "qq", ":q <CR>", { desc = "Quit" })

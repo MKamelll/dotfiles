@@ -10,9 +10,9 @@ vim.pack.add({
 })
 
 vim.pack.add({
-  "https://github.com/nvim-lua/plenary.nvim",
-  { src = "https://github.com/m00qek/baleia.nvim", version = "v1.3.0" },
-  { src = "https://github.com/ej-shafran/compile-mode.nvim", version = "v5.0.0" },
+    "https://github.com/nvim-lua/plenary.nvim",
+    { src = "https://github.com/m00qek/baleia.nvim",           version = "v1.3.0" },
+    { src = "https://github.com/ej-shafran/compile-mode.nvim", version = "v5.0.0" },
 })
 
 vim.g.compile_mode = {
@@ -21,31 +21,44 @@ vim.g.compile_mode = {
 }
 
 vim.pack.add({
-  "https://github.com/hrsh7th/cmp-nvim-lsp",
-  "https://github.com/hrsh7th/cmp-buffer",
-  "https://github.com/hrsh7th/cmp-path",
-  "https://github.com/L3MON4D3/LuaSnip",
-  "https://github.com/saadparwaiz1/cmp_luasnip",
-  "https://github.com/rafamadriz/friendly-snippets",
-  "https://github.com/hrsh7th/nvim-cmp",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/hrsh7th/cmp-buffer",
+    "https://github.com/hrsh7th/cmp-path",
+    "https://github.com/L3MON4D3/LuaSnip",
+    "https://github.com/saadparwaiz1/cmp_luasnip",
+    "https://github.com/rafamadriz/friendly-snippets",
+    "https://github.com/hrsh7th/nvim-cmp",
 })
 
 vim.pack.add({
-  "https://github.com/nvim-lua/plenary.nvim",
-  { src = "https://github.com/nvim-telescope/telescope.nvim", version = "v0.1.9" },
+    "https://github.com/nvim-lua/plenary.nvim",
+    { src = "https://github.com/nvim-telescope/telescope.nvim", version = "v0.1.9" },
 })
 
 vim.pack.add({
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 })
 
 vim.api.nvim_create_autocmd("PackChanged", {
-  callback = function(ev)
-    if ev.data.spec.name == "nvim-treesitter" and ev.data.kind ~= "delete" then
-      vim.cmd("TSUpdate")
-    end
-  end,
+    callback = function(ev)
+        if ev.data.spec.name == "nvim-treesitter" and ev.data.kind ~= "delete" then
+            vim.cmd("TSUpdate")
+        end
+    end,
 })
+
+vim.pack.add({
+    {
+        src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+        version = vim.version.range('3')
+    },
+    -- dependencies
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/MunifTanjim/nui.nvim",
+    -- optional, but recommended
+    "https://github.com/nvim-tree/nvim-web-devicons",
+})
+
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"

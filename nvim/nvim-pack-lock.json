@@ -58,6 +58,15 @@
       "rev": "704b99f10a72cc05d370cfeb294ff83412a8ab55",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
     },
+    "neo-tree.nvim": {
+      "rev": "83e7a2982fd12b9c3d35bc39dd5877cd91a02a61",
+      "src": "https://github.com/nvim-neo-tree/neo-tree.nvim",
+      "version": "3.0.0 - 4.0.0"
+    },
+    "nui.nvim": {
+      "rev": "10fc361835c856ba4233ef5ea135b919bf3dce97",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
+    },
     "nvim-cmp": {
       "rev": "2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3",
       "src": "https://github.com/hrsh7th/nvim-cmp"
@@ -66,10 +75,18 @@
       "rev": "b7b920947f21339ee41fbb38c79d6445e12900aa",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
+    "nvim-tree.lua": {
+      "rev": "b2aadda94b107480c48e548d6db51c6840b7b33c",
+      "src": "https://github.com/nvim-tree/nvim-tree.lua"
+    },
     "nvim-treesitter": {
       "rev": "cf12346a3414fa1b06af75c79faebe7f76df080a",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'master'"
+    },
+    "nvim-web-devicons": {
+      "rev": "2ae6958df7ced50baac5035cec0c15799eedfbf7",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
