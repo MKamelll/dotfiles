@@ -30,3 +30,5 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end
     end,
 })
+
+vim.keymap.set("n", "ee", ":Neotree toggle<CR>", { desc = "toggle neotree" })
