@@ -346,9 +346,9 @@
 
   :config
   (defun lsp-code-action-quickfix ()
-  "Execute quickfix code actions."
-  (interactive)
-  (lsp-execute-code-action-by-kind "quickfix"))
+    "Execute quickfix code actions."
+    (interactive)
+    (lsp-execute-code-action-by-kind "quickfix"))
 
   ;; shortcuts
   (global-set-key (kbd "M-<return>") #'lsp-code-action-quickfix)
