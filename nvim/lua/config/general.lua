@@ -7,6 +7,7 @@ vim.o.smartindent = true
 vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = false
 vim.o.swapfile = false
+vim.g.mapleader = " "
 
 -- diagnostics
 vim.keymap.set("n", "fl", function()
@@ -51,20 +52,22 @@ vim.filetype.add({
     },
 })
 
+
 -- general bindings
-vim.keymap.set("n", "ww", ":w <CR>", { desc = "Write file" })
-vim.keymap.set("n", "qq", ":q <CR>", { desc = "Quit" })
+vim.keymap.set("n", "<leader>w", ":w <CR>", { desc = "Write file" })
+vim.keymap.set("n", "<leader>q", ":q <CR>", { desc = "Quit" })
 
 -- buffers
-vim.keymap.set("n", "bn", ":bnext<CR>", { desc = "Buffer next" })
-vim.keymap.set("n", "bp", ":bprevious<CR>", { desc = "Buffer previous" })
-vim.keymap.set("n", "bd", ":bdelete<CR>", { desc = "Buffer delete" })
-vim.keymap.set("n", "bm", ":b #<CR>", { desc = "Switch to most recent buffer" })
+vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Buffer next" })
+vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Buffer previous" })
+vim.keymap.set("n", "<leader>bd", ":bdelete<CR>", { desc = "Buffer delete" })
+vim.keymap.set("n", "<leader>bm", ":b #<CR>", { desc = "Switch to most recent buffer" })
 
 -- tabs
-vim.keymap.set("n", "tn", ":tabnext<CR>", { desc = "Tab next" })
-vim.keymap.set("n", "tp", ":tabprevious<CR>", { desc = "Tab previous" })
-vim.keymap.set("n", "td", ":tabclose<CR>", { desc = "Tab close" })
+vim.keymap.set("n", "<leader>tn", ":tabnext<CR>", { desc = "Tab next" })
+vim.keymap.set("n", "<leader>tp", ":tabprevious<CR>", { desc = "Tab previous" })
+vim.keymap.set("n", "<leader>td", ":tabclose<CR>", { desc = "Tab close" })
+
 
 -- lsp
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "goto definition" })
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "goto definition" })
