@@ -56,6 +56,10 @@ vim.filetype.add({
 -- general bindings
 vim.keymap.set("n", "<leader>w", ":w <CR>", { desc = "Write file" })
 vim.keymap.set("n", "<leader>q", ":q <CR>", { desc = "Quit" })
+vim.keymap.set('n', '<C-Right>', 'e', { desc = 'Move forward by word' })
+vim.keymap.set('n', '<C-Left>', 'ge', { desc = 'Move backward by word' })
+vim.keymap.set('i', '<C-Right>', '<C-o>e', { desc = 'Move forward by word' })
+vim.keymap.set('i', '<C-Left>', '<C-o>ge', { desc = 'Move backward by word' })
 
 -- buffers
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Buffer next" })
