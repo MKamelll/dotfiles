@@ -60,6 +60,14 @@ vim.pack.add({
 })
 
 
+vim.pack.add({
+    { src = "https://github.com/windwp/nvim-autopairs" },
+})
+
+require("nvim-autopairs").setup({
+    check_ts = true,
+})
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
